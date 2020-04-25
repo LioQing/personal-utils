@@ -116,13 +116,11 @@ namespace lecs
 
 		void Update()
 		{
-			entities.erase(std::remove_if(entities.begin(), entities.end(),
-				[this](const std::unique_ptr<Entity>& e)
-				{
-					emptyID.push_back(e->id);
-					return !e->IsActive();
-				}),
-				entities.end());
+			for (auto& e : entities)
+			{
+				if (!e) continue;
+				if (!e->IsActive()) delete e.release();
+			}
 		}
 
 		Entity& AddEntity()
@@ -131,7 +129,7 @@ namespace lecs
 
 			std::unique_ptr<Entity> uPtr{ e };
 			entities.resize(entities.size() + 1);
-			entities[e->id] = std::move(uPtr);
+			entities.at(e->id) = std::move(uPtr);
 
 			return *e;
 		}
@@ -142,8 +140,9 @@ namespace lecs
 			EntityContainer entitiesWith = EntityContainer(*this);
 			for (auto& e : entities)
 			{
+				if (!e) continue;
 				uint32_t id = e->id;
-				if (e->HasComponent<T>()) entitiesWith.entities.emplace_back(entities[id].get());
+				if (e->HasComponent<T>()) entitiesWith.entities.emplace_back(entities.at(id).get());
 			}
 			return entitiesWith;
 		}
@@ -156,8 +155,9 @@ namespace lecs
 			EntityContainer entitiesWith = EntityContainer(entityManager);
 			for (auto& e : entities)
 			{
+				if (!e) continue;
 				uint32_t id = e->id;
-				if (e->HasComponent<T>()) entitiesWith.entities.emplace_back(entityManager.entities[id].get());
+				if (e->HasComponent<T>()) entitiesWith.entities.emplace_back(entityManager.entities.at(id).get());
 			}
 			return entitiesWith;
 		}
@@ -167,7 +167,7 @@ namespace lecs
 	{
 	public:
 
-		virtual void Update(EntityManager* eMan) {}
+		virtual void Update(EntityManager* entityManager) {}
 	};
 
 	class SystemManager
