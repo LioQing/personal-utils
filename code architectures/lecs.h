@@ -8,6 +8,8 @@
 
 namespace lecs
 {
+	class EntityManager;
+
 	constexpr std::size_t Max_Component = 32;
 
 	class Component
@@ -35,6 +37,7 @@ namespace lecs
 	{
 	private:
 
+		EntityManager& entityManager;
 		bool active = true;
 
 	public:
@@ -44,6 +47,8 @@ namespace lecs
 
 		std::array<Component*, Max_Component> componentArray;
 		std::bitset<Max_Component> componentBitSet;
+
+		Entity(EntityManager& eMan, uint32_t eID) : entityManager(eMan), id(eID) {}
 
 		bool IsActive()
 		{
@@ -82,6 +87,22 @@ namespace lecs
 		}
 	};
 
+	class EntityContainer
+	{
+	private:
+
+		EntityManager& entityManager;
+
+	public:
+
+		std::vector<Entity*> entities;
+
+		EntityContainer(EntityManager& eMan) : entityManager(eMan) {}
+
+		template <typename T>
+		EntityContainer With();
+	};
+
 	class EntityManager
 	{
 	private:
@@ -91,29 +112,56 @@ namespace lecs
 	public:
 
 		std::vector<std::unique_ptr<Entity>> entities;
+		std::vector<uint32_t> emptyID;
+
+		void Update()
+		{
+			entities.erase(std::remove_if(entities.begin(), entities.end(),
+				[this](const std::unique_ptr<Entity>& e)
+				{
+					emptyID.push_back(e->id);
+					return !e->IsActive();
+				}),
+				entities.end());
+		}
 
 		Entity& AddEntity()
 		{
-			Entity* e(new Entity());
-			e->id = nextID++;
+			Entity* e(new Entity(*this, nextID++));
+
 			std::unique_ptr<Entity> uPtr{ e };
+			entities.resize(entities.size() + 1);
 			entities[e->id] = std::move(uPtr);
 
 			return *e;
 		}
 
 		template <typename T>
-		std::vector<Entity*> With()
+		EntityContainer With()
 		{
-			std::vector<Entity*> entitiesWith;
+			EntityContainer entitiesWith = EntityContainer(*this);
 			for (auto& e : entities)
 			{
 				uint32_t id = e->id;
-				if (e->HasComponent<T>()) entitiesWith.emplace_back(entities[id].get());
+				if (e->HasComponent<T>()) entitiesWith.entities.emplace_back(entities[id].get());
 			}
 			return entitiesWith;
 		}
 	};
+
+	template <typename T>
+	EntityContainer EntityContainer::With()
+	{
+		{
+			EntityContainer entitiesWith = EntityContainer(entityManager);
+			for (auto& e : entities)
+			{
+				uint32_t id = e->id;
+				if (e->HasComponent<T>()) entitiesWith.entities.emplace_back(entityManager.entities[id].get());
+			}
+			return entitiesWith;
+		}
+	}
 
 	class System
 	{
@@ -150,6 +198,26 @@ namespace lecs
 			{
 				s->Update(eManager);
 			}
+		}
+	};
+
+	class ECSManager
+	{
+	public:
+
+		EntityManager* entityManager;
+		SystemManager* systemManager;
+
+		ECSManager()
+		{
+			entityManager = new EntityManager();
+			systemManager = new SystemManager(entityManager);
+		}
+
+		void UpdateECSManagers()
+		{
+			entityManager->Update();
+			systemManager->Update();
 		}
 	};
 }
