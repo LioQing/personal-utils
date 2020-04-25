@@ -160,7 +160,7 @@ public:
 		y = ty;
 	}
 
-	Vec2<T>& Normalize()
+	Vec2& Normalize()
 	{
 		if (Magnitude() == 0) return *this;
 		*this *= (1.0 / Magnitude());
@@ -227,28 +227,28 @@ public:
 			}
 		}
 	}
-	static Vec2<T> ReQuadrant(int quadrant)
+	static Vec2 ReQuadrant(int quadrant)
 	{
 		switch (quadrant)
 		{
 			case 1:
-				return Vec2<T>(1, 1);
+				return Vec2(1, 1);
 				break;
 			case 2:
-				return Vec2<T>(-1, 1);
+				return Vec2(-1, 1);
 				break;
 			case 3:
-				return Vec2<T>(-1, -1);
+				return Vec2(-1, -1);
 				break;
 			case 4:
-				return Vec2<T>(1, -1);
+				return Vec2(1, -1);
 				break;
 			default:
 				return Vec2::Zero();
 				break;
 		}
 	}
-	static Vec2<T> ReQuadrant(double deg, double zero, bool anticlockwise = true)
+	static Vec2 ReQuadrant(double deg, double zero = 0, bool anticlockwise = true)
 	{
 		double nDeg;
 
