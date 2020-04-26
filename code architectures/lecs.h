@@ -8,8 +8,6 @@
 
 namespace lecs
 {
-	class EntityManager;
-
 	constexpr std::size_t Max_Component = 32;
 
 	class Component
@@ -33,6 +31,8 @@ namespace lecs
 		}
 	};
 
+	class EntityManager;
+
 	class Entity
 	{
 	private:
@@ -54,10 +54,7 @@ namespace lecs
 		{
 			return active;
 		}
-		void Destroy()
-		{
-			active = false;
-		}
+		void Destroy(bool immediate = false);
 
 		template <typename T, typename... TArgs>
 		T& AddComponent(TArgs&&... mArgs)
@@ -100,7 +97,7 @@ namespace lecs
 		EntityContainer(EntityManager& eMan) : entityManager(eMan) {}
 
 		template <typename T>
-		EntityContainer With();
+		EntityContainer Entities();
 	};
 
 	class EntityManager
@@ -119,23 +116,55 @@ namespace lecs
 			for (auto& e : entities)
 			{
 				if (!e) continue;
-				if (!e->IsActive()) delete e.release();
+				if (!e->IsActive())
+				{
+					emptyID.push_back(e->id);
+					delete e.release();
+				}
 			}
+		}
+
+		void ImmediatelyDestroy(uint32_t id)
+		{
+			emptyID.push_back(id);
+			delete entities.at(id).release();
 		}
 
 		Entity& AddEntity()
 		{
-			Entity* e(new Entity(*this, nextID++));
+			uint32_t nID;
+			bool isEmpty = emptyID.empty();
+			if (!isEmpty)
+			{
+				nID = emptyID.back();
+				emptyID.pop_back();
+			}
+			else
+			{
+				nID = nextID++;
+			}
 
+			Entity* e(new Entity(*this, nID));
 			std::unique_ptr<Entity> uPtr{ e };
-			entities.resize(entities.size() + 1);
+			if (isEmpty) entities.resize(entities.size() + 1);
 			entities.at(e->id) = std::move(uPtr);
 
 			return *e;
 		}
 
+		EntityContainer Entities()
+		{
+			EntityContainer en = EntityContainer(*this);
+			for (auto& e : entities)
+			{
+				if (!e) continue;
+				en.entities.emplace_back(entities.at(e->id).get());
+			}
+			return en;
+		}
+
 		template <typename T>
-		EntityContainer With()
+		EntityContainer Entities()
 		{
 			EntityContainer entitiesWith = EntityContainer(*this);
 			for (auto& e : entities)
@@ -148,8 +177,14 @@ namespace lecs
 		}
 	};
 
+	void Entity::Destroy(bool immediate)
+	{
+		active = false;
+		if (immediate) entityManager.ImmediatelyDestroy(id);
+	}
+
 	template <typename T>
-	EntityContainer EntityContainer::With()
+	EntityContainer EntityContainer::Entities()
 	{
 		{
 			EntityContainer entitiesWith = EntityContainer(entityManager);
@@ -180,6 +215,7 @@ namespace lecs
 
 		std::vector<std::unique_ptr<System>> systems;
 
+		SystemManager() = default;
 		SystemManager(EntityManager* eMan) : eManager(eMan) {}
 
 		template <typename T, typename... TArgs>
@@ -201,23 +237,23 @@ namespace lecs
 		}
 	};
 
-	class ECSManager
+	class ECSManagers
 	{
 	public:
 
-		EntityManager* entityManager;
-		SystemManager* systemManager;
+		EntityManager entityManager;
+		SystemManager systemManager;
 
-		ECSManager()
+		ECSManagers()
 		{
-			entityManager = new EntityManager();
-			systemManager = new SystemManager(entityManager);
+			entityManager = EntityManager();
+			systemManager = SystemManager(&entityManager);
 		}
 
 		void UpdateECSManagers()
 		{
-			entityManager->Update();
-			systemManager->Update();
+			entityManager.Update();
+			systemManager.Update();
 		}
 	};
 }
