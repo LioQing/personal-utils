@@ -56,11 +56,36 @@ namespace lecs
 		}
 		void Destroy(bool immediate = false);
 
+		template <typename T>
+		T& AddComponent(std::unique_ptr<T> uPtr)
+		{
+			uPtr->entity = id;
+			components.emplace_back(std::move(uPtr));
+
+			componentArray[ComponentManager::GetComponentTypeID<T>()] = uPtr.get();
+			componentBitSet[ComponentManager::GetComponentTypeID<T>()] = true;
+
+			return *uPtr.get();
+		}
+
+		template <typename T>
+		T& AddComponent(const T& c)
+		{
+			c->entity = id;
+			std::unique_ptr<Component> uPtr{ c };
+			components.emplace_back(std::move(uPtr));
+
+			componentArray[ComponentManager::GetComponentTypeID<T>()] = c;
+			componentBitSet[ComponentManager::GetComponentTypeID<T>()] = true;
+
+			return *c;
+		}
+
 		template <typename T, typename... TArgs>
 		T& AddComponent(TArgs&&... mArgs)
 		{
 			T* c(new T(std::forward<TArgs>(mArgs)...));
-			c->entity = this->id;
+			c->entity = id;
 			std::unique_ptr<Component> uPtr{ c };
 			components.emplace_back(std::move(uPtr));
 
@@ -217,6 +242,22 @@ namespace lecs
 
 		SystemManager() = default;
 		SystemManager(EntityManager* eMan) : eManager(eMan) {}
+
+		template <typename T>
+		T& AddSystem(const T& s)
+		{
+			std::unique_ptr<System> uPtr{ s };
+			systems.emplace_back(std::move(uPtr));
+
+			return *s;
+		}
+
+		template <typename T>
+		T& AddSystem(std::unique_ptr<T> uPtr)
+		{
+			systems.emplace_back(std::move(uPtr));
+			return *uPtr.get();
+		}
 
 		template <typename T, typename... TArgs>
 		T& AddSystem(TArgs&&... aArgs)
