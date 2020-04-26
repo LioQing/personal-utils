@@ -5,6 +5,8 @@
 #include <array>
 #include <vector>
 #include <bitset>
+#include <map>
+#include <functional>
 
 namespace lecs
 {
@@ -19,17 +21,12 @@ namespace lecs
 
 	std::size_t nextComponentID = 0;
 
-	class ComponentManager
+	template <typename T>
+	inline std::size_t GetComponentTypeID()
 	{
-	public:
-
-		template <typename T>
-		static std::size_t GetComponentTypeID()
-		{
-			static std::size_t id = nextComponentID++;
-			return id;
-		}
-	};
+		static std::size_t id = nextComponentID++;
+		return id;
+	}
 
 	class EntityManager;
 
@@ -48,7 +45,7 @@ namespace lecs
 		std::array<Component*, Max_Component> componentArray;
 		std::bitset<Max_Component> componentBitSet;
 
-		Entity(EntityManager& eMan, uint32_t eID) : entityManager(eMan), id(eID) {}
+		Entity(EntityManager& entityManager, uint32_t eID) : entityManager(entityManager), id(eID) {}
 
 		bool IsActive()
 		{
@@ -62,8 +59,8 @@ namespace lecs
 			uPtr->entity = id;
 			components.emplace_back(std::move(uPtr));
 
-			componentArray[ComponentManager::GetComponentTypeID<T>()] = uPtr.get();
-			componentBitSet[ComponentManager::GetComponentTypeID<T>()] = true;
+			componentArray[GetComponentTypeID<T>()] = uPtr.get();
+			componentBitSet[GetComponentTypeID<T>()] = true;
 
 			return *uPtr.get();
 		}
@@ -75,8 +72,8 @@ namespace lecs
 			std::unique_ptr<Component> uPtr{ c };
 			components.emplace_back(std::move(uPtr));
 
-			componentArray[ComponentManager::GetComponentTypeID<T>()] = c;
-			componentBitSet[ComponentManager::GetComponentTypeID<T>()] = true;
+			componentArray[GetComponentTypeID<T>()] = c;
+			componentBitSet[GetComponentTypeID<T>()] = true;
 
 			return *c;
 		}
@@ -89,23 +86,23 @@ namespace lecs
 			std::unique_ptr<Component> uPtr{ c };
 			components.emplace_back(std::move(uPtr));
 
-			componentArray[ComponentManager::GetComponentTypeID<T>()] = c;
-			componentBitSet[ComponentManager::GetComponentTypeID<T>()] = true;
+			componentArray[GetComponentTypeID<T>()] = c;
+			componentBitSet[GetComponentTypeID<T>()] = true;
 
 			return *c;
 		}
 
-		template <typename T> 
+		template <typename T>
 		T& GetComponent() const
 		{
-			auto ptr(componentArray[ComponentManager::GetComponentTypeID<T>()]);
+			auto ptr(componentArray[GetComponentTypeID<T>()]);
 			return *static_cast<T*>(ptr);
 		}
 
 		template <typename T>
 		bool HasComponent()
 		{
-			return componentBitSet[ComponentManager::GetComponentTypeID<T>()];
+			return componentBitSet[GetComponentTypeID<T>()];
 		}
 	};
 
@@ -119,7 +116,7 @@ namespace lecs
 
 		std::vector<Entity*> entities;
 
-		EntityContainer(EntityManager& eMan) : entityManager(eMan) {}
+		EntityContainer(EntityManager& entityManager) : entityManager(entityManager) {}
 
 		template <typename T>
 		EntityContainer Entities();
@@ -223,25 +220,97 @@ namespace lecs
 		}
 	}
 
+	std::size_t nextEventID = 0;
+
+	template <typename T>
+	inline std::size_t GetEventID()
+	{
+		static std::size_t id = nextEventID++;
+		return id;
+	}
+
+	class Event;
+
+	class EventSubscriber
+	{
+	public:
+
+		std::vector<std::size_t> subscribed;
+
+		virtual void Receive(Event* event) {}
+	};
+
+	class Event
+	{
+	public:
+
+		std::size_t id;
+		std::vector<EventSubscriber*> subscribers;
+	};
+
+	class EventManager
+	{
+	private:
+
+		EntityManager* entityManager;
+
+	public:
+
+		std::vector<std::unique_ptr<Event>> events;
+
+		EventManager() : entityManager(nullptr) {}
+		EventManager(EntityManager* entityManager) : entityManager(entityManager) {}
+
+		template <typename T>
+		void Subscribe(EventSubscriber* subscriber)
+		{
+			AddEvent<T>();
+			events.at(GetEventID<T>())->subscribers.emplace_back(subscriber);
+			subscriber->subscribed.emplace_back(GetEventID<T>());
+		}
+
+		template <typename T, typename... TArgs>
+		void Emit(TArgs... aArgs)
+		{
+			for (auto& sub : events.at(GetEventID<T>())->subscribers)
+			{
+				sub->Receive(new T(std::forward<TArgs>(aArgs)...));
+			}
+		}
+
+		template <typename T>
+		void AddEvent()
+		{
+			if (GetEventID<T>() < events.size()) return;
+			T* ev(new T());
+			ev->id = GetEventID<T>();
+			std::unique_ptr<T> uPtr{ ev };
+			events.resize(events.size() + 1);
+			events.at(ev->id) = std::move(uPtr);
+		}
+	};
+
 	class System
 	{
 	public:
 
-		virtual void Update(EntityManager* entityManager) {}
+		virtual void Update(EntityManager* entityManager, EventManager* eventManager) {}
 	};
 
 	class SystemManager
 	{
 	private:
 
-		EntityManager* eManager;
+		EntityManager* entityManager;
+		EventManager* eventManager;
 
 	public:
 
 		std::vector<std::unique_ptr<System>> systems;
 
-		SystemManager() = default;
-		SystemManager(EntityManager* eMan) : eManager(eMan) {}
+		SystemManager() : entityManager(nullptr) {}
+		explicit SystemManager(EntityManager* entityManager, EventManager* eventManager) 
+			: entityManager(entityManager), eventManager(eventManager) {}
 
 		template <typename T>
 		T& AddSystem(const T& s)
@@ -273,7 +342,7 @@ namespace lecs
 		{
 			for (auto& s : systems)
 			{
-				s->Update(eManager);
+				s->Update(entityManager, eventManager);
 			}
 		}
 	};
@@ -284,11 +353,13 @@ namespace lecs
 
 		EntityManager entityManager;
 		SystemManager systemManager;
+		EventManager eventManager;
 
 		ECSManagers()
 		{
 			entityManager = EntityManager();
-			systemManager = SystemManager(&entityManager);
+			eventManager = EventManager(&entityManager);
+			systemManager = SystemManager(&entityManager, &eventManager);
 		}
 
 		void UpdateECSManagers()
