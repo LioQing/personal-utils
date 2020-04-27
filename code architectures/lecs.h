@@ -264,6 +264,28 @@ namespace lecs
 		}
 
 		template <typename T>
+		void Unsubscribe(EventSubscriber* subscriber)
+		{
+			AddEvent<T>();
+			std::size_t id = GetEventID<T>();
+			events.at(id)->subscribers.erase(std::remove_if(
+				events.at(id)->subscribers.begin(), events.at(id)->subscribers.end(),
+				[subscriber](EventSubscriber* s)
+				{
+					return s == subscriber;
+				}),
+				events.at(id)->subscribers.end());
+
+			std::vector<std::size_t>* subscribed = &subscriber->subscribed;
+			subscribed->erase(std::remove_if(subscribed->begin(), subscribed->end(),
+				[id](const std::size_t& eID)
+				{
+					return eID == id;
+				}),
+				subscribed->end());
+		}
+
+		template <typename T>
 		void Subscribe(EventSubscriber* subscriber)
 		{
 			AddEvent<T>();
