@@ -5,8 +5,6 @@
 #include <array>
 #include <vector>
 #include <bitset>
-#include <map>
-#include <functional>
 
 namespace lecs
 {
@@ -220,16 +218,8 @@ namespace lecs
 		}
 	}
 
-	std::size_t nextEventID = 0;
-
-	template <typename T>
-	inline std::size_t GetEventID()
-	{
-		static std::size_t id = nextEventID++;
-		return id;
-	}
-
 	class Event;
+	class EventManager;
 
 	class EventSubscriber
 	{
@@ -237,15 +227,19 @@ namespace lecs
 
 		std::vector<std::size_t> subscribed;
 
-		virtual void Receive(Event* event) {}
+		virtual void Receive(Event* event, EventManager* eventManager) {}
 	};
 
 	class Event
 	{
 	public:
 
+		EventManager* eventManager;
 		std::size_t id;
 		std::vector<EventSubscriber*> subscribers;
+
+		template <typename T>
+		bool IsEvent();
 	};
 
 	class EventManager
@@ -253,6 +247,7 @@ namespace lecs
 	private:
 
 		EntityManager* entityManager;
+		std::size_t nextEventID = 0;
 
 	public:
 
@@ -260,6 +255,13 @@ namespace lecs
 
 		EventManager() : entityManager(nullptr) {}
 		EventManager(EntityManager* entityManager) : entityManager(entityManager) {}
+
+		template <typename T>
+		inline std::size_t GetEventID()
+		{
+			static std::size_t id = nextEventID++;
+			return id;
+		}
 
 		template <typename T>
 		void Subscribe(EventSubscriber* subscriber)
@@ -274,7 +276,10 @@ namespace lecs
 		{
 			for (auto& sub : events.at(GetEventID<T>())->subscribers)
 			{
-				sub->Receive(new T(std::forward<TArgs>(aArgs)...));
+				T* ev(new T(std::forward<TArgs>(aArgs)...));
+				ev->eventManager = this;
+				ev->id = GetEventID<T>();
+				sub->Receive(ev, this);
 			}
 		}
 
@@ -289,6 +294,12 @@ namespace lecs
 			events.at(ev->id) = std::move(uPtr);
 		}
 	};
+
+	template <typename T>
+	bool Event::IsEvent()
+	{
+		return id == eventManager->GetEventID<T>();
+	}
 
 	class System
 	{
@@ -308,7 +319,7 @@ namespace lecs
 
 		std::vector<std::unique_ptr<System>> systems;
 
-		SystemManager() : entityManager(nullptr) {}
+		SystemManager() : entityManager(nullptr), eventManager(nullptr) {}
 		explicit SystemManager(EntityManager* entityManager, EventManager* eventManager) 
 			: entityManager(entityManager), eventManager(eventManager) {}
 
