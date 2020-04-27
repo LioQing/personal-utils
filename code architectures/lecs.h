@@ -5,10 +5,12 @@
 #include <array>
 #include <vector>
 #include <bitset>
+#include <queue>
 
 namespace lecs
 {
-	constexpr std::size_t Max_Component = 32;
+	constexpr std::size_t MAX_LOG = 32;
+	constexpr std::size_t MAX_COMPONENT = 32;
 
 	class Component
 	{
@@ -17,12 +19,12 @@ namespace lecs
 		uint32_t entity;
 	};
 
-	std::size_t nextComponentID = 0;
+	std::size_t next_component_id = 0;
 
 	template <typename T>
-	inline std::size_t GetComponentTypeID()
+	inline std::size_t get_component_type_id()
 	{
-		static std::size_t id = nextComponentID++;
+		static std::size_t id = next_component_id++;
 		return id;
 	}
 
@@ -32,80 +34,80 @@ namespace lecs
 	{
 	private:
 
-		EntityManager& entityManager;
+		EntityManager& entity_manager;
 		bool active = true;
 
 	public:
 
 		uint32_t id;
 
-		std::array<std::unique_ptr<Component>, Max_Component> componentArray;
-		std::bitset<Max_Component> componentBitSet;
+		std::array<std::unique_ptr<Component>, MAX_COMPONENT> components;
+		std::bitset<MAX_COMPONENT> component_bitset;
 
-		Entity(EntityManager& entityManager, uint32_t eID) : entityManager(entityManager), id(eID) {}
+		Entity(EntityManager& entity_manager, uint32_t id) : entity_manager(entity_manager), id(id) {}
 
-		bool IsActive()
+		bool is_active()
 		{
 			return active;
 		}
-		void Destroy(bool immediate = false);
+		void destroy(bool immediate = false);
 
 		template <typename T>
-		T& AddComponent(std::unique_ptr<T> uPtr)
+		T& add_component(std::unique_ptr<T> u_ptr)
 		{
-			uPtr->entity = id;
+			u_ptr->entity = id;
 
-			componentArray[GetComponentTypeID<T>()] = std::move(uPtr);
-			componentBitSet[GetComponentTypeID<T>()] = true;
+			components[get_component_type_id<T>()] = std::move(u_ptr);
+			component_bitset[get_component_type_id<T>()] = true;
 
-			return *uPtr.get();
+			return *u_ptr.get();
 		}
 
 		template <typename T>
-		T& AddComponent(const T& c)
+		T& add_component(const T& c)
 		{
 			c->entity = id;
-			std::unique_ptr<Component> uPtr{ c };
+			std::unique_ptr<Component> u_ptr{ c };
 
-			componentArray[GetComponentTypeID<T>()] = std::move(uPtr);
-			componentBitSet[GetComponentTypeID<T>()] = true;
+			components[get_component_type_id<T>()] = std::move(u_ptr);
+			component_bitset[get_component_type_id<T>()] = true;
 
 			return *c;
 		}
 
 		template <typename T, typename... TArgs>
-		T& AddComponent(TArgs&&... mArgs)
+		T& add_component(TArgs&&... mArgs)
 		{
 			T* c(new T(std::forward<TArgs>(mArgs)...));
 			c->entity = id;
-			std::unique_ptr<Component> uPtr{ c };
+			std::unique_ptr<Component> u_ptr{ c };
 
-			componentArray[GetComponentTypeID<T>()] = std::move(uPtr);
-			componentBitSet[GetComponentTypeID<T>()] = true;
+			components[get_component_type_id<T>()] = std::move(u_ptr);
+			component_bitset[get_component_type_id<T>()] = true;
 
 			return *c;
 		}
 
 		template <typename T>
-		T& RemoveComponent()
+		T& remove_component()
 		{
-			T c = *static_cast<T*>(componentArray[GetComponentTypeID<T>()].get());
-			delete componentArray[GetComponentTypeID<T>()].release();
-			componentBitSet[GetComponentTypeID<T>()] = false;
+			T c = *static_cast<T*>(components[get_component_type_id<T>()].get());
+			delete components[get_component_type_id<T>()].release();
+			component_bitset[get_component_type_id<T>()] = false;
 			return c;
 		}
 
 		template <typename T>
-		T& GetComponent() const
+		T& get_component() const
 		{
-			auto ptr(componentArray[GetComponentTypeID<T>()].get());
+			auto ptr(components[get_component_type_id<T>()].get());
 			return *static_cast<T*>(ptr);
 		}
 
 		template <typename T>
-		bool HasComponent()
+		bool has_component()
 		{
-			return componentBitSet[GetComponentTypeID<T>()];
+			return component_bitset[get_component_type_id<T>()];
 		}
 	};
 
@@ -113,71 +115,71 @@ namespace lecs
 	{
 	private:
 
-		EntityManager& entityManager;
+		EntityManager& entity_manager;
 
 	public:
 
 		std::vector<Entity*> entities;
 
-		EntityContainer(EntityManager& entityManager) : entityManager(entityManager) {}
+		EntityContainer(EntityManager& entity_manager) : entity_manager(entity_manager) {}
 
 		template <typename T>
-		EntityContainer Entities();
+		EntityContainer entity_filter();
 	};
 
 	class EntityManager
 	{
 	private:
 
-		uint32_t nextID;
+		uint32_t next_id;
 
 	public:
 
 		std::vector<std::unique_ptr<Entity>> entities;
-		std::vector<uint32_t> emptyID;
+		std::vector<uint32_t> empty_id;
 
-		void Update()
+		void update()
 		{
 			for (auto& e : entities)
 			{
 				if (!e) continue;
-				if (!e->IsActive())
+				if (!e->is_active())
 				{
-					emptyID.push_back(e->id);
+					empty_id.push_back(e->id);
 					delete e.release();
 				}
 			}
 		}
 
-		void ImmediatelyDestroy(uint32_t id)
+		void immediate_destroy(uint32_t id)
 		{
-			emptyID.push_back(id);
+			empty_id.push_back(id);
 			delete entities.at(id).release();
 		}
 
-		Entity& AddEntity()
+		Entity& add_entity()
 		{
-			uint32_t nID;
-			bool isEmpty = emptyID.empty();
-			if (!isEmpty)
+			uint32_t new_id;
+			bool is_empty = empty_id.empty();
+			if (!is_empty)
 			{
-				nID = emptyID.back();
-				emptyID.pop_back();
+				new_id = empty_id.back();
+				empty_id.pop_back();
 			}
 			else
 			{
-				nID = nextID++;
+				new_id = next_id++;
 			}
 
-			Entity* e(new Entity(*this, nID));
-			std::unique_ptr<Entity> uPtr{ e };
-			if (isEmpty) entities.resize(entities.size() + 1);
-			entities.at(e->id) = std::move(uPtr);
+			Entity* e(new Entity(*this, new_id));
+			std::unique_ptr<Entity> u_ptr{ e };
+			if (is_empty) entities.resize(entities.size() + 1);
+			entities.at(e->id) = std::move(u_ptr);
 
 			return *e;
 		}
 
-		EntityContainer Entities()
+		EntityContainer entity_filter()
 		{
 			EntityContainer en = EntityContainer(*this);
 			for (auto& e : entities)
@@ -189,37 +191,37 @@ namespace lecs
 		}
 
 		template <typename T>
-		EntityContainer Entities()
+		EntityContainer entity_filter()
 		{
-			EntityContainer entitiesWith = EntityContainer(*this);
+			EntityContainer entities_with = EntityContainer(*this);
 			for (auto& e : entities)
 			{
 				if (!e) continue;
 				uint32_t id = e->id;
-				if (e->HasComponent<T>()) entitiesWith.entities.emplace_back(entities.at(id).get());
+				if (e->has_component<T>()) entities_with.entities.emplace_back(entities.at(id).get());
 			}
-			return entitiesWith;
+			return entities_with;
 		}
 	};
 
-	void Entity::Destroy(bool immediate)
+	void Entity::destroy(bool immediate)
 	{
 		active = false;
-		if (immediate) entityManager.ImmediatelyDestroy(id);
+		if (immediate) entity_manager.immediate_destroy(id);
 	}
 
 	template <typename T>
-	EntityContainer EntityContainer::Entities()
+	EntityContainer EntityContainer::entity_filter()
 	{
 		{
-			EntityContainer entitiesWith = EntityContainer(entityManager);
+			EntityContainer entities_with = EntityContainer(entity_manager);
 			for (auto& e : entities)
 			{
 				if (!e) continue;
 				uint32_t id = e->id;
-				if (e->HasComponent<T>()) entitiesWith.entities.emplace_back(entityManager.entities.at(id).get());
+				if (e->has_component<T>()) entities_with.entities.emplace_back(entity_manager.entities.at(id).get());
 			}
-			return entitiesWith;
+			return entities_with;
 		}
 	}
 
@@ -232,47 +234,47 @@ namespace lecs
 
 		std::vector<std::size_t> subscribed;
 
-		virtual void Receive(Event* event, EventManager* eventManager) {}
+		virtual void receive(Event* event, EventManager* event_manager) {}
 	};
 
 	class Event
 	{
 	public:
 
-		EventManager* eventManager;
+		EventManager* event_manager;
 		std::size_t id;
 		std::vector<EventSubscriber*> subscribers;
 
 		template <typename T>
-		bool IsEvent();
+		bool is_event();
 	};
 
 	class EventManager
 	{
 	private:
 
-		EntityManager* entityManager;
-		std::size_t nextEventID = 0;
+		EntityManager* entity_manager;
+		std::size_t next_event_id = 0;
 
 	public:
 
 		std::vector<std::unique_ptr<Event>> events;
 
-		EventManager() : entityManager(nullptr) {}
-		EventManager(EntityManager* entityManager) : entityManager(entityManager) {}
+		EventManager() : entity_manager(nullptr) {}
+		EventManager(EntityManager* entity_manager) : entity_manager(entity_manager) {}
 
 		template <typename T>
-		inline std::size_t GetEventID()
+		inline std::size_t get_event_id()
 		{
-			static std::size_t id = nextEventID++;
+			static std::size_t id = next_event_id++;
 			return id;
 		}
 
 		template <typename T>
-		void Unsubscribe(EventSubscriber* subscriber)
+		void unsubscribe(EventSubscriber* subscriber)
 		{
-			AddEvent<T>();
-			std::size_t id = GetEventID<T>();
+			add_event<T>();
+			std::size_t id = get_event_id<T>();
 			events.at(id)->subscribers.erase(std::remove_if(
 				events.at(id)->subscribers.begin(), events.at(id)->subscribers.end(),
 				[subscriber](EventSubscriber* s)
@@ -291,119 +293,167 @@ namespace lecs
 		}
 
 		template <typename T>
-		void Subscribe(EventSubscriber* subscriber)
+		void subscribe(EventSubscriber* subscriber)
 		{
-			AddEvent<T>();
-			events.at(GetEventID<T>())->subscribers.emplace_back(subscriber);
-			subscriber->subscribed.emplace_back(GetEventID<T>());
+			add_event<T>();
+			events.at(get_event_id<T>())->subscribers.emplace_back(subscriber);
+			subscriber->subscribed.emplace_back(get_event_id<T>());
 		}
 
 		template <typename T, typename... TArgs>
-		void Emit(TArgs... aArgs)
+		void emit(TArgs... aArgs)
 		{
-			for (auto& sub : events.at(GetEventID<T>())->subscribers)
+			for (auto& sub : events.at(get_event_id<T>())->subscribers)
 			{
 				T* ev(new T(std::forward<TArgs>(aArgs)...));
-				ev->eventManager = this;
-				ev->id = GetEventID<T>();
-				sub->Receive(ev, this);
+				ev->event_manager = this;
+				ev->id = get_event_id<T>();
+				sub->receive(ev, this);
 			}
 		}
 
 		template <typename T>
-		void AddEvent()
+		void add_event()
 		{
-			if (GetEventID<T>() < events.size()) return;
+			if (get_event_id<T>() < events.size()) return;
 			T* ev(new T());
-			ev->id = GetEventID<T>();
-			std::unique_ptr<T> uPtr{ ev };
+			ev->id = get_event_id<T>();
+			std::unique_ptr<T> u_ptr{ ev };
 			events.resize(events.size() + 1);
-			events.at(ev->id) = std::move(uPtr);
+			events.at(ev->id) = std::move(u_ptr);
 		}
 	};
 
 	template <typename T>
-	bool Event::IsEvent()
+	bool Event::is_event()
 	{
-		return id == eventManager->GetEventID<T>();
+		return id == event_manager->get_event_id<T>();
 	}
 
 	class System
 	{
 	public:
 
-		virtual void Update(EntityManager* entityManager, EventManager* eventManager) {}
+		virtual void update(EntityManager* entity_manager, EventManager* event_manager) {}
 	};
 
 	class SystemManager
 	{
 	private:
 
-		EntityManager* entityManager;
-		EventManager* eventManager;
+		EntityManager* entity_manager;
+		EventManager* event_manager;
 
 	public:
 
 		std::vector<std::unique_ptr<System>> systems;
 
-		SystemManager() : entityManager(nullptr), eventManager(nullptr) {}
-		explicit SystemManager(EntityManager* entityManager, EventManager* eventManager) 
-			: entityManager(entityManager), eventManager(eventManager) {}
+		SystemManager() : entity_manager(nullptr), event_manager(nullptr) {}
+		explicit SystemManager(EntityManager* entity_manager, EventManager* event_manager)
+			: entity_manager(entity_manager), event_manager(event_manager) {}
 
 		template <typename T>
-		T& AddSystem(const T& s)
+		T& add_system(const T& s)
 		{
-			std::unique_ptr<System> uPtr{ s };
-			systems.emplace_back(std::move(uPtr));
+			std::unique_ptr<System> u_ptr{ s };
+			systems.emplace_back(std::move(u_ptr));
 
 			return *s;
 		}
 
 		template <typename T>
-		T& AddSystem(std::unique_ptr<T> uPtr)
+		T& add_system(std::unique_ptr<T> u_ptr)
 		{
-			systems.emplace_back(std::move(uPtr));
-			return *uPtr.get();
+			systems.emplace_back(std::move(u_ptr));
+			return *u_ptr.get();
 		}
 
 		template <typename T, typename... TArgs>
-		T& AddSystem(TArgs&&... aArgs)
+		T& add_system(TArgs&&... aArgs)
 		{
 			T* s(new T(std::forward<TArgs>(aArgs)...));
-			std::unique_ptr<System> uPtr{ s };
-			systems.emplace_back(std::move(uPtr));
+			std::unique_ptr<System> u_ptr{ s };
+			systems.emplace_back(std::move(u_ptr));
 
 			return *s;
 		}
 
-		void Update()
+		void update()
 		{
 			for (auto& s : systems)
 			{
-				s->Update(entityManager, eventManager);
+				s->update(entity_manager, event_manager);
 			}
 		}
+	};
+
+	class Logger
+	{
+	public:
+
+		enum LogTag
+		{
+			Component,
+			Entity,
+			System,
+			Error,
+			Create,
+			Delete,
+		};
+
+		template <typename... T>
+		void add_log(std::string log_msg, T... tag) 
+		{
+			LogTag tags[] = { tag... };
+			std::pair<std::bitset<n_tag>, std::string> log;
+
+			log.second = log_msg;
+			for (auto t : tags)
+			{
+				log.first[t] = true;
+				log_per_tag[t] = log_msg;
+			}
+
+			logs.push_back(log);
+		}
+
+		std::string get_logs()
+		{
+			std::string log_msg = "";
+			for (auto& l : logs)
+			{
+				log_msg += l.second + "\n";
+			}
+			return log_msg;
+		}
+
+	private:
+
+		static const std::size_t n_tag = 6;
+
+		std::deque<std::pair<std::bitset<n_tag>, std::string>> logs;
+		std::array<std::string, n_tag> log_per_tag;
 	};
 
 	class ECSManagers
 	{
 	public:
 
-		EntityManager entityManager;
+		EntityManager entity_manager;
 		SystemManager systemManager;
-		EventManager eventManager;
+		EventManager event_manager;
 
 		ECSManagers()
 		{
-			entityManager = EntityManager();
-			eventManager = EventManager(&entityManager);
-			systemManager = SystemManager(&entityManager, &eventManager);
+			entity_manager = EntityManager();
+			event_manager = EventManager(&entity_manager);
+			systemManager = SystemManager(&entity_manager, &event_manager);
 		}
 
-		void UpdateECSManagers()
+		void update_ecs_managers()
 		{
-			entityManager.Update();
-			systemManager.Update();
+			entity_manager.update();
+			systemManager.update();
 		}
 	};
 }
