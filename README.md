@@ -8,16 +8,16 @@
 
 File | Name | Description
 ------------ | ------------- | -------------
-lecs.h | Lio's ECS | Single header ECS library
+[lecs.h](https://github.com/LioQing/PersonalUtils/blob/master/code%20architectures/lecs.h) | Lio's ECS | Single header ECS library
 
 ### Data Structures
 
 File | Name | Description
 ------------ | ------------- | -------------
-Vector2D.h | Vector2D | 2D Vector class
+[Vector2D.h](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Vector2D.h) | Vector2D | 2D Vector class
 
 ### Tools
 
 File | Name | Description
 ------------ | ------------- | -------------
-CSVReader.h | CSV Reader | CSV file reader and parser
+[CSVReader.h](https://github.com/LioQing/PersonalUtils/blob/master/tools/CSVReader.h) | CSV Reader | CSV file reader and parser
