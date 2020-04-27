@@ -38,9 +38,8 @@ namespace lecs
 	public:
 
 		uint32_t id;
-		std::vector<std::unique_ptr<Component>> components;
 
-		std::array<Component*, Max_Component> componentArray;
+		std::array<std::unique_ptr<Component>, Max_Component> componentArray;
 		std::bitset<Max_Component> componentBitSet;
 
 		Entity(EntityManager& entityManager, uint32_t eID) : entityManager(entityManager), id(eID) {}
@@ -55,9 +54,8 @@ namespace lecs
 		T& AddComponent(std::unique_ptr<T> uPtr)
 		{
 			uPtr->entity = id;
-			components.emplace_back(std::move(uPtr));
 
-			componentArray[GetComponentTypeID<T>()] = uPtr.get();
+			componentArray[GetComponentTypeID<T>()] = std::move(uPtr);
 			componentBitSet[GetComponentTypeID<T>()] = true;
 
 			return *uPtr.get();
@@ -68,9 +66,8 @@ namespace lecs
 		{
 			c->entity = id;
 			std::unique_ptr<Component> uPtr{ c };
-			components.emplace_back(std::move(uPtr));
 
-			componentArray[GetComponentTypeID<T>()] = c;
+			componentArray[GetComponentTypeID<T>()] = std::move(uPtr);
 			componentBitSet[GetComponentTypeID<T>()] = true;
 
 			return *c;
@@ -82,18 +79,26 @@ namespace lecs
 			T* c(new T(std::forward<TArgs>(mArgs)...));
 			c->entity = id;
 			std::unique_ptr<Component> uPtr{ c };
-			components.emplace_back(std::move(uPtr));
 
-			componentArray[GetComponentTypeID<T>()] = c;
+			componentArray[GetComponentTypeID<T>()] = std::move(uPtr);
 			componentBitSet[GetComponentTypeID<T>()] = true;
 
 			return *c;
 		}
 
 		template <typename T>
+		T& RemoveComponent()
+		{
+			T c = *static_cast<T*>(componentArray[GetComponentTypeID<T>()].get());
+			delete componentArray[GetComponentTypeID<T>()].release();
+			componentBitSet[GetComponentTypeID<T>()] = false;
+			return c;
+		}
+
+		template <typename T>
 		T& GetComponent() const
 		{
-			auto ptr(componentArray[GetComponentTypeID<T>()]);
+			auto ptr(componentArray[GetComponentTypeID<T>()].get());
 			return *static_cast<T*>(ptr);
 		}
 
