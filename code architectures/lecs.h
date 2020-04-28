@@ -12,381 +12,6 @@ namespace lecs
 	constexpr std::size_t MAX_LOG = 32;
 	constexpr std::size_t MAX_COMPONENT = 32;
 
-	class Component
-	{
-	public:
-
-		uint32_t entity;
-	};
-
-	std::size_t next_component_id = 0;
-
-	template <typename T>
-	inline std::size_t get_component_type_id()
-	{
-		static std::size_t id = next_component_id++;
-		return id;
-	}
-
-	class EntityManager;
-
-	class Entity
-	{
-	private:
-
-		EntityManager& entity_manager;
-		bool active = true;
-
-	public:
-
-		uint32_t id;
-
-		std::array<std::unique_ptr<Component>, MAX_COMPONENT> components;
-		std::bitset<MAX_COMPONENT> component_bitset;
-
-		Entity(EntityManager& entity_manager, uint32_t id) : entity_manager(entity_manager), id(id) {}
-
-		bool is_active()
-		{
-			return active;
-		}
-		void destroy(bool immediate = false);
-
-		template <typename T>
-		T& add_component(std::unique_ptr<T> u_ptr)
-		{
-			u_ptr->entity = id;
-
-			components[get_component_type_id<T>()] = std::move(u_ptr);
-			component_bitset[get_component_type_id<T>()] = true;
-
-			return *u_ptr.get();
-		}
-
-		template <typename T>
-		T& add_component(const T& c)
-		{
-			c->entity = id;
-			std::unique_ptr<Component> u_ptr{ c };
-
-			components[get_component_type_id<T>()] = std::move(u_ptr);
-			component_bitset[get_component_type_id<T>()] = true;
-
-			return *c;
-		}
-
-		template <typename T, typename... TArgs>
-		T& add_component(TArgs&&... mArgs)
-		{
-			T* c(new T(std::forward<TArgs>(mArgs)...));
-			c->entity = id;
-			std::unique_ptr<Component> u_ptr{ c };
-
-			components[get_component_type_id<T>()] = std::move(u_ptr);
-			component_bitset[get_component_type_id<T>()] = true;
-
-			return *c;
-		}
-
-		template <typename T>
-		T& remove_component()
-		{
-			T c = *static_cast<T*>(components[get_component_type_id<T>()].get());
-			delete components[get_component_type_id<T>()].release();
-			component_bitset[get_component_type_id<T>()] = false;
-			return c;
-		}
-
-		template <typename T>
-		T& get_component() const
-		{
-			auto ptr(components[get_component_type_id<T>()].get());
-			return *static_cast<T*>(ptr);
-		}
-
-		template <typename T>
-		bool has_component()
-		{
-			return component_bitset[get_component_type_id<T>()];
-		}
-	};
-
-	class EntityContainer
-	{
-	private:
-
-		EntityManager& entity_manager;
-
-	public:
-
-		std::vector<Entity*> entities;
-
-		EntityContainer(EntityManager& entity_manager) : entity_manager(entity_manager) {}
-
-		template <typename T>
-		EntityContainer entity_filter();
-	};
-
-	class EntityManager
-	{
-	private:
-
-		uint32_t next_id;
-
-	public:
-
-		std::vector<std::unique_ptr<Entity>> entities;
-		std::vector<uint32_t> empty_id;
-
-		void update()
-		{
-			for (auto& e : entities)
-			{
-				if (!e) continue;
-				if (!e->is_active())
-				{
-					empty_id.push_back(e->id);
-					delete e.release();
-				}
-			}
-		}
-
-		void immediate_destroy(uint32_t id)
-		{
-			empty_id.push_back(id);
-			delete entities.at(id).release();
-		}
-
-		Entity& add_entity()
-		{
-			uint32_t new_id;
-			bool is_empty = empty_id.empty();
-			if (!is_empty)
-			{
-				new_id = empty_id.back();
-				empty_id.pop_back();
-			}
-			else
-			{
-				new_id = next_id++;
-			}
-
-			Entity* e(new Entity(*this, new_id));
-			std::unique_ptr<Entity> u_ptr{ e };
-			if (is_empty) entities.resize(entities.size() + 1);
-			entities.at(e->id) = std::move(u_ptr);
-
-			return *e;
-		}
-
-		EntityContainer entity_filter()
-		{
-			EntityContainer en = EntityContainer(*this);
-			for (auto& e : entities)
-			{
-				if (!e) continue;
-				en.entities.emplace_back(entities.at(e->id).get());
-			}
-			return en;
-		}
-
-		template <typename T>
-		EntityContainer entity_filter()
-		{
-			EntityContainer entities_with = EntityContainer(*this);
-			for (auto& e : entities)
-			{
-				if (!e) continue;
-				uint32_t id = e->id;
-				if (e->has_component<T>()) entities_with.entities.emplace_back(entities.at(id).get());
-			}
-			return entities_with;
-		}
-	};
-
-	void Entity::destroy(bool immediate)
-	{
-		active = false;
-		if (immediate) entity_manager.immediate_destroy(id);
-	}
-
-	template <typename T>
-	EntityContainer EntityContainer::entity_filter()
-	{
-		{
-			EntityContainer entities_with = EntityContainer(entity_manager);
-			for (auto& e : entities)
-			{
-				if (!e) continue;
-				uint32_t id = e->id;
-				if (e->has_component<T>()) entities_with.entities.emplace_back(entity_manager.entities.at(id).get());
-			}
-			return entities_with;
-		}
-	}
-
-	class Event;
-	class EventManager;
-
-	class EventSubscriber
-	{
-	public:
-
-		std::vector<std::size_t> subscribed;
-
-		virtual void receive(Event* event, EventManager* event_manager) {}
-	};
-
-	class Event
-	{
-	public:
-
-		EventManager* event_manager;
-		std::size_t id;
-		std::vector<EventSubscriber*> subscribers;
-
-		template <typename T>
-		bool is_event();
-	};
-
-	class EventManager
-	{
-	private:
-
-		EntityManager* entity_manager;
-		std::size_t next_event_id = 0;
-
-	public:
-
-		std::vector<std::unique_ptr<Event>> events;
-
-		EventManager() : entity_manager(nullptr) {}
-		EventManager(EntityManager* entity_manager) : entity_manager(entity_manager) {}
-
-		template <typename T>
-		inline std::size_t get_event_id()
-		{
-			static std::size_t id = next_event_id++;
-			return id;
-		}
-
-		template <typename T>
-		void unsubscribe(EventSubscriber* subscriber)
-		{
-			add_event<T>();
-			std::size_t id = get_event_id<T>();
-			events.at(id)->subscribers.erase(std::remove_if(
-				events.at(id)->subscribers.begin(), events.at(id)->subscribers.end(),
-				[subscriber](EventSubscriber* s)
-				{
-					return s == subscriber;
-				}),
-				events.at(id)->subscribers.end());
-
-			std::vector<std::size_t>* subscribed = &subscriber->subscribed;
-			subscribed->erase(std::remove_if(subscribed->begin(), subscribed->end(),
-				[id](const std::size_t& eID)
-				{
-					return eID == id;
-				}),
-				subscribed->end());
-		}
-
-		template <typename T>
-		void subscribe(EventSubscriber* subscriber)
-		{
-			add_event<T>();
-			events.at(get_event_id<T>())->subscribers.emplace_back(subscriber);
-			subscriber->subscribed.emplace_back(get_event_id<T>());
-		}
-
-		template <typename T, typename... TArgs>
-		void emit(TArgs... aArgs)
-		{
-			for (auto& sub : events.at(get_event_id<T>())->subscribers)
-			{
-				T* ev(new T(std::forward<TArgs>(aArgs)...));
-				ev->event_manager = this;
-				ev->id = get_event_id<T>();
-				sub->receive(ev, this);
-			}
-		}
-
-		template <typename T>
-		void add_event()
-		{
-			if (get_event_id<T>() < events.size()) return;
-			T* ev(new T());
-			ev->id = get_event_id<T>();
-			std::unique_ptr<T> u_ptr{ ev };
-			events.resize(events.size() + 1);
-			events.at(ev->id) = std::move(u_ptr);
-		}
-	};
-
-	template <typename T>
-	bool Event::is_event()
-	{
-		return id == event_manager->get_event_id<T>();
-	}
-
-	class System
-	{
-	public:
-
-		virtual void update(EntityManager* entity_manager, EventManager* event_manager) {}
-	};
-
-	class SystemManager
-	{
-	private:
-
-		EntityManager* entity_manager;
-		EventManager* event_manager;
-
-	public:
-
-		std::vector<std::unique_ptr<System>> systems;
-
-		SystemManager() : entity_manager(nullptr), event_manager(nullptr) {}
-		explicit SystemManager(EntityManager* entity_manager, EventManager* event_manager)
-			: entity_manager(entity_manager), event_manager(event_manager) {}
-
-		template <typename T>
-		T& add_system(const T& s)
-		{
-			std::unique_ptr<System> u_ptr{ s };
-			systems.emplace_back(std::move(u_ptr));
-
-			return *s;
-		}
-
-		template <typename T>
-		T& add_system(std::unique_ptr<T> u_ptr)
-		{
-			systems.emplace_back(std::move(u_ptr));
-			return *u_ptr.get();
-		}
-
-		template <typename T, typename... TArgs>
-		T& add_system(TArgs&&... aArgs)
-		{
-			T* s(new T(std::forward<TArgs>(aArgs)...));
-			std::unique_ptr<System> u_ptr{ s };
-			systems.emplace_back(std::move(u_ptr));
-
-			return *s;
-		}
-
-		void update()
-		{
-			for (auto& s : systems)
-			{
-				s->update(entity_manager, event_manager);
-			}
-		}
-	};
-
 	enum LogTag
 	{
 		LT_COMPONENT,
@@ -395,7 +20,11 @@ namespace lecs
 		LT_ERROR,
 		LT_CREATE,
 		LT_DELETE,
-		LT_DEBUG
+		LT_EVENT,
+		LT_WARNING,
+		LT_DEBUG,
+
+		LT_SIZE
 	};
 
 	class Logger
@@ -403,7 +32,7 @@ namespace lecs
 	public:
 
 		template <typename... T>
-		void add_log(std::string log_msg, T... tag) 
+		void add_log(std::string log_msg, T... tag)
 		{
 			LogTag tags[] = { tag... };
 			std::pair<std::bitset<n_tag>, std::string> log;
@@ -463,11 +92,476 @@ namespace lecs
 
 	private:
 
-		static const std::size_t n_tag = 7;
+		static const std::size_t n_tag = LT_SIZE;
 
 		std::bitset<n_tag> show;
 		std::deque<std::pair<std::bitset<n_tag>, std::string>> logs;
 		std::array<std::string, n_tag> log_per_tag;
+	};
+
+	Logger logger;
+
+	class Component
+	{
+	public:
+
+		uint32_t entity;
+	};
+
+	std::size_t next_component_id = 0;
+
+	template <typename T>
+	inline std::size_t get_component_type_id(bool not_create = false)
+	{
+		std::size_t tmp_id = next_component_id;
+		static std::size_t id = next_component_id++;
+
+		if (id > tmp_id && not_create) logger.add_log
+		(
+			"Warning: new component id for Component " + std::string(typeid(T).name()) + " created within function of no intention of creating new id", 
+			LT_WARNING
+		);
+
+		if (id > MAX_COMPONENT) logger.add_log
+		(
+			"Error: new component id for Component " + std::string(typeid(T).name()) + " exceed MAX_COMPONENT", 
+			LT_ERROR
+		);
+
+		return id;
+	}
+
+	class EntityManager;
+
+	class Entity
+	{
+	private:
+
+		EntityManager& entity_manager;
+		bool active = true;
+
+	public:
+
+		uint32_t id;
+
+		std::array<std::unique_ptr<Component>, MAX_COMPONENT> components;
+		std::bitset<MAX_COMPONENT> component_bitset;
+
+		Entity(EntityManager& entity_manager, uint32_t id) : entity_manager(entity_manager), id(id) {}
+
+		bool is_active()
+		{
+			return active;
+		}
+		void destroy(bool immediate = false);
+
+		template <typename T>
+		T& add_component(std::unique_ptr<T> u_ptr)
+		{
+			u_ptr->entity = id;
+
+			components[get_component_type_id<T>()] = std::move(u_ptr);
+			component_bitset[get_component_type_id<T>()] = true;
+
+			logger.add_log
+			(
+				"New component added to entity: Component " + std::string(typeid(T).name()) + " added to Entity " + std::to_string(id),
+				LT_COMPONENT, LT_CREATE
+			);
+			return *u_ptr.get();
+		}
+
+		template <typename T>
+		T& add_component(const T& c)
+		{
+			c->entity = id;
+			std::unique_ptr<Component> u_ptr{ c };
+
+			components[get_component_type_id<T>()] = std::move(u_ptr);
+			component_bitset[get_component_type_id<T>()] = true;
+
+			logger.add_log
+			(
+				"New component added to entity: Component " + std::string(typeid(T).name()) + " added to Entity " + std::to_string(id),
+				LT_COMPONENT, LT_CREATE
+			);
+			return *c;
+		}
+
+		template <typename T, typename... TArgs>
+		T& add_component(TArgs&&... mArgs)
+		{
+			T* c(new T(std::forward<TArgs>(mArgs)...));
+			c->entity = id;
+			std::unique_ptr<Component> u_ptr{ c };
+
+			components[get_component_type_id<T>()] = std::move(u_ptr);
+			component_bitset[get_component_type_id<T>()] = true;
+
+			logger.add_log
+			(
+				"New component added to entity: Component " + std::string(typeid(T).name()) + " added to Entity " + std::to_string(id),
+				LT_COMPONENT, LT_CREATE
+			);
+			return *c;
+		}
+
+		template <typename T>
+		T& remove_component()
+		{
+			T c = *static_cast<T*>(components[get_component_type_id<T>()].get());
+			delete components[get_component_type_id<T>()].release();
+			component_bitset[get_component_type_id<T>()] = false;
+
+			logger.add_log
+			(
+				"Component removed from entity: Component " + std::string(typeid(T).name()) + " removed from Entity " + std::to_string(id),
+				LT_COMPONENT, LT_DELETE
+			);
+			return c;
+		}
+
+		template <typename T>
+		T& get_component() const
+		{
+			auto ptr(components[get_component_type_id<T>(true)].get());
+			if (ptr == nullptr) logger.add_log
+			(
+				"Warning: Entity " + std::to_string(id) + " does not have Component " + std::string(typeid(T).name()) + ", returned nullptr", 
+				LT_WARNING
+			);
+			return *static_cast<T*>(ptr);
+		}
+
+		template <typename T>
+		bool has_component()
+		{
+			return component_bitset[get_component_type_id<T>(true)];
+		}
+	};
+
+	class EntityContainer
+	{
+	private:
+
+		EntityManager& entity_manager;
+
+	public:
+
+		std::vector<Entity*> entities;
+
+		explicit EntityContainer(EntityManager& entity_manager) : entity_manager(entity_manager) {}
+
+		template <typename T>
+		EntityContainer entity_filter();
+	};
+
+	class EntityManager
+	{
+	private:
+
+		uint32_t next_id;
+
+	public:
+
+		std::vector<std::unique_ptr<Entity>> entities;
+		std::vector<uint32_t> empty_id;
+
+		void update()
+		{
+			for (auto& e : entities)
+			{
+				if (!e) continue;
+				if (!e->is_active())
+				{
+					empty_id.push_back(e->id);
+					delete e.release();
+
+					logger.add_log
+					(
+						"Entity destroyed: Entity " + std::to_string(e->id) + " destroyed",
+						LT_ENTITY, LT_DELETE
+					);
+				}
+			}
+		}
+
+		void immediate_destroy(uint32_t id)
+		{
+			empty_id.push_back(id);
+			delete entities.at(id).release();
+
+			logger.add_log
+			(
+				"Entity destroyed: Entity " + std::to_string(id) + " destroyed",
+				LT_ENTITY, LT_DELETE
+			);
+		}
+
+		Entity& add_entity()
+		{
+			uint32_t new_id;
+			bool is_empty = empty_id.empty();
+			if (!is_empty)
+			{
+				new_id = empty_id.back();
+				empty_id.pop_back();
+			}
+			else
+			{
+				new_id = next_id++;
+			}
+
+			Entity* e(new Entity(*this, new_id));
+			std::unique_ptr<Entity> u_ptr{ e };
+			if (is_empty) entities.resize(entities.size() + 1);
+			entities.at(e->id) = std::move(u_ptr);
+
+			logger.add_log
+			(
+				"Entity created: Entity " + std::to_string(e->id) + " created",
+				LT_ENTITY, LT_CREATE
+			);
+			return *e;
+		}
+
+		EntityContainer entity_filter()
+		{
+			EntityContainer en = EntityContainer(*this);
+			for (auto& e : entities)
+			{
+				if (!e) continue;
+				en.entities.emplace_back(entities.at(e->id).get());
+			}
+			return en;
+		}
+
+		template <typename T>
+		EntityContainer entity_filter()
+		{
+			EntityContainer entities_with = EntityContainer(*this);
+			for (auto& e : entities)
+			{
+				if (!e) continue;
+				uint32_t id = e->id;
+				if (e->has_component<T>()) entities_with.entities.emplace_back(entities.at(id).get());
+			}
+			return entities_with;
+		}
+	};
+
+	void Entity::destroy(bool immediate)
+	{
+		active = false;
+		if (immediate) entity_manager.immediate_destroy(id);
+	}
+
+	template <typename T>
+	EntityContainer EntityContainer::entity_filter()
+	{
+		{
+			EntityContainer entities_with = EntityContainer(entity_manager);
+			for (auto& e : entities)
+			{
+				if (!e) continue;
+				uint32_t id = e->id;
+				if (e->has_component<T>()) entities_with.entities.emplace_back(entity_manager.entities.at(id).get());
+			}
+			return entities_with;
+		}
+	}
+
+	class Event;
+	class EventManager;
+
+	class EventSubscriber
+	{
+	public:
+
+		std::vector<std::size_t> subscribed;
+
+		virtual void receive(Event*, EntityManager*, EventManager*) {}
+	};
+
+	class Event
+	{
+	public:
+
+		EventManager* event_manager;
+		std::size_t id;
+		std::vector<EventSubscriber*> subscribers;
+
+		template <typename T>
+		bool is_event();
+	};
+
+	class EventManager
+	{
+	private:
+
+		EntityManager* entity_manager;
+		std::size_t next_event_id = 0;
+
+	public:
+
+		std::vector<std::unique_ptr<Event>> events;
+
+		EventManager() : entity_manager(nullptr) {}
+		explicit EventManager(EntityManager* entity_manager) : entity_manager(entity_manager) {}
+
+		template <typename T>
+		inline std::size_t get_event_id()
+		{
+			static std::size_t id = next_event_id++;
+			return id;
+		}
+
+		template <typename T>
+		void unsubscribe(EventSubscriber* subscriber)
+		{
+			add_event<T>();
+			std::size_t id = get_event_id<T>();
+			events.at(id)->subscribers.erase(std::remove_if(
+				events.at(id)->subscribers.begin(), events.at(id)->subscribers.end(),
+				[subscriber](EventSubscriber* s)
+				{
+					return s == subscriber;
+				}),
+				events.at(id)->subscribers.end());
+
+			std::vector<std::size_t>* subscribed = &subscriber->subscribed;
+			subscribed->erase(std::remove_if(subscribed->begin(), subscribed->end(),
+				[id](const std::size_t& eID)
+				{
+					return eID == id;
+				}),
+				subscribed->end());
+		}
+
+		template <typename T>
+		void subscribe(EventSubscriber* subscriber)
+		{
+			add_event<T>();
+			events.at(get_event_id<T>())->subscribers.emplace_back(subscriber);
+			subscriber->subscribed.emplace_back(get_event_id<T>());
+		}
+
+		template <typename T, typename... TArgs>
+		void emit(TArgs... aArgs)
+		{
+			add_event<T>();
+			for (auto& sub : events.at(get_event_id<T>())->subscribers)
+			{
+				T* ev(new T(std::forward<TArgs>(aArgs)...));
+				ev->event_manager = this;
+				ev->id = get_event_id<T>();
+				sub->receive(ev, entity_manager, this);
+			}
+
+			logger.add_log
+			(
+				"Event emitted: Event " + std::string(typeid(T).name()) + " emitted",
+				LT_EVENT
+			);
+		}
+
+		template <typename T>
+		bool add_event()
+		{
+			if (get_event_id<T>() < events.size()) return false;
+			T* ev(new T());
+			ev->id = get_event_id<T>();
+			std::unique_ptr<T> u_ptr{ ev };
+			events.resize(events.size() + 1);
+			events.at(ev->id) = std::move(u_ptr);
+
+			logger.add_log
+			(
+				"Event created: Event " + std::string(typeid(T).name()) + " created",
+				LT_EVENT, LT_CREATE
+			);
+
+			return true;
+		}
+	};
+
+	template <typename T>
+	bool Event::is_event()
+	{
+		return id == event_manager->get_event_id<T>();
+	}
+
+	class System
+	{
+	public:
+
+		virtual void update(EntityManager* entity_manager, EventManager* event_manager) {}
+	};
+
+	class SystemManager
+	{
+	private:
+
+		EntityManager* entity_manager;
+		EventManager* event_manager;
+
+	public:
+
+		std::vector<std::unique_ptr<System>> systems;
+
+		SystemManager() : entity_manager(nullptr), event_manager(nullptr) {}
+		explicit SystemManager(EntityManager* entity_manager, EventManager* event_manager)
+			: entity_manager(entity_manager), event_manager(event_manager) {}
+
+		template <typename T>
+		T& add_system(const T& s)
+		{
+			std::unique_ptr<System> u_ptr{ s };
+			systems.emplace_back(std::move(u_ptr));
+
+			logger.add_log
+			(
+				"System created: System " + std::string(typeid(T).name()) + " created",
+				LT_SYSTEM, LT_CREATE
+			);
+			return *s;
+		}
+
+		template <typename T>
+		T& add_system(std::unique_ptr<T> u_ptr)
+		{
+			systems.emplace_back(std::move(u_ptr));
+
+			logger.add_log
+			(
+				"System created: System " + std::string(typeid(T).name()) + " created",
+				LT_SYSTEM, LT_CREATE
+			);
+			return *u_ptr.get();
+		}
+
+		template <typename T, typename... TArgs>
+		T& add_system(TArgs&&... aArgs)
+		{
+			T* s(new T(std::forward<TArgs>(aArgs)...));
+			std::unique_ptr<System> u_ptr{ s };
+			systems.emplace_back(std::move(u_ptr));
+
+			logger.add_log
+			(
+				"System created: System " + std::string(typeid(T).name()) + " created",
+				LT_SYSTEM, LT_CREATE
+			);
+			return *s;
+		}
+
+		void update()
+		{
+			for (auto& s : systems)
+			{
+				s->update(entity_manager, event_manager);
+			}
+		}
 	};
 
 	class ECSManagers
@@ -491,6 +585,4 @@ namespace lecs
 			systemManager.update();
 		}
 	};
-
-	Logger logger;
 }
