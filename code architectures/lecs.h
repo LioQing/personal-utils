@@ -8,6 +8,8 @@
 #include <bitset>
 #include <queue>
 
+typedef std::size_t DeltaTime;
+
 namespace lecs
 {
 	constexpr std::size_t MAX_LOG = 32;
@@ -381,7 +383,7 @@ namespace lecs
 
 		std::vector<std::size_t> subscribed;
 
-		virtual void receive(Event*, EntityManager*, EventManager*) {}
+		virtual void receive(Event&) {}
 	};
 
 	class Event
@@ -393,7 +395,13 @@ namespace lecs
 		std::vector<EventSubscriber*> subscribers;
 
 		template <typename T>
-		bool is_event();
+		T& downcast()
+		{
+			return static_cast<T&>(*this);
+		}
+
+		template <typename T>
+		bool is_event() const;
 	};
 
 	class EventManager
@@ -453,10 +461,10 @@ namespace lecs
 			add_event<T>();
 			for (auto& sub : events.at(get_event_id<T>())->subscribers)
 			{
-				T* ev(new T(std::forward<TArgs>(aArgs)...));
-				ev->event_manager = this;
-				ev->id = get_event_id<T>();
-				sub->receive(ev, entity_manager, this);
+				T ev(T(std::forward<TArgs>(aArgs)...));
+				ev.event_manager = this;
+				ev.id = get_event_id<T>();
+				sub->receive(ev);
 			}
 
 			logger.add_log
@@ -487,7 +495,7 @@ namespace lecs
 	};
 
 	template <typename T>
-	bool Event::is_event()
+	bool Event::is_event() const
 	{
 		return id == event_manager->get_event_id<T>();
 	}
@@ -496,7 +504,7 @@ namespace lecs
 	{
 	public:
 
-		virtual void update(EntityManager* entity_manager, EventManager* event_manager) {}
+		virtual void update(EntityManager*, EventManager*, DeltaTime) {}
 	};
 
 	class SystemManager
@@ -556,11 +564,11 @@ namespace lecs
 			return *s;
 		}
 
-		void update()
+		void update(DeltaTime delta_time)
 		{
 			for (auto& s : systems)
 			{
-				s->update(entity_manager, event_manager);
+				s->update(entity_manager, event_manager, delta_time);
 			}
 		}
 	};
@@ -580,10 +588,10 @@ namespace lecs
 			systemManager = SystemManager(&entity_manager, &event_manager);
 		}
 
-		void update_ecs_managers()
+		void update_ecs_managers(DeltaTime delta_time = 0)
 		{
 			entity_manager.update();
-			systemManager.update();
+			systemManager.update(delta_time);
 		}
 	};
 }
