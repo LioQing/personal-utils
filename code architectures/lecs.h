@@ -387,19 +387,20 @@ namespace lecs
 		}
 	};
 
+	enum LogTag
+	{
+		LT_COMPONENT,
+		LT_ENTITY,
+		LT_SYSTEM,
+		LT_ERROR,
+		LT_CREATE,
+		LT_DELETE,
+		LT_DEBUG
+	};
+
 	class Logger
 	{
 	public:
-
-		enum LogTag
-		{
-			Component,
-			Entity,
-			System,
-			Error,
-			Create,
-			Delete,
-		};
 
 		template <typename... T>
 		void add_log(std::string log_msg, T... tag) 
@@ -407,30 +408,64 @@ namespace lecs
 			LogTag tags[] = { tag... };
 			std::pair<std::bitset<n_tag>, std::string> log;
 
+			bool shown = false;
 			log.second = log_msg;
 			for (auto t : tags)
 			{
 				log.first[t] = true;
 				log_per_tag[t] = log_msg;
+
+				if (show[t] && !shown)
+				{
+					std::cout << log_msg << std::endl;
+					shown = true;
+				}
 			}
 
-			logs.push_back(log);
+			logs.push_front(log);
+
+			if (logs.size() > MAX_LOG) logs.pop_back();
 		}
 
-		std::string get_logs()
+		std::string get_logs(std::size_t n = MAX_LOG)
 		{
 			std::string log_msg = "";
-			for (auto& l : logs)
+			std::size_t begin = n > logs.size() ? logs.size() : n;
+			for (std::size_t i = begin; i >= 1; --i)
 			{
-				log_msg += l.second + "\n";
+				log_msg += logs.at(i - 1).second + "\n";
 			}
 			return log_msg;
 		}
 
+		std::string get_log()
+		{
+			return logs.front().second;
+		}
+
+		std::string get_log(LogTag tag)
+		{
+			return log_per_tag[tag];
+		}
+
+		void always_show(bool always = true)
+		{
+			if (always) show.set();
+			else show.reset();
+		}
+
+		template <typename... T>
+		void always_show(bool always, T... tag)
+		{
+			LogTag tags[] = { tag... };
+			for (auto t : tags) show.set(t, always);
+		}
+
 	private:
 
-		static const std::size_t n_tag = 6;
+		static const std::size_t n_tag = 7;
 
+		std::bitset<n_tag> show;
 		std::deque<std::pair<std::bitset<n_tag>, std::string>> logs;
 		std::array<std::string, n_tag> log_per_tag;
 	};
@@ -456,4 +491,6 @@ namespace lecs
 			systemManager.update();
 		}
 	};
+
+	Logger logger;
 }
