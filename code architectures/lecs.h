@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <cstdint>
 #include <string>
 #include <memory>
@@ -121,7 +122,7 @@ namespace lecs
 	};
 
 	// the logger used in namespace lecs
-	Logger logger;
+	static Logger logger;
 
 	// base class for all components
 	class Component
@@ -133,7 +134,7 @@ namespace lecs
 	};
 
 	// the next component id to be assigned
-	uint32_t next_component_id = 0;
+	static uint32_t next_component_id = 0;
 
 	// get the component id of component T
 	// create a new component id if the component type is never assigned an id before
@@ -399,8 +400,8 @@ namespace lecs
 	};
 
 	// destroy the entity
-		// immediate = false, destroy until the next update of entity manager
-	void Entity::Destroy(bool immediate)
+	// immediate = false, destroy until the next update of entity manager
+	inline void Entity::Destroy(bool immediate)
 	{
 		active = false;
 		if (immediate) entity_manager.ImmediateDestroy(id);
