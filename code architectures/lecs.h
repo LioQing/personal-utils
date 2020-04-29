@@ -11,7 +11,7 @@
 // unit of time of difference in time between the previous fame the next frame
 // to be passed into systems
 // can be ignored if not used
-typedef std::size_t DeltaTime;
+typedef uint32_t DeltaTime;
 
 namespace lecs
 {
@@ -133,15 +133,14 @@ namespace lecs
 	};
 
 	// the next component id to be assigned
-	std::size_t next_component_id = 0;
+	uint32_t next_component_id = 0;
 
 	// get the component id of component T
 	// create a new component id if the component type is never assigned an id before
 	template <typename T>
-	inline std::size_t get_component_type_id()
+	inline uint32_t get_component_type_id()
 	{
-		std::size_t tmp_id = next_component_id;
-		static std::size_t id = next_component_id++;
+		static uint32_t id = next_component_id++;
 
 		if (id > MAX_COMPONENT) logger.add_log
 		(
@@ -432,7 +431,7 @@ namespace lecs
 	public:
 
 		// vector of id of subscribed event
-		std::vector<std::size_t> subscribed;
+		std::vector<uint32_t> subscribed;
 
 		// receive function to be called when an subscribed event is emitted
 		virtual void receive(Event&) {}
@@ -448,7 +447,7 @@ namespace lecs
 	public:
 
 		// event id of this event
-		std::size_t id;
+		uint32_t id;
 
 		// vector of subscribers to this event
 		std::vector<EventSubscriber*> subscribers;
@@ -471,7 +470,7 @@ namespace lecs
 	private:
 
 		EntityManager* entity_manager;
-		std::size_t next_event_id = 0;
+		uint32_t next_event_id = 0;
 
 	public:
 
@@ -484,9 +483,9 @@ namespace lecs
 		// get the event id
 		// create a new event id if the event type is never assigned an id before
 		template <typename T>
-		inline std::size_t get_event_id()
+		inline uint32_t get_event_id()
 		{
-			static std::size_t id = next_event_id++;
+			static uint32_t id = next_event_id++;
 			return id;
 		}
 
@@ -495,7 +494,7 @@ namespace lecs
 		void unsubscribe(EventSubscriber* subscriber)
 		{
 			add_event<T>();
-			std::size_t id = get_event_id<T>();
+			uint32_t id = get_event_id<T>();
 			events.at(id)->subscribers.erase(std::remove_if(
 				events.at(id)->subscribers.begin(), events.at(id)->subscribers.end(),
 				[subscriber](EventSubscriber* s)
@@ -504,9 +503,9 @@ namespace lecs
 				}),
 				events.at(id)->subscribers.end());
 
-			std::vector<std::size_t>* subscribed = &subscriber->subscribed;
+			std::vector<uint32_t>* subscribed = &subscriber->subscribed;
 			subscribed->erase(std::remove_if(subscribed->begin(), subscribed->end(),
-				[id](const std::size_t& eID)
+				[id](const uint32_t& eID)
 				{
 					return eID == id;
 				}),
@@ -660,21 +659,21 @@ namespace lecs
 	public:
 
 		EntityManager entity_manager;
-		SystemManager systemManager;
+		SystemManager system_manager;
 		EventManager event_manager;
 
 		ECSManagers()
 		{
 			entity_manager = EntityManager();
 			event_manager = EventManager(&entity_manager);
-			systemManager = SystemManager(&entity_manager, &event_manager);
+			system_manager = SystemManager(&entity_manager, &event_manager);
 		}
 
 		// update all ecs managers
-		void update_ecs_managers(DeltaTime delta_time = 0)
+		void update_ecs_managers(DeltaTime delta_time = NULL)
 		{
 			entity_manager.update();
-			systemManager.update(delta_time);
+			system_manager.update(delta_time);
 		}
 	};
 }
