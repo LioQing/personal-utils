@@ -594,6 +594,8 @@ namespace lecs
 		EntityManager* entity_manager;
 		EventManager* event_manager;
 
+		uint32_t next_system_id = 0;
+
 	public:
 
 		// vector of systems
@@ -603,13 +605,23 @@ namespace lecs
 		explicit SystemManager(EntityManager* entity_manager, EventManager* event_manager)
 			: entity_manager(entity_manager), event_manager(event_manager) {}
 
+		// get the system id
+		// create a new system id if the system type is never assigned an id before
+		template <typename T>
+		inline uint32_t GetSystemID()
+		{
+			static uint32_t id = next_system_id++;
+			return id;
+		}
+
 		// add system of class T
 		// pass in reference of T
 		template <typename T>
 		T& AddSystem(const T& s)
 		{
 			std::unique_ptr<System> u_ptr{ s };
-			systems.emplace_back(std::move(u_ptr));
+			systems.resize(systems.size() + 1);
+			systems.at(GetSystemID<T>()) = std::move(u_ptr);
 
 			logger.AddLog
 			(
@@ -623,7 +635,8 @@ namespace lecs
 		template <typename T>
 		T& AddSystem(std::unique_ptr<T> u_ptr)
 		{
-			systems.emplace_back(std::move(u_ptr));
+			systems.resize(systems.size() + 1);
+			systems.at(GetSystemID<T>()) = std::move(u_ptr);
 
 			logger.AddLog
 			(
@@ -639,7 +652,8 @@ namespace lecs
 		{
 			T* s(new T(std::forward<TArgs>(aArgs)...));
 			std::unique_ptr<System> u_ptr{ s };
-			systems.emplace_back(std::move(u_ptr));
+			systems.resize(systems.size() + 1);
+			systems.at(GetSystemID<T>()) = std::move(u_ptr);
 
 			logger.AddLog
 			(
@@ -647,6 +661,19 @@ namespace lecs
 				LT_SYSTEM, LT_CREATE
 			);
 			return *s;
+		}
+
+		// get system T
+		template <typename T>
+		T& GetSystem()
+		{
+			System* ptr(systems.at(GetSystemID<T>()).get());
+			if (ptr == nullptr) logger.AddLog
+			(
+				"Warning: " + std::string(typeid(T).name()) + " does not exist, returned nullptr",
+				LT_WARNING
+			);
+			return *static_cast<T*>(ptr);
 		}
 
 		// update all systems
