@@ -692,22 +692,22 @@ namespace lecs
 	{
 	public:
 
-		EntityManager entity_manager;
-		SystemManager system_manager;
-		EventManager event_manager;
+		EntityManager* entity_manager;
+		SystemManager* system_manager;
+		EventManager* event_manager;
 
 		ECSManagers()
 		{
-			entity_manager = EntityManager();
-			event_manager = EventManager(&entity_manager);
-			system_manager = SystemManager(&entity_manager, &event_manager);
+			entity_manager = new EntityManager();
+			event_manager = new EventManager(entity_manager);
+			system_manager = new SystemManager(entity_manager, event_manager);
 		}
 
 		// update all ecs managers
 		void UpdateECSManagers(DeltaTime delta_time = NULL)
 		{
-			entity_manager.Update();
-			system_manager.Update(delta_time);
+			entity_manager->Update();
+			system_manager->Update(delta_time);
 		}
 	};
 }
