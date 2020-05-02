@@ -154,6 +154,16 @@ namespace lecs
 
 	class EntityManager;
 
+	// groups name
+	// or you can use normal int
+	enum EntityGroup
+	{
+		GRP_ENTITY,
+		GRP_TERRAIN,
+
+		GRP_SIZE
+	};
+
 	// entity class to store its own components and id
 	class Entity
 	{
@@ -164,6 +174,9 @@ namespace lecs
 
 		std::array<std::unique_ptr<Component>, MAX_COMPONENT> components;
 		std::bitset<MAX_COMPONENT> component_bitset;
+
+		const static std::size_t n_group = GRP_SIZE;
+		std::bitset<n_group> group_bitset;
 
 	public:
 
@@ -272,6 +285,24 @@ namespace lecs
 		{
 			return component_bitset[GetComponentTypeID<T>()];
 		}
+
+		// group bitset to true
+		void AddGroup(std::size_t group)
+		{
+			group_bitset[group] = true;
+		}
+
+		// set false to group in group bitset
+		void RemoveGroup(std::size_t group)
+		{
+			group_bitset[group] = false;
+		}
+
+		// check whether this entity has group
+		bool HasGroup(std::size_t group)
+		{
+			return group_bitset[group];
+		}
 	};
 
 	// entity container class for storing and filtering multiple entities
@@ -300,6 +331,9 @@ namespace lecs
 
 		uint32_t next_id;
 
+		static const std::size_t n_group = GRP_SIZE;
+		std::array<EntityContainer*, n_group> groups;
+
 	public:
 
 		// unique_ptr of entities currently active
@@ -309,9 +343,28 @@ namespace lecs
 		// vector of id of destroyed entities to be reused
 		std::vector<uint32_t> empty_id;
 
+		EntityManager()
+		{
+			for (auto i(0u); i < n_group; ++i)
+			{
+				groups[i] = new EntityContainer(*this);
+			}
+		}
+
 		// check and destroy non active entities
 		void Update()
 		{
+			for (auto i(0u); i < n_group; ++i)
+			{
+				auto& g(groups[i]);
+				g->entities.erase(std::remove_if(std::begin(g->entities), std::end(g->entities),
+					[i](Entity* e)
+					{
+						return !e->IsActive() || !e->HasGroup(i);
+					}),
+					std::end(g->entities));
+			}
+
 			for (auto& e : entities)
 			{
 				if (!e) continue;
@@ -369,6 +422,25 @@ namespace lecs
 				LT_ENTITY, LT_CREATE
 			);
 			return *e;
+		}
+
+		// add entity to group
+		void AddToGroup(Entity* entity, std::size_t group)
+		{
+			groups[group]->entities.emplace_back(entity);
+			entity->AddGroup(group);
+		}
+
+		// remove entity from group
+		void RemoveFromGroup(Entity* entity, std::size_t group)
+		{
+			entity->RemoveGroup(group);
+		}
+
+		// get the entity container representing the group
+		EntityContainer& GetGroup(std::size_t group)
+		{
+			return *groups[group];
 		}
 
 		// get an entity container that contains all the entities active
