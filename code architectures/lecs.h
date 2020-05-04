@@ -129,28 +129,32 @@ namespace lecs
 	{
 	public:
 
+		// the next component id to be assigned
+		static uint32_t NextComponentID()
+		{
+			static uint32_t next_component_id = 0;
+			return next_component_id++;
+		}
+
+		// get the component id of component T
+		// create a new component id if the component type is never assigned an id before
+		template <typename T>
+		static uint32_t GetComponentTypeID()
+		{
+			static uint32_t id = NextComponentID();
+
+			if (id > MAX_COMPONENT) logger.AddLog
+			(
+				"Error: new component id for Component " + std::string(typeid(T).name()) + " exceed MAX_COMPONENT",
+				LT_ERROR
+			);
+
+			return id;
+		}
+
 		// store the id of the entity this component belongs to
 		uint32_t entity;
 	};
-
-	// the next component id to be assigned
-	static uint32_t next_component_id = 0;
-
-	// get the component id of component T
-	// create a new component id if the component type is never assigned an id before
-	template <typename T>
-	inline uint32_t GetComponentTypeID()
-	{
-		static uint32_t id = next_component_id++;
-
-		if (id > MAX_COMPONENT) logger.AddLog
-		(
-			"Error: new component id for Component " + std::string(typeid(T).name()) + " exceed MAX_COMPONENT",
-			LT_ERROR
-		);
-
-		return id;
-	}
 
 	class EntityManager;
 
@@ -202,8 +206,8 @@ namespace lecs
 		{
 			u_ptr->entity = id;
 
-			components[GetComponentTypeID<T>()] = std::move(u_ptr);
-			component_bitset[GetComponentTypeID<T>()] = true;
+			components[Component::GetComponentTypeID<T>()] = std::move(u_ptr);
+			component_bitset[Component::GetComponentTypeID<T>()] = true;
 
 			logger.AddLog
 			(
@@ -220,8 +224,8 @@ namespace lecs
 			c->entity = id;
 			std::unique_ptr<Component> u_ptr{ c };
 
-			components[GetComponentTypeID<T>()] = std::move(u_ptr);
-			component_bitset[GetComponentTypeID<T>()] = true;
+			components[Component::GetComponentTypeID<T>()] = std::move(u_ptr);
+			component_bitset[Component::GetComponentTypeID<T>()] = true;
 
 			logger.AddLog
 			(
@@ -239,8 +243,8 @@ namespace lecs
 			c->entity = id;
 			std::unique_ptr<Component> u_ptr{ c };
 
-			components[GetComponentTypeID<T>()] = std::move(u_ptr);
-			component_bitset[GetComponentTypeID<T>()] = true;
+			components[Component::GetComponentTypeID<T>()] = std::move(u_ptr);
+			component_bitset[Component::GetComponentTypeID<T>()] = true;
 
 			logger.AddLog
 			(
@@ -254,9 +258,9 @@ namespace lecs
 		template <typename T>
 		T& RemoveComponent()
 		{
-			T c = *static_cast<T*>(components[GetComponentTypeID<T>()].get());
-			delete components[GetComponentTypeID<T>()].release();
-			component_bitset[GetComponentTypeID<T>()] = false;
+			T c = *static_cast<T*>(components[Component::GetComponentTypeID<T>()].get());
+			delete components[Component::GetComponentTypeID<T>()].release();
+			component_bitset[Component::GetComponentTypeID<T>()] = false;
 
 			logger.AddLog
 			(
@@ -270,7 +274,7 @@ namespace lecs
 		template <typename T>
 		T& GetComponent() const
 		{
-			auto ptr(components[GetComponentTypeID<T>()].get());
+			auto ptr(components[Component::GetComponentTypeID<T>()].get());
 			if (ptr == nullptr) logger.AddLog
 			(
 				"Warning: Entity " + std::to_string(id) + " does not have Component " + std::string(typeid(T).name()) + ", returned nullptr",
@@ -283,7 +287,7 @@ namespace lecs
 		template <typename T>
 		bool HasComponent()
 		{
-			return component_bitset[GetComponentTypeID<T>()];
+			return component_bitset[Component::GetComponentTypeID<T>()];
 		}
 
 		// group bitset to true
