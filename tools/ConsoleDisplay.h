@@ -57,8 +57,6 @@ public:
 			screen_str.push_back('\n');
 		}
 
-		screen_str.push_back('\0');
-
 		for (auto c : screen_str) std::cout << c;
 	}
 };
