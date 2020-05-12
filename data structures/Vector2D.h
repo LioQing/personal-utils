@@ -319,6 +319,12 @@ public:
 	{
 		return Vec2(1, 0);
 	}
+
+		template <typename T>
+	Vec2<T> Cast()
+	{
+		return Vec2<T>(x, y);
+	}
 };
 
 typedef Vec2<double> Vector2D;
