@@ -7,7 +7,8 @@
 #endif
 
 template <typename T>
-class Vec2 {
+class Vec2 
+{
 public:
 
 	T x, y;
@@ -193,44 +194,42 @@ public:
 		return Vec2(x < 0 ? x * -1 : x, y < 0 ? y * -1 : y);
 	}
 
-	double Degree(bool flipYAxis = false)
+	double Degree()
 	{
-		T tmp = this->y;
-		if (flipYAxis) tmp *= -1;
 		double degree;
-		if (tmp != 0) degree = atan(this->x / tmp) * 180 / M_PI;
-		else
+		if (this->y != 0) degree = atan(this->x / this->y) * 180 / M_PI;
+		else degree = 90;
+
+		switch(this->Quadrant())
 		{
-			degree = 90;
-			if (this->x < 0) degree *= -1;
+			case 1:
+				return degree;
+
+			case 2:
+				return 180 + degree;
+
+			case 3: 
+				return 180 + degree;
+
+			case 4:
+				return 360 + degree;
+
+			default:
+				return degree;
 		}
-		if (tmp < 0 && flipYAxis) degree -= 180;
-		return degree;
 	}
 
 	int Quadrant() const
 	{
-		if (x > 0)
+		if (x >= 0)
 		{
-			if (y > 0)
-			{
-				return 1;
-			}
-			else
-			{
-				return 4;
-			}
+			if (y >= 0) return 1;
+			else return 4;
 		}
 		else
 		{
-			if (y > 0)
-			{
-				return 2;
-			}
-			else
-			{
-				return 3;
-			}
+			if (y >= 0) return 2;
+			else return 3;
 		}
 	}
 	static Vec2 ReQuadrant(int quadrant)
@@ -239,33 +238,27 @@ public:
 		{
 			case 1:
 				return Vec2(1, 1);
-				break;
+
 			case 2:
 				return Vec2(-1, 1);
-				break;
+
 			case 3:
 				return Vec2(-1, -1);
-				break;
+
 			case 4:
 				return Vec2(1, -1);
-				break;
+
 			default:
 				return Vec2::Zero();
-				break;
+				
 		}
 	}
 	static Vec2 ReQuadrant(double deg, double zero = 0, bool anticlockwise = true)
 	{
 		double nDeg;
 
-		if (anticlockwise)
-		{
-			nDeg = deg - zero;
-		}
-		else
-		{
-			nDeg = zero - deg;
-		}
+		if (anticlockwise) nDeg = deg - zero;
+		else nDeg = zero - deg;
 
 		while (nDeg < 0) nDeg += 360;
 
@@ -320,10 +313,10 @@ public:
 		return Vec2(1, 0);
 	}
 
-		template <typename T>
-	Vec2<T> Cast()
+	template <typename S>
+	Vec2<S> Cast()
 	{
-		return Vec2<T>(x, y);
+		return Vec2<S>(x, y);
 	}
 };
 
