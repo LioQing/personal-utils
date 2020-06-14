@@ -15,6 +15,7 @@ https://www.avrfreaks.net/sites/default/files/triangles.c
 #pragma once
 
 #include <Windows.h>
+#include <string>
 
 typedef struct _CONSOLE_FONT_INFOEX
 {
@@ -88,6 +89,11 @@ public:
         // get handles
         m_wHnd = GetStdHandle(STD_OUTPUT_HANDLE);
         m_rHnd = GetStdHandle(STD_INPUT_HANDLE);
+    }
+
+    ~LConsoleScreen()
+    {
+        delete[] m_bufscrn;
     }
 
     void Init(int width, int height, int fontw = 8, int fonth = 16, std::string title = "LConsoleScreen")
