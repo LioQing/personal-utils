@@ -16,6 +16,7 @@ https://www.avrfreaks.net/sites/default/files/triangles.c
 
 #include <Windows.h>
 #include <string>
+#include <cwchar>
 
 typedef struct _CONSOLE_FONT_INFOEX
 {
@@ -30,8 +31,8 @@ typedef struct _CONSOLE_FONT_INFOEX
 #ifdef __cplusplus
 extern "C" {
 #endif
-BOOL WINAPI SetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX
-lpConsoleCurrentFontEx);
+BOOL WINAPI SetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
+BOOL WINAPI GetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
 #ifdef __cplusplus
 }
 #endif
@@ -89,6 +90,15 @@ public:
         // get handles
         m_wHnd = GetStdHandle(STD_OUTPUT_HANDLE);
         m_rHnd = GetStdHandle(STD_INPUT_HANDLE);
+
+		// font
+		m_cfi.cbSize = sizeof(m_cfi);
+        m_cfi.nFont = 0;
+        m_cfi.dwFontSize.X = 8;
+        m_cfi.dwFontSize.Y = 16;
+        m_cfi.FontFamily = FF_DONTCARE;
+        m_cfi.FontWeight = FW_NORMAL;
+		std::wcscpy(m_cfi.FaceName, L"Consolas");
     }
 
     ~LConsoleScreen()
@@ -98,30 +108,20 @@ public:
 
     void Init(int width, int height, int fontw = 8, int fonth = 16, std::string title = "LConsoleScreen")
     {
-        // set size
-        m_size = { (short)(width - 1), (short)(height - 1) };
-
         //set title
-        SetConsoleTitle(LPCSTR(title.c_str()));
+        SetTitle(title);
 
-        // set windows size
-        SMALL_RECT win_size = { 0, 0, m_size.X, m_size.Y };
-        SetConsoleWindowInfo(m_wHnd, TRUE, &win_size);
+        // set resolution
+        SetResolution(width, height);
 
         // set buffer size
         SetConsoleScreenBufferSize(m_wHnd, m_size);
 
         // set font info
-        CONSOLE_FONT_INFOEX cfi;
-        cfi.cbSize = sizeof(cfi);
-        cfi.nFont = 0;
-        cfi.dwFontSize.X = fontw;
-        cfi.dwFontSize.Y = fonth;
-        cfi.FontFamily = FF_DONTCARE;
-        cfi.FontWeight = FW_NORMAL;
+		SetFontSize(fontw, fonth);
 
-        wcsncpy(cfi.FaceName, L"Consolas", LF_FACESIZE);
-        SetCurrentConsoleFontEx(m_wHnd, false, &cfi);
+		// window size
+		RefreshWindowSize();
 
         // alloc mem for scrn
         m_bufscrn = new CHAR_INFO[m_size.X * m_size.Y];
@@ -133,6 +133,26 @@ public:
         SMALL_RECT win = { 0, 0, (short)(m_size.X - 1), (short)(m_size.Y - 1) };
         WriteConsoleOutputA(m_wHnd, m_bufscrn, { m_size.X, m_size.Y }, { 0, 0 }, &win);
     }
+
+	void SetTitle(std::string title) { m_title = title; SetConsoleTitleA(LPCSTR(title.c_str())); }
+	std::string GetTitle() { return m_title; }
+
+	void SetFontSize(int width, int height)
+	{
+		m_cfi.dwFontSize.X = width;
+		m_cfi.dwFontSize.Y = height;
+		SetCurrentConsoleFontEx(m_wHnd, false, &m_cfi);
+	}
+	COORD GetFontSize() { return m_cfi.dwFontSize; }
+
+	void SetResolution(int width, int height) { m_size = { (short)width, (short)height }; }
+	COORD GetResolution() { return m_size; }
+
+	void RefreshWindowSize()
+	{
+		m_winSize = { 0, 0, (short)(m_size.X - 1), (short)(m_size.Y - 1) };
+        SetConsoleWindowInfo(m_wHnd, true, &m_winSize);
+	}
 
     /*  DRAW METHODS  */
 
@@ -432,6 +452,9 @@ protected:
 
     CHAR_INFO* m_bufscrn;
     COORD m_size;
+	SMALL_RECT m_winSize;
+	CONSOLE_FONT_INFOEX m_cfi;
+	std::string m_title;
 
     HANDLE m_wHnd;
     HANDLE m_rHnd;
