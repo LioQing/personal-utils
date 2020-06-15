@@ -653,10 +653,15 @@ namespace lecs
 		return id == event_manager->GetEventID<T>();
 	}
 
+	class SystemManager;
+	
 	// base system class for all system classes
 	class System
 	{
 	public:
+
+		// function to be called when the system is added to system manager
+		virtual void Init(EntityManager*, EventManager*, SystemManager*) {}
 
 		// function to be called everytime system manager is updated
 		virtual void Update(EntityManager*, EventManager*, DeltaTime) {}
@@ -697,7 +702,9 @@ namespace lecs
 		{
 			std::unique_ptr<System> u_ptr{ s };
 			systems.resize(systems.size() + 1);
+			auto ptr = u_ptr.get();
 			systems.at(GetSystemID<T>()) = std::move(u_ptr);
+			ptr->Init(entity_manager, event_manager, this);
 
 			logger.AddLog
 			(
@@ -712,7 +719,9 @@ namespace lecs
 		T& AddSystem(std::unique_ptr<T> u_ptr)
 		{
 			systems.resize(systems.size() + 1);
+			auto ptr = u_ptr.get();
 			systems.at(GetSystemID<T>()) = std::move(u_ptr);
+			ptr->Init(entity_manager, event_manager, this);
 
 			logger.AddLog
 			(
@@ -730,6 +739,7 @@ namespace lecs
 			std::unique_ptr<System> u_ptr{ s };
 			systems.resize(systems.size() + 1);
 			systems.at(GetSystemID<T>()) = std::move(u_ptr);
+			s->Init(entity_manager, event_manager, this);
 
 			logger.AddLog
 			(
