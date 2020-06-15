@@ -8,14 +8,14 @@
 
 File | Name | Description
 ------------ | ------------- | -------------
-[lecs.h](https://github.com/LioQing/PersonalUtils/blob/master/code%20architectures/lecs.h) | Lio's ECS | Single header ECS library
+[lecs.h](https://github.com/LioQing/PersonalUtils/blob/master/code%20architectures/lecs.h) | Lio's ECS | Single header ECS library with an event system
 
 ### Data Structures
 
 File | Name | Description
 ------------ | ------------- | -------------
 [Matrix.h](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Matrix.h) | Matrix | A half-finished matrix class
-[Vector2D.h](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Vector2D.h) | Vector2D | 2D Vector class
+[Vector2D.h](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Vector2D.h) | Vector2D | 2D Vector class with many mathematic functions
 
 ### Tools
 
