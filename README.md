@@ -1,8 +1,8 @@
 # PersonalUtils
 
-[Code Architectures](https://github.com/LioQing/PersonalUtils/new/master?readme=1#code-architectures)<br/>
-[Data Structures](https://github.com/LioQing/PersonalUtils/new/master?readme=1#data-structures)<br/>
-[Tools](https://github.com/LioQing/PersonalUtils/new/master?readme=1#tools)<br/>
+[Code Architectures](https://github.com/LioQing/PersonalUtils/tree/master/code%20architectures)<br/>
+[Data Structures](https://github.com/LioQing/PersonalUtils/tree/master/data%20structures)<br/>
+[Tools](https://github.com/LioQing/PersonalUtils/tree/master/tools)<br/>
 
 ### Code Architectures
 
