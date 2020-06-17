@@ -189,12 +189,12 @@ public:
 	}
 
 	
-	Vec2 Abs()
+	Vec2 Abs() const
 	{
 		return Vec2(x < 0 ? x * -1 : x, y < 0 ? y * -1 : y);
 	}
 
-	double Degree()
+	double Degree() const
 	{
 		double degree;
 		if (this->y != 0) degree = atan(this->x / this->y) * 180 / M_PI;
@@ -314,7 +314,7 @@ public:
 	}
 
 	template <typename S>
-	Vec2<S> Cast()
+	Vec2<S> Cast() const
 	{
 		return Vec2<S>(x, y);
 	}
