@@ -428,6 +428,19 @@ namespace lecs
 			return *e;
 		}
 
+		// get entity by id
+		// return reference to the entity
+		Entity& GetEntity(uint32_t id)
+		{
+			if (entities.at(id) == nullptr)
+				logger.AddLog
+				(
+					"Error: Entity " + std::to_string(id) + " is nullptr",
+					LT_ENTITY, LT_ERROR
+				);
+			return *entities.at(id).get();
+		}
+
 		// add entity to group
 		void AddToGroup(Entity* entity, std::size_t group)
 		{
