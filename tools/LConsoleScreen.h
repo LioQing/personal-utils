@@ -81,6 +81,7 @@ enum PIXEL_TYPE
 	PIXEL_QUARTER = 0xb0,
 };
 
+// This is the screen class
 class LConsoleScreen
 {
 public:
@@ -100,11 +101,7 @@ public:
         m_cfi.FontWeight = FW_NORMAL;
 		std::wcscpy(m_cfi.FaceName, L"Consolas");
     }
-
-    ~LConsoleScreen()
-    {
-        delete[] m_bufscrn;
-    }
+    ~LConsoleScreen() { delete[] m_bufscrn; }
 
     void Init(int width, int height, int fontw = 8, int fonth = 16, std::string title = "LConsoleScreen")
     {
@@ -156,7 +153,7 @@ public:
 
     /*  DRAW METHODS  */
 
-    void Draw(int x, int y, unsigned char c = 0xdb, short col = 0x000F)
+    virtual void Draw(int x, int y, unsigned char c = 0xdb, short col = 0x000F)
     {
         if (x >= 0 && x < m_size.X && y >= 0 && y < m_size.Y)
 		{
@@ -173,6 +170,11 @@ public:
 			for (int y = y1; y < y2; y++)
 				Draw(x, y, c, col);
     }
+
+	void FullFill(unsigned char c = 0xdb, short col = 0x000F)
+	{
+		Fill(0, 0, m_size.X, m_size.Y, c, col);
+	}
 
     void DrawString(int x, int y, std::string c, short col = 0x000F)
 	{
@@ -459,4 +461,32 @@ protected:
     HANDLE m_wHnd;
     HANDLE m_rHnd;
 
+};
+
+// This class place 2 block as 1 pixel
+// so that text will not be scaled while retaining the square shape of pixels
+class TConsoleScreen : public LConsoleScreen
+{
+public:
+
+	TConsoleScreen() : LConsoleScreen() {}
+	~TConsoleScreen() { delete[] m_bufscrn; }
+
+	void Init(int width, int height, int size = 16, std::string title = "TConsoleScreen")
+	{
+		LConsoleScreen::Init(width * 2, height, size / 2, size, title);
+		md_size = { (short)width, (short)height };
+	}
+
+	/* DRAW METHODS */
+
+	void Draw(int x, int y, unsigned char c = 0xdb, short col = 0x000F) override
+	{
+		LConsoleScreen::Draw(x * 2, y, c, col);
+		LConsoleScreen::Draw(x * 2 + 1, y, c, col);
+	}
+
+private:
+
+	COORD md_size;
 };
