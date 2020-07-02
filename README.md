@@ -22,5 +22,4 @@ File | Name | Description
 File | Name | Description
 ------------ | ------------- | -------------
 [CSVReader.h](https://github.com/LioQing/PersonalUtils/blob/master/tools/CSVReader.h) | CSV Reader | CSV file reader and parser
-[ConsoleDisplay.h](https://github.com/LioQing/PersonalUtils/blob/master/tools/ConsoleDisplay.h) | Console Display | Display 2D simple graphics on console screen
 [LConsoleScreen.h](https://github.com/LioQing/PersonalUtils/blob/master/tools/LConsoleScreen.h) | Lio's Console Screen | Display Ascii characters as 2D screen in cmd (Windows only) (no delay refresh rate) (better than the one above!!)
