@@ -1,10 +1,10 @@
 #pragma once
 
 #include <cmath>
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
+#if __cplusplus > 201103L
+    #include <initializer_list>
 #endif
+
 
 template <typename T>
 class Vec2 
@@ -23,20 +23,34 @@ public:
 		y = v.y;
 		return *this;
 	}
+    Vec2& operator=(const T s)
+    {
+        x = s;
+        y = s;
+        return *this;
+    }
+#if __cplusplus > 201103L
+    Vec2& operator=(const std::initializer_list<T> v)
+    {
+        x = *v.begin();
+        y = *(v.begin() + 1);
+        return *this;
+    }
+#endif
 
-	Vec2 operator+(const Vec2& v)
+	Vec2 operator+(const Vec2& v) const
 	{
 		return Vec2(x + v.x, y + v.y);
 	}
-	Vec2 operator-(const Vec2& v)
+	Vec2 operator-(const Vec2& v) const
 	{
 		return Vec2(x - v.x, y - v.y);
 	}
-	Vec2 operator*(const Vec2& v)
+	Vec2 operator*(const Vec2& v) const
 	{
 		return Vec2(x * v.x, y * v.y);
 	}
-	Vec2 operator/(const Vec2& v)
+	Vec2 operator/(const Vec2& v) const 
 	{
 		return Vec2(x / v.x, y / v.y);
 	}
@@ -66,19 +80,19 @@ public:
 		return *this;
 	}
 
-	Vec2 operator+(T s)
+	Vec2 operator+(const T s) const
 	{
 		return Vec2(x + s, y + s);
 	}
-	Vec2 operator-(T s)
+	Vec2 operator-(const T s) const 
 	{
 		return Vec2(x - s, y - s);
 	}
-	Vec2 operator*(T s)
+	Vec2 operator*(const T s) const 
 	{
 		return Vec2(x * s, y * s);
 	}
-	Vec2 operator/(T s)
+	Vec2 operator/(const T s) const
 	{
 		return Vec2(x / s, y / s);
 	}
@@ -144,21 +158,33 @@ public:
 		return !(v1.x == v2.x && v1.y == v2.y);
 	}
 
+    friend std::ostream& operator<<(std::ostream& os, const Vec2& v)
+    {
+        os << v.x << ", " << v.y;
+        return os;
+    }
+    friend std::istream& operator>>(std::istream& is, Vec2& v)
+    {
+        is >> v.x >> v.y;
+        return is;
+    }
+
 	void Set(T x, T y)
 	{
 		this->x = x;
 		this->y = y;
 	}
 
-	void Rotate(T deg)
+	Vec2& Rotate(T theta)
 	{
-		T theta = deg / 180.0 * M_PI;
 		T c = cos(theta);
 		T s = sin(theta);
 		T tx = x * c - y * s;
 		T ty = x * s + y * c;
 		x = tx;
 		y = ty;
+
+        return *this;
 	}
 
 	Vec2& Normalize()
@@ -188,95 +214,9 @@ public:
 		return std::sqrt(SqrMagnitude());
 	}
 
-	
 	Vec2 Abs() const
 	{
 		return Vec2(x < 0 ? x * -1 : x, y < 0 ? y * -1 : y);
-	}
-
-	double Degree() const
-	{
-		double degree;
-		if (this->y != 0) degree = atan(this->x / this->y) * 180 / M_PI;
-		else degree = 90;
-
-		switch(this->Quadrant())
-		{
-			case 1:
-				return degree;
-
-			case 2:
-				return 180 + degree;
-
-			case 3: 
-				return 180 + degree;
-
-			case 4:
-				return 360 + degree;
-
-			default:
-				return degree;
-		}
-	}
-
-	int Quadrant() const
-	{
-		if (x >= 0)
-		{
-			if (y >= 0) return 1;
-			else return 4;
-		}
-		else
-		{
-			if (y >= 0) return 2;
-			else return 3;
-		}
-	}
-	static Vec2 ReQuadrant(int quadrant)
-	{
-		switch (quadrant)
-		{
-			case 1:
-				return Vec2(1, 1);
-
-			case 2:
-				return Vec2(-1, 1);
-
-			case 3:
-				return Vec2(-1, -1);
-
-			case 4:
-				return Vec2(1, -1);
-
-			default:
-				return Vec2::Zero();
-				
-		}
-	}
-	static Vec2 ReQuadrant(double deg, double zero = 0, bool anticlockwise = true)
-	{
-		double nDeg;
-
-		if (anticlockwise) nDeg = deg - zero;
-		else nDeg = zero - deg;
-
-		while (nDeg < 0) nDeg += 360;
-
-		nDeg = fmod(nDeg, 360);
-
-		if (nDeg >= 0 && nDeg < 90) return Vec2<T>(1, 1);
-		else if (nDeg >= 90 && nDeg < 180) return Vec2<T>(-1, 1);
-		else if (nDeg >= 180 && nDeg < 270) return Vec2<T>(-1, -1);
-		else if (nDeg >= 270 && nDeg < 360) return Vec2<T>(1, -1);
-	}
-
-	static Vec2 SplitComponents(T m, T deg, int quadrant = 1)
-	{
-		T theta = deg / 180.0 * M_PI;
-
-		T c = m * cos(theta);
-		T s = m * sin(theta);
-		return Vec2(c, s) * ReQuadrant(quadrant);
 	}
 
 	static T Dot(const Vec2& v1, const Vec2& v2)
