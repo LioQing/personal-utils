@@ -53,6 +53,10 @@ public:
 	{
 		return Vec2(x / v.x, y / v.y);
 	}
+	Vec2 operator%(const Vec2& v) const 
+	{
+		return Vec2(x % v.x, y % v.y);
+	}
 
 	Vec2& operator+=(const Vec2& v)
 	{
@@ -78,6 +82,12 @@ public:
 		y /= v.y;
 		return *this;
 	}
+	Vec2& operator%=(const Vec2& v)
+	{
+		x %= v.x;
+		y %= v.y;
+		return *this;
+	}
 
 	Vec2 operator+(const T s) const
 	{
@@ -94,6 +104,10 @@ public:
 	Vec2 operator/(const T s) const
 	{
 		return Vec2(x / s, y / s);
+	}
+	Vec2 operator%(const T s) const
+	{
+		return Vec2(x % s, y % s);
 	}
 
 	Vec2& operator+=(const T s)
@@ -118,6 +132,12 @@ public:
 	{
 		x /= s;
 		y /= s;
+		return *this;
+	}
+	Vec2& operator%=(const T s)
+	{
+		x %= s;
+		y %= s;
 		return *this;
 	}
 
