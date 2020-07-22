@@ -9,7 +9,7 @@
 #include <bitset>
 #include <queue>
 
-// unit of time of difference in time between the previous fame the next frame
+// unit of time of difference in time between the previous frame the next frame
 // to be passed into systems
 // can be ignored if not used
 typedef uint32_t DeltaTime;
