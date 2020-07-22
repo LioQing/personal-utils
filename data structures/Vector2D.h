@@ -13,7 +13,7 @@ public:
 	T x, y;
 
 	Vec2() : x(0), y(0) {}
-	Vec2(const T& x, const T& y) : x(x), y(y) {}
+	Vec2(const T x, const T y) : x(x), y(y) {}
 	Vec2(const Vec2& v) : x(v.x), y(v.y) {}
 
 	Vec2& operator=(const Vec2& v)
@@ -29,10 +29,10 @@ public:
 		return *this;
 	}
 #if __cplusplus > 201103L
-	Vec2& operator=(const std::initializer_list<T> v)
+	Vec2& operator=(const std::initializer_list<T>& v)
 	{
 		x = *v.begin();
-		y = *(v.begin() + 1);
+		y = *(std::next(v.begin()));
 		return *this;
 	}
 #endif
@@ -96,25 +96,25 @@ public:
 		return Vec2(x / s, y / s);
 	}
 
-	Vec2& operator+=(T s)
+	Vec2& operator+=(const T s)
 	{
 		x += s;
 		y += s;
 		return *this;
 	}
-	Vec2& operator-=(T s)
+	Vec2& operator-=(const T s)
 	{
 		x -= s;
 		y -= s;
 		return *this;
 	}
-	Vec2& operator*=(T s)
+	Vec2& operator*=(const T s)
 	{
 		x *= s;
 		y *= s;
 		return *this;
 	}
-	Vec2& operator/=(T s)
+	Vec2& operator/=(const T s)
 	{
 		x /= s;
 		y /= s;
