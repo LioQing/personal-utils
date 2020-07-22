@@ -2,9 +2,8 @@
 
 #include <cmath>
 #if __cplusplus > 201103L
-    #include <initializer_list>
+	#include <initializer_list>
 #endif
-
 
 template <typename T>
 class Vec2 
@@ -13,8 +12,8 @@ public:
 
 	T x, y;
 
-	Vec2() :x(0), y(0) {}
-	Vec2(T x, T y) : x(x), y(y) {}
+	Vec2() : x(0), y(0) {}
+	Vec2(const T& x, const T& y) : x(x), y(y) {}
 	Vec2(const Vec2& v) : x(v.x), y(v.y) {}
 
 	Vec2& operator=(const Vec2& v)
@@ -23,19 +22,19 @@ public:
 		y = v.y;
 		return *this;
 	}
-    Vec2& operator=(const T s)
-    {
-        x = s;
-        y = s;
-        return *this;
-    }
+	Vec2& operator=(const T s)
+	{
+		x = s;
+		y = s;
+		return *this;
+	}
 #if __cplusplus > 201103L
-    Vec2& operator=(const std::initializer_list<T> v)
-    {
-        x = *v.begin();
-        y = *(v.begin() + 1);
-        return *this;
-    }
+	Vec2& operator=(const std::initializer_list<T> v)
+	{
+		x = *v.begin();
+		y = *(v.begin() + 1);
+		return *this;
+	}
 #endif
 
 	Vec2 operator+(const Vec2& v) const
@@ -158,16 +157,16 @@ public:
 		return !(v1.x == v2.x && v1.y == v2.y);
 	}
 
-    friend std::ostream& operator<<(std::ostream& os, const Vec2& v)
-    {
-        os << v.x << ", " << v.y;
-        return os;
-    }
-    friend std::istream& operator>>(std::istream& is, Vec2& v)
-    {
-        is >> v.x >> v.y;
-        return is;
-    }
+	friend std::ostream& operator<<(std::ostream& os, const Vec2& v)
+	{
+		os << v.x << ", " << v.y;
+		return os;
+	}
+	friend std::istream& operator>>(std::istream& is, Vec2& v)
+	{
+		is >> v.x >> v.y;
+		return is;
+	}
 
 	void Set(T x, T y)
 	{
@@ -184,7 +183,7 @@ public:
 		x = tx;
 		y = ty;
 
-        return *this;
+		return *this;
 	}
 
 	Vec2& Normalize()
