@@ -37,104 +37,124 @@ public:
 	}
 #endif
 
-	Vec2 operator+(const Vec2& v) const
+	template<typename U>
+	Vec2 operator+(const Vec2<U>& v) const
 	{
 		return Vec2(x + v.x, y + v.y);
 	}
-	Vec2 operator-(const Vec2& v) const
+	template<typename U>
+	Vec2 operator-(const Vec2<U>& v) const
 	{
 		return Vec2(x - v.x, y - v.y);
 	}
-	Vec2 operator*(const Vec2& v) const
+	template<typename U>
+	Vec2 operator*(const Vec2<U>& v) const
 	{
 		return Vec2(x * v.x, y * v.y);
 	}
-	Vec2 operator/(const Vec2& v) const 
+	template<typename U>
+	Vec2 operator/(const Vec2<U>& v) const 
 	{
 		return Vec2(x / v.x, y / v.y);
 	}
-	Vec2 operator%(const Vec2& v) const 
+	template<typename U>
+	Vec2 operator%(const Vec2<U>& v) const 
 	{
 		return Vec2(x % v.x, y % v.y);
 	}
 
-	Vec2& operator+=(const Vec2& v)
+	template<typename U>
+	Vec2& operator+=(const Vec2<U>& v)
 	{
 		x += v.x;
 		y += v.y;
 		return *this;
 	}
-	Vec2& operator-=(const Vec2& v)
+	template<typename U>
+	Vec2& operator-=(const Vec2<U>& v)
 	{
 		x -= v.x;
 		y -= v.y;
 		return *this;
 	}
-	Vec2& operator*=(const Vec2& v)
+	template<typename U>
+	Vec2& operator*=(const Vec2<U>& v)
 	{
 		x *= v.x;
 		y *= v.y;
 		return *this;
 	}
-	Vec2& operator/=(const Vec2& v)
+	template<typename U>
+	Vec2& operator/=(const Vec2<U>& v)
 	{
 		x /= v.x;
 		y /= v.y;
 		return *this;
 	}
-	Vec2& operator%=(const Vec2& v)
+	template<typename U>
+	Vec2& operator%=(const Vec2<U>& v)
 	{
 		x %= v.x;
 		y %= v.y;
 		return *this;
 	}
 
-	Vec2 operator+(const T s) const
+	template<typename U>
+	Vec2 operator+(const U s) const
 	{
 		return Vec2(x + s, y + s);
 	}
-	Vec2 operator-(const T s) const 
+	template<typename U>
+	Vec2 operator-(const U s) const 
 	{
 		return Vec2(x - s, y - s);
 	}
-	Vec2 operator*(const T s) const 
+	template<typename U>
+	Vec2 operator*(const U s) const 
 	{
 		return Vec2(x * s, y * s);
 	}
-	Vec2 operator/(const T s) const
+	template<typename U>
+	Vec2 operator/(const U s) const
 	{
 		return Vec2(x / s, y / s);
 	}
-	Vec2 operator%(const T s) const
+	template<typename U>
+	Vec2 operator%(const U s) const
 	{
 		return Vec2(x % s, y % s);
 	}
 
-	Vec2& operator+=(const T s)
+	template<typename U>
+	Vec2& operator+=(const U s)
 	{
 		x += s;
 		y += s;
 		return *this;
 	}
-	Vec2& operator-=(const T s)
+	template<typename U>
+	Vec2& operator-=(const U s)
 	{
 		x -= s;
 		y -= s;
 		return *this;
 	}
-	Vec2& operator*=(const T s)
+	template<typename U>
+	Vec2& operator*=(const U s)
 	{
 		x *= s;
 		y *= s;
 		return *this;
 	}
-	Vec2& operator/=(const T s)
+	template<typename U>
+	Vec2& operator/=(const U s)
 	{
 		x /= s;
 		y /= s;
 		return *this;
 	}
-	Vec2& operator%=(const T s)
+	template<typename U>
+	Vec2& operator%=(const U s)
 	{
 		x %= s;
 		y %= s;
@@ -198,33 +218,52 @@ public:
 		return is;
 	}
 
-	void Set(T x, T y)
+	template<typename U>
+	void Set(U x, U y)
 	{
 		this->x = x;
 		this->y = y;
 	}
 
-	Vec2 Rotated(T theta) const
+	template<typename S, typename U>
+	Vec2<S> Rotated(U theta) const
 	{
-		T c = cos(theta);
-		T s = sin(theta);
-		T tx = x * c - y * s;
-		T ty = x * s + y * c;
+		S c = cos(theta);
+		S s = sin(theta);
+		S tx = x * c - y * s;
+		S ty = x * s + y * c;
+
+		return Vec2<S>(tx, ty);
+	}
+	template<typename U>
+	Vec2 Rotated(U theta) const
+	{
+		U c = cos(theta);
+		U s = sin(theta);
+		U tx = x * c - y * s;
+		U ty = x * s + y * c;
 
 		return Vec2(tx, ty);
 	}
-	Vec2& Rotate(T theta)
+	template<typename U>
+	Vec2& Rotate(U theta)
 	{
-		T c = cos(theta);
-		T s = sin(theta);
-		T tx = x * c - y * s;
-		T ty = x * s + y * c;
+		U c = cos(theta);
+		U s = sin(theta);
+		U tx = x * c - y * s;
+		U ty = x * s + y * c;
 		x = tx;
 		y = ty;
 
 		return *this;
 	}
 
+	template<typename U>
+	Vec2<U> Normalized() const
+	{
+		if (Magnitude() == 0) return this->Cast<U>();
+		return Vec2<U>(this->Cast<U>() / Magnitude());
+	}
 	Vec2 Normalized() const
 	{
 		if (Magnitude() == 0) return *this;
@@ -242,7 +281,13 @@ public:
 		return Vec2(y, -x);
 	}
 
-	T Distance(const Vec2& v) const
+	template<typename U>
+	U Distance(const Vec2& v) const
+	{
+		Vec2<U> d(v.x - x, v.y - y);
+		return d.Magnitude();
+	}
+	double Distance(const Vec2& v) const
 	{
 		Vec2 d(v.x - x, v.y - y);
 		return d.Magnitude();
@@ -273,27 +318,27 @@ public:
 
 	static Vec2 One()
 	{
-		return Vec2(1, 1);
+		return Vec2(1.0, 1.0);
 	}
 	static Vec2 Zero()
 	{
-		return Vec2(0, 0);
+		return Vec2(0.0, 0.0);
 	}
 	static Vec2 Up()
 	{
-		return Vec2(0, 1);
+		return Vec2(0.0, 1.0);
 	}
 	static Vec2 Down()
 	{
-		return Vec2(0, -1);
+		return Vec2(0.0, -1.0);
 	}
 	static Vec2 Left()
 	{
-		return Vec2(-1, 0);
+		return Vec2(-1.0, 0.0);
 	}
 	static Vec2 Right()
 	{
-		return Vec2(1, 0);
+		return Vec2(1.0, 0.0);
 	}
 
 	template <typename S>
