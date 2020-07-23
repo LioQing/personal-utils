@@ -176,6 +176,16 @@ public:
 	{
 		return !(v1.x == v2.x && v1.y == v2.y);
 	}
+#if __cplusplus > 201103L
+	friend bool operator==(const Vec2& v1, const std::initializer_list<T> v2)
+	{
+		return v1.x == v2.begin() && v1.y == std::next(v2.y.begin());
+	}
+	friend bool operator!=(const Vec2& v1, const std::initializer_list<T> v2)
+	{
+		return !(v1.x == v2.begin() && v1.y == std::next(v2.y.begin()));
+	}
+#endif
 
 	friend std::ostream& operator<<(std::ostream& os, const Vec2& v)
 	{
@@ -194,6 +204,15 @@ public:
 		this->y = y;
 	}
 
+	Vec2 Rotated(T theta) const
+	{
+		T c = cos(theta);
+		T s = sin(theta);
+		T tx = x * c - y * s;
+		T ty = x * s + y * c;
+
+		return Vec2(tx, ty);
+	}
 	Vec2& Rotate(T theta)
 	{
 		T c = cos(theta);
@@ -206,6 +225,11 @@ public:
 		return *this;
 	}
 
+	Vec2 Normalized() const
+	{
+		if (Magnitude() == 0) return *this;
+		return Vec2(*this / Magnitude());
+	}
 	Vec2& Normalize()
 	{
 		if (Magnitude() == 0) return *this;
