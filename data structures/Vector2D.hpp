@@ -11,6 +11,7 @@ public:
 	T x, y;
 
 	Vec2() : x(0.0), y(0.0) {}
+	template <typename U> Vec2(const U s) : x(s), y(s) {}
 	template <typename U> Vec2(const U x, const U y) : x(x), y(y) {}
 	template <typename U> Vec2(const Vec2<U>& v) : x(v.x), y(v.y) {}
 
@@ -249,7 +250,8 @@ public:
 		return Vec2(y, -x);
 	}
 
-	double Distance(const Vec2& v) const
+	template <typename U>
+	double Distance(const Vec2<U>& v) const
 	{
 		Vec2 d(v.x - x, v.y - y);
 		return d.Magnitude();
@@ -269,39 +271,23 @@ public:
 		return Vec2(x < 0 ? x * -1 : x, y < 0 ? y * -1 : y);
 	}
 
-	double Dot(const Vec2& v)
+	template <typename U>
+	double Dot(const Vec2<U>& v)
 	{
 		return x * v.x + y * v.y;
 	}
-	double Cross(const Vec2& v)
+	template <typename U>
+	double Cross(const Vec2<U>& v)
 	{
 		return (x * v.x) - (y * v.y);
 	}
 
-	static Vec2 One()
-	{
-		return Vec2(1.0, 1.0);
-	}
-	static Vec2 Zero()
-	{
-		return Vec2(0.0, 0.0);
-	}
-	static Vec2 Up()
-	{
-		return Vec2(0.0, 1.0);
-	}
-	static Vec2 Down()
-	{
-		return Vec2(0.0, -1.0);
-	}
-	static Vec2 Left()
-	{
-		return Vec2(-1.0, 0.0);
-	}
-	static Vec2 Right()
-	{
-		return Vec2(1.0, 0.0);
-	}
+	static Vec2 One()	{ return Vec2(1.0, 1.0); }
+	static Vec2 Zero()	{ return Vec2(0.0, 0.0); }
+	static Vec2 Up()	{ return Vec2(0.0, 1.0); }
+	static Vec2 Down()	{ return Vec2(0.0, -1.0); }
+	static Vec2 Left()	{ return Vec2(-1.0, 0.0); }
+	static Vec2 Right()	{ return Vec2(1.0, 0.0); }
 
 	template <typename U>
 	Vec2<U> Cast() const
@@ -310,6 +296,6 @@ public:
 	}
 };
 
-typedef Vec2<double> Vector2D;
-typedef Vec2<float> Vector2Df;
-typedef Vec2<int> Vector2Di;
+typedef Vec2<double> Vec2d;
+typedef Vec2<float> Vec2f;
+typedef Vec2<int> Vec2i;
