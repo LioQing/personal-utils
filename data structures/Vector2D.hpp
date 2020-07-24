@@ -1,41 +1,33 @@
 #pragma once
 
+#include <iostream>
 #include <cmath>
-#if __cplusplus > 201103L
-	#include <initializer_list>
-#endif
 
-template <typename T>
+template <typename T = double>
 class Vec2 
 {
 public:
 
 	T x, y;
 
-	Vec2() : x(0), y(0) {}
-	Vec2(const T x, const T y) : x(x), y(y) {}
-	Vec2(const Vec2& v) : x(v.x), y(v.y) {}
+	Vec2() : x(0.0), y(0.0) {}
+	template <typename U> Vec2(const U x, const U y) : x(x), y(y) {}
+	template <typename U> Vec2(const Vec2<U>& v) : x(v.x), y(v.y) {}
 
-	Vec2& operator=(const Vec2& v)
+	template <typename U>
+	Vec2& operator=(const Vec2<U>& v)
 	{
 		x = v.x;
 		y = v.y;
 		return *this;
 	}
-	Vec2& operator=(const T s)
+	template <typename U>
+	Vec2& operator=(const U s)
 	{
 		x = s;
 		y = s;
 		return *this;
 	}
-#if __cplusplus > 201103L
-	Vec2& operator=(const std::initializer_list<T>& v)
-	{
-		x = *v.begin();
-		y = *(std::next(v.begin()));
-		return *this;
-	}
-#endif
 
 	template<typename U>
 	Vec2 operator+(const Vec2<U>& v) const
@@ -188,24 +180,16 @@ public:
 		return tmp;
 	}
 
-	friend bool operator==(const Vec2& v1, const Vec2& v2)
+	template <typename U>
+	friend bool operator==(const Vec2& v1, const Vec2<U>& v2)
 	{
 		return v1.x == v2.x && v1.y == v2.y;
 	}
-	friend bool operator!=(const Vec2& v1, const Vec2& v2)
+	template <typename U>
+	friend bool operator!=(const Vec2& v1, const Vec2<U>& v2)
 	{
 		return !(v1.x == v2.x && v1.y == v2.y);
 	}
-#if __cplusplus > 201103L
-	friend bool operator==(const Vec2& v1, const std::initializer_list<T> v2)
-	{
-		return v1.x == v2.begin() && v1.y == std::next(v2.y.begin());
-	}
-	friend bool operator!=(const Vec2& v1, const std::initializer_list<T> v2)
-	{
-		return !(v1.x == v2.begin() && v1.y == std::next(v2.y.begin()));
-	}
-#endif
 
 	friend std::ostream& operator<<(std::ostream& os, const Vec2& v)
 	{
@@ -225,49 +209,33 @@ public:
 		this->y = y;
 	}
 
-	template<typename S, typename U>
+	template<typename S = T, typename U>
 	Vec2<S> Rotated(U theta) const
 	{
-		S c = cos(theta);
-		S s = sin(theta);
-		S tx = x * c - y * s;
-		S ty = x * s + y * c;
+		double c = cos(theta);
+		double s = sin(theta);
+		S tx = static_cast<S>(x * c - y * s);
+		S ty = static_cast<S>(x * s + y * c);
 
 		return Vec2<S>(tx, ty);
 	}
 	template<typename U>
-	Vec2 Rotated(U theta) const
-	{
-		U c = cos(theta);
-		U s = sin(theta);
-		U tx = x * c - y * s;
-		U ty = x * s + y * c;
-
-		return Vec2(tx, ty);
-	}
-	template<typename U>
 	Vec2& Rotate(U theta)
 	{
-		U c = cos(theta);
-		U s = sin(theta);
-		U tx = x * c - y * s;
-		U ty = x * s + y * c;
+		double c = cos(theta);
+		double s = sin(theta);
+		T tx = static_cast<T>(x * c - y * s);
+		T ty = static_cast<T>(x * s + y * c);
 		x = tx;
 		y = ty;
 
 		return *this;
 	}
 
-	template<typename U>
-	Vec2<U> Normalized() const
-	{
-		if (Magnitude() == 0) return this->Cast<U>();
-		return Vec2<U>(this->Cast<U>() / Magnitude());
-	}
-	Vec2 Normalized() const
+	Vec2<double> Normalized() const
 	{
 		if (Magnitude() == 0) return *this;
-		return Vec2(*this / Magnitude());
+		return Vec2<double>(this->Cast<double>() / Magnitude());
 	}
 	Vec2& Normalize()
 	{
@@ -281,12 +249,6 @@ public:
 		return Vec2(y, -x);
 	}
 
-	template<typename U>
-	U Distance(const Vec2& v) const
-	{
-		Vec2<U> d(v.x - x, v.y - y);
-		return d.Magnitude();
-	}
 	double Distance(const Vec2& v) const
 	{
 		Vec2 d(v.x - x, v.y - y);
@@ -307,13 +269,13 @@ public:
 		return Vec2(x < 0 ? x * -1 : x, y < 0 ? y * -1 : y);
 	}
 
-	static T Dot(const Vec2& v1, const Vec2& v2)
+	double Dot(const Vec2& v)
 	{
-		return v1.x * v2.x + v1.y * v2.y;
+		return x * v.x + y * v.y;
 	}
-	static T Cross(const Vec2& v1, const Vec2& v2)
+	double Cross(const Vec2& v)
 	{
-		return (v1.x * v2.y) - (v1.y * v2.x);
+		return (x * v.x) - (y * v.y);
 	}
 
 	static Vec2 One()
@@ -341,10 +303,10 @@ public:
 		return Vec2(1.0, 0.0);
 	}
 
-	template <typename S>
-	Vec2<S> Cast() const
+	template <typename U>
+	Vec2<U> Cast() const
 	{
-		return Vec2<S>(x, y);
+		return Vec2<U>(x, y);
 	}
 };
 
