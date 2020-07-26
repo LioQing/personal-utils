@@ -6,64 +6,172 @@
 namespace lio
 {
 	template <typename T>
-	class Vec2 
+	struct Vec2 
 	{
-	private:
-
-		double _mag;
-		double _rot;
-
-	public:
-
 		T x, y;
 
-		Vec2() { Set(0.0); }
-		Vec2(double mag) { Set(mag); }
-		Vec2(T x, T y) { Set(x, y); }
-		template <typename U> Vec2(const Vec2<U>& v) { Set(v); }
+		Vec2() : x(0.0), y(0.0) {}
+		Vec2(T s) : x(s), y(s) {}
+		Vec2(T x, T y) : x(x), y(y) {}
+		template <typename U> Vec2(const Vec2<U>& v) : x(v.x), y(v.y) {}
 
-		template <typename U> Vec2& operator=(const Vec2<U>& v) { return Set(v); }
-		Vec2& operator=(T s) { return Set(s); }
+		template <typename U>
+		Vec2& operator=(const Vec2<U>& v)
+		{
+			x = v.x;
+			y = v.y;
+			return *this;
+		}
+		template <typename U>
+		Vec2& operator=(const U& s)
+		{
+			x = s;
+			y = s;
+			return *this;
+		}
 
-		template<typename U> Vec2 operator+(const Vec2<U>& v) const { return Vec2(x + v.x, y + v.y); }
-		template<typename U> Vec2 operator-(const Vec2<U>& v) const { return Vec2(x - v.x, y - v.y); }
-		template<typename U> Vec2 operator*(const Vec2<U>& v) const { return Vec2(x * v.x, y * v.y); }
-		template<typename U> Vec2 operator/(const Vec2<U>& v) const { return Vec2(x / v.x, y / v.y); }
-		template<typename U> Vec2 operator%(const Vec2<U>& v) const { return Vec2(x % v.x, y % v.y); }
+		template<typename U>
+		Vec2 operator+(const Vec2<U>& v) const
+		{
+			return Vec2(x + v.x, y + v.y);
+		}
+		template<typename U>
+		Vec2 operator-(const Vec2<U>& v) const
+		{
+			return Vec2(x - v.x, y - v.y);
+		}
+		template<typename U>
+		Vec2 operator*(const Vec2<U>& v) const
+		{
+			return Vec2(x * v.x, y * v.y);
+		}
+		template<typename U>
+		Vec2 operator/(const Vec2<U>& v) const 
+		{
+			return Vec2(x / v.x, y / v.y);
+		}
+		template<typename U>
+		Vec2 operator%(const Vec2<U>& v) const 
+		{
+			return Vec2(fmod(x, v.x), fmod(y, v.y));
+		}
 
-		template<typename U> Vec2& operator+=(const Vec2<U>& v) { return Set(*this + v); }
-		template<typename U> Vec2& operator-=(const Vec2<U>& v) { return Set(*this - v); }
-		template<typename U> Vec2& operator*=(const Vec2<U>& v) { return Set(*this * v); }
-		template<typename U> Vec2& operator/=(const Vec2<U>& v) { return Set(*this / v); }
-		template<typename U> Vec2& operator%=(const Vec2<U>& v) { return Set(*this % v); }
+		template<typename U>
+		Vec2& operator+=(const Vec2<U>& v)
+		{
+			x += v.x;
+			y += v.y;
+			return *this;
+		}
+		template<typename U>
+		Vec2& operator-=(const Vec2<U>& v)
+		{
+			x -= v.x;
+			y -= v.y;
+			return *this;
+		}
+		template<typename U>
+		Vec2& operator*=(const Vec2<U>& v)
+		{
+			x *= v.x;
+			y *= v.y;
+			return *this;
+		}
+		template<typename U>
+		Vec2& operator/=(const Vec2<U>& v)
+		{
+			x /= v.x;
+			y /= v.y;
+			return *this;
+		}
+		template<typename U>
+		Vec2& operator%=(const Vec2<U>& v)
+		{
+			x = fmod(x, v.x);
+			y = fmod(y, v.y);
+			return *this;
+		}
 
-		Vec2 operator+(double s) const { return _MagRot(_mag + s, _rot); }
-		Vec2 operator-(double s) const { return _MagRot(_mag - s, _rot); }
-		Vec2 operator*(double s) const { return Vec2(x * s, y * s); }
-		Vec2 operator/(double s) const { return Vec2(x / s, y / s); }
-		Vec2 operator%(double s) const { return Vec2(x % s, y % s); }
+		Vec2 operator+(T s) const
+		{
+			double scale = s * Magnitude();
+			return Vec2(x + x * scale, y + y * scale);
+		}
+		Vec2 operator-(T s) const
+		{
+			double scale = s * Magnitude();
+			return Vec2(x - x * scale, y - y * scale);
+		}
+		Vec2 operator*(T s) const
+		{
+			return Vec2(x * s, y * s);
+		}
+		Vec2 operator/(T s) const 
+		{
+			return Vec2(x / s, y / s);
+		}
+		Vec2 operator%(T s) const
+		{
+			return Vec2(fmod(x, s), fmod(x, s));
+		}
 
-		Vec2& operator+=(double s) { return _SetMagRot(_mag + s, _rot); }
-		Vec2& operator-=(double s) { return _SetMagRot(_mag - s, _rot); }
-		Vec2& operator*=(T s) { return Set(*this * s); }
-		Vec2& operator/=(T s) { return Set(*this / s); }
-		Vec2& operator%=(T s) { return Set(*this % s); }
+		Vec2& operator+=(T s)
+		{
+			double scale = s * Magnitude();
+			x += x * scale;
+			y += y * scale;
+			return *this;
+		}
+		Vec2& operator-=(T s)
+		{
+			double scale = s * Magnitude();
+			x -= x * scale;
+			y -= y * scale;
+			return *this;
+		}
+		Vec2& operator*=(T s)
+		{
+			x *= s;
+			y *= s;
+			return *this;
+		}
+		Vec2& operator/=(T s)
+		{
+			x /= s;
+			y /= s;
+			return *this;
+		}
+		Vec2& operator%=(T s)
+		{
+			x = fmod(x, s);
+			y = fmod(y, s);
+			return *this;
+		}
 
-		Vec2 operator-() const { return Vec2(-x, -y); }
-		Vec2 operator+() const { return Vec2(x, y); }
-
-		Vec2& operator++() { return _SetMagRot(_mag + 1.0, _rot); }
-		Vec2& operator--() { return _SetMagRot(_mag - 1.0, _rot); }
+		Vec2& operator++()
+		{
+			x += 1.0;
+			y += 1.0;
+			return *this;
+		}
+		Vec2& operator--()
+		{
+			x -= 1.0;
+			y -= 1.0;
+			return *this;
+		}
 		Vec2 operator++(int)
 		{
-			Vec2 tmp = *this;
-			_MagRot(_mag + 1.0, _rot);
+			Vec2 tmp(x, y);
+			x += 1.0;
+			y += 1.0;
 			return tmp;
 		}
 		Vec2 operator--(int)
 		{
-			Vec2 tmp = *this;
-			_MagRot(_mag - 1.0, _rot);
+			Vec2 tmp(x, y);
+			x -= 1.0;
+			y -= 1.0;
 			return tmp;
 		}
 
@@ -89,95 +197,42 @@ namespace lio
 			return is;
 		}
 
-		double _Rot() const { return _rot; }
-
- 		template <typename U>
-		Vec2& Set(const Vec2<U>& v)
-		{
-			static_assert(std::is_convertible<U, T>::value, "not convertible type");
-			_mag = v.Magnitude();
-			_rot = v._Rot();
-			x = v.x;
-			y = v.y;
-			return *this;
-		}
-		Vec2& Set(double mag)
-		{
-			_mag = mag;
-			_rot = 0.0;
-			x = mag;
-			y = 0.0;
-			return *this;
-		} 
 		Vec2& Set(T x, T y)
 		{
-			_mag = _Magnitude(x, y);
-			_rot = _Rotation(x, y);
 			this->x = x;
 			this->y = y;
 			return *this;
 		}
 
-	private:
-
-		Vec2(double mag, double rot, T x, T y) : _mag(mag), _rot(rot), x(x), y(y) {}
-
-		double _Magnitude(double x, double y) const
+		Vec2<double> Rotated(double theta) const
 		{
-			return std::hypot(x, y);
+			double c = cos(theta);
+			double s = sin(theta);
+			double tx = c * x - s * y;
+			double ty = s * x + c * y;
+
+			return Vec2<double>(tx, ty);
 		}
-		double _Rotation(double x, double y) const
+		Vec2& Rotate(double theta)
 		{
-			return atan2(y, x);
-		}
-
-		template <typename U>
-		Vec2 _MagRot(const U mag, const U rot) const
-		{
-			U tx = mag * cos(rot);
-			U ty = mag * sin(rot);
-
-			return Vec2(mag, rot, tx, ty);
-		}
-		template <typename U>
-		Vec2& _SetMagRot(const U mag, const U rot)
-		{
-			_mag = mag;
-			_rot = rot;
-			x = mag * cos(rot);
-			y = mag * sin(rot);
+			double c = cos(theta);
+			double s = sin(theta);
+			x = c * x - s * y;
+			y = s * x + c * y;
 
 			return *this;
-		}
-
-	public:
-
-		Vec2<float> Rotated(float theta) { return _MagRot<float>(_mag, _rot + theta); }
-		Vec2<float> Rotatedf(float theta) { return _MagRot<float>(_mag, _rot + theta); }
-		Vec2<double> Rotated(double theta) { return _MagRot<double>(_mag, _rot + theta); }
-		Vec2<long double> Rotated(long double theta) { return _MagRot<long double>(_mag, _rot + theta); }
-		Vec2<long double> Rotatedl(long double theta) { return _MagRot<long double>(_mag, _rot + theta); }
-		template <typename U>
-		Vec2<double> Rotated(U theta) 
-		{ 
-			return _MagRot<double>(_mag, _rot + theta); 
-		}
-
-		template<typename U>
-		Vec2& Rotate(U theta)
-		{
-			return _SetMagRot<double>(_mag, _rot + theta);
 		}
 
 		Vec2<double> Normalized() const
 		{
 			if (Magnitude() == 0) return *this;
-			return _MagRot(1.0, _rot);
+			return Vec2<double>(this->Cast<double>() / Magnitude());
 		}
 		Vec2& Normalize()
 		{
 			if (Magnitude() == 0) return *this;
-			return _SetMagRot(1.0, _rot);
+			*this *= (1.0 / Magnitude());
+			return *this;
 		}
 
 		Vec2 Ortho() const
@@ -188,13 +243,17 @@ namespace lio
 		template <typename U>
 		double Distance(const Vec2<U>& v) const
 		{
-			Vec2<double> d(static_cast<double>(v.x) - x, static_cast<double>(v.y) - y);
+			Vec2<double> d(v.x - x, v.y - y);
 			return d.Magnitude();
 		}
 
+		double SqrMagnitude() const
+		{
+			return x * x + y * y;
+		}
 		double Magnitude() const
 		{
-			return _mag;
+			return std::hypot(x, y);
 		}
 
 		Vec2 Abs() const
@@ -205,12 +264,12 @@ namespace lio
 		template <typename U>
 		double Dot(const Vec2<U>& v) const
 		{
-			return static_cast<double>(x) * v.x + static_cast<double>(y) * v.y;
+			return x * v.x + y * v.y;
 		}
 		template <typename U>
 		double Cross(const Vec2<U>& v) const
 		{
-			return (static_cast<double>(x) * v.x) - (static_cast<double>(y) * v.y);
+			return (x * v.x) - (y * v.y);
 		}
 
 		// 0 --> Collinear
@@ -219,8 +278,7 @@ namespace lio
 		template <typename U, typename S>
 		int Orientation(const Vec2<U>& v2, const Vec2<S>& v3) const
 		{
-			int val = (static_cast<double>(v2.y) - y) * (static_cast<double>(v3.x) - v2.x) - 
-			(static_cast<double>(v2.x) - x) * (static_cast<double>(v3.y) - v2.y);
+			int val = (v2.y - y) * (v3.x - v2.x) - (v2.x - x) * (v3.y - v2.y);
 
 			if (val == 0) return 0;
 			return (val > 0) ? 1 : -1;
