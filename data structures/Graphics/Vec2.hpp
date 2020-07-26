@@ -2,12 +2,15 @@
 
 #include <iostream>
 #include <cmath>
+#include <type_traits>
 
 namespace lio
 {
 	template <typename T>
-	struct Vec2 
+	class Vec2 
 	{
+	public:
+
 		T x, y;
 
 		Vec2() : x(0.0), y(0.0) {}
@@ -92,15 +95,43 @@ namespace lio
 			return *this;
 		}
 
+		template <typename U>
+		friend Vec2 operator+(T s, const Vec2<U>& v)
+		{
+			double scale = s / Magnitude();
+			return Vec2(v.x + abs(v.x) * scale, v.y + abs(v.y) * scale);
+		}
+		template <typename U>
+		friend Vec2 operator-(T s, const Vec2<U>& v)
+		{
+			double scale = s / Magnitude();
+			return Vec2(v.x - abs(v.x) * scale, v.y - abs(v.y) * scale);
+		}
+		template <typename U>
+		friend Vec2 operator*(T s, const Vec2<U>& v)
+		{
+			return Vec2(v.x * s, v.y * s);
+		}
+		template <typename U>
+		friend Vec2 operator/(T s, const Vec2<U>& v)
+		{
+			return Vec2(v.x / s, v.y / s);
+		}
+		template <typename U>
+		friend Vec2 operator%(T s, const Vec2<U>& v)
+		{
+			return Vec2(v.x % s, v.y % s);
+		}
+
 		Vec2 operator+(T s) const
 		{
-			double scale = s * Magnitude();
-			return Vec2(x + x * scale, y + y * scale);
+			double scale = s / Magnitude();
+			return Vec2(x + abs(x) * scale, y + abs(y) * scale);
 		}
 		Vec2 operator-(T s) const
 		{
-			double scale = s * Magnitude();
-			return Vec2(x - x * scale, y - y * scale);
+			double scale = s / Magnitude();
+			return Vec2(x - abs(x) * scale, y - abs(y) * scale);
 		}
 		Vec2 operator*(T s) const
 		{
@@ -117,16 +148,16 @@ namespace lio
 
 		Vec2& operator+=(T s)
 		{
-			double scale = s * Magnitude();
-			x += x * scale;
-			y += y * scale;
+			double scale = s / Magnitude();
+			x += abs(x) * scale;
+			y += abs(y) * scale;
 			return *this;
 		}
 		Vec2& operator-=(T s)
 		{
-			double scale = s * Magnitude();
-			x -= x * scale;
-			y -= y * scale;
+			double scale = s / Magnitude();
+			x -= abs(x) * scale;
+			y -= abs(y) * scale;
 			return *this;
 		}
 		Vec2& operator*=(T s)
@@ -150,14 +181,16 @@ namespace lio
 
 		Vec2& operator++()
 		{
-			x += 1.0;
-			y += 1.0;
+			double scale = 1.0 / Magnitude();
+			x += abs(x) * scale;
+			y += abs(y) * scale;
 			return *this;
 		}
 		Vec2& operator--()
 		{
-			x -= 1.0;
-			y -= 1.0;
+			double scale = 1.0 / Magnitude();
+			x -= abs(x) * scale;
+			y -= abs(y) * scale;
 			return *this;
 		}
 		Vec2 operator++(int)
