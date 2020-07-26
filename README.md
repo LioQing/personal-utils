@@ -15,7 +15,8 @@ File | Name | Description
 File | Name | Description
 ------------ | ------------- | -------------
 [Matrix.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Matrix.hpp) | Matrix | A half-finished matrix class
-[Vector2D.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Vector2D.hpp) | Vector2D | 2D Vector class with many mathematic functions
+[Vec2.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Vec2.hpp) | Vector2 | 2D Vector class with many graphical functions
+[LineSeg.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/LineSeg.hpp) | Line Segment | 2D line segment class
 
 ### Tools
 
