@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <cmath>
-#include <type_traits>
 
 namespace lio
 {
@@ -96,31 +95,31 @@ namespace lio
 		}
 
 		template <typename U>
-		friend Vec2 operator+(T s, const Vec2<U>& v)
+		friend Vec2<U> operator+(T s, const Vec2<U>& v)
 		{
 			double scale = s / Magnitude();
-			return Vec2(v.x + abs(v.x) * scale, v.y + abs(v.y) * scale);
+			return Vec2<U>(v.x + abs(v.x) * scale, v.y + abs(v.y) * scale);
 		}
 		template <typename U>
-		friend Vec2 operator-(T s, const Vec2<U>& v)
+		friend Vec2<U> operator-(T s, const Vec2<U>& v)
 		{
 			double scale = s / Magnitude();
-			return Vec2(v.x - abs(v.x) * scale, v.y - abs(v.y) * scale);
+			return Vec2<U>(v.x - abs(v.x) * scale, v.y - abs(v.y) * scale);
 		}
 		template <typename U>
-		friend Vec2 operator*(T s, const Vec2<U>& v)
+		friend Vec2<U> operator*(T s, const Vec2<U>& v)
 		{
-			return Vec2(v.x * s, v.y * s);
+			return Vec2<U>(v.x * s, v.y * s);
 		}
 		template <typename U>
-		friend Vec2 operator/(T s, const Vec2<U>& v)
+		friend Vec2<U> operator/(T s, const Vec2<U>& v)
 		{
-			return Vec2(v.x / s, v.y / s);
+			return Vec2<U>(v.x / s, v.y / s);
 		}
 		template <typename U>
-		friend Vec2 operator%(T s, const Vec2<U>& v)
+		friend Vec2<U> operator%(T s, const Vec2<U>& v)
 		{
-			return Vec2(v.x % s, v.y % s);
+			return Vec2<U>(v.x % s, v.y % s);
 		}
 
 		Vec2 operator+(T s) const
