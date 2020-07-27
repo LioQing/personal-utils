@@ -12,9 +12,7 @@ namespace lio
 
 		T x, y;
 
-		Vec2() : x(0.0), y(0.0) {}
-		Vec2(T s) : x(s), y(s) {}
-		Vec2(T x, T y) : x(x), y(y) {}
+		Vec2(T x = 0.0, T y = 0.0) : x(x), y(y) {}
 		template <typename U> Vec2(const Vec2<U>& v) : x(v.x), y(v.y) {}
 
 		template <typename U>
@@ -24,8 +22,7 @@ namespace lio
 			y = v.y;
 			return *this;
 		}
-		template <typename U>
-		Vec2& operator=(const U& s)
+		Vec2& operator=(T s)
 		{
 			x = s;
 			y = s;
@@ -97,13 +94,13 @@ namespace lio
 		template <typename U>
 		friend Vec2<U> operator+(T s, const Vec2<U>& v)
 		{
-			double scale = s / Magnitude();
+			double scale = s / v.Magnitude();
 			return Vec2<U>(v.x + abs(v.x) * scale, v.y + abs(v.y) * scale);
 		}
 		template <typename U>
 		friend Vec2<U> operator-(T s, const Vec2<U>& v)
 		{
-			double scale = s / Magnitude();
+			double scale = s / v.Magnitude();
 			return Vec2<U>(v.x - abs(v.x) * scale, v.y - abs(v.y) * scale);
 		}
 		template <typename U>
@@ -229,7 +226,7 @@ namespace lio
 			return is;
 		}
 
-		Vec2& Set(T x, T y)
+		Vec2& Set(T x = 0.0, T y = 0.0)
 		{
 			this->x = x;
 			this->y = y;

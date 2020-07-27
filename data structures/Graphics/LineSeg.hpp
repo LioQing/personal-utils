@@ -13,11 +13,8 @@ namespace lio
 
 		Vec2<T> p1, p2;
 
-		LineSeg() : p1(0.0, 0.0), p2(0.0, 0.0) {}
-		LineSeg(T x, T y) : p1(0.0, 0.0), p2(x, y) {}
-		LineSeg(T x1, T y1, T x2, T y2) : p1(x1, y1), p2(x2, y2) {}
-		template <typename U, typename S> LineSeg(const Vec2<U>& p1, const Vec2<S>& p2) : p1(p1), p2(p2) {}
-		template <typename U> LineSeg(const Vec2<U>& p) : p1(0.0, 0.0), p2(p) {}
+		LineSeg(T x1 = 0.0, T y1 = 0.0, T x2 = 0.0, T y2 = 0.0) : p1(x1, y1), p2(x2, y2) {}
+		template <typename U, typename S> LineSeg(const Vec2<U>& p1, const Vec2<S>& p2 = Vec2<T>::Zero()) : p1(p1), p2(p2) {}
 		template <typename U> LineSeg(const LineSeg<U>& l) : p1(l.p1), p2(l.p2) {}
 
 		template <typename U>
@@ -56,9 +53,9 @@ namespace lio
 			return LineSeg<S>(l.p1 / v, l.p2 / v);
 		}
 		template <typename U, typename S>
-		friend LineSeg<S> operator+(const Vec2<U>& v, const LineSeg<S>& l)
+		friend LineSeg<S> operator%(const Vec2<U>& v, const LineSeg<S>& l)
 		{
-			return LineSeg<S>(l.p1 + v, l.p2 + v);
+			return LineSeg<S>(l.p1 % v, l.p2 % v);
 		}
 
 		template <typename U>
@@ -184,7 +181,7 @@ namespace lio
 
 		friend std::ostream& operator<<(std::ostream& os, const LineSeg& l)
 		{
-			os << "(" << l.p1 << ") (" << l.p2 << ")";
+			os << "(" << l.p1 << "), (" << l.p2 << ")";
 			return os;
 		}
 		friend std::istream& operator>>(std::istream& is, LineSeg& l)
@@ -194,13 +191,13 @@ namespace lio
 		}
 
 		template <typename U, typename S>
-		LineSeg& Set(const Vec2<U>& p1, const Vec2<S>& p2)
+		LineSeg& Set(const Vec2<U>& p1, const Vec2<S>& p2 = Vec2<T>::Zero())
 		{
 			this->p1 = p1;
 			this->p2 = p2;
 			return *this;
 		}
-		LineSeg& Set(T x1, T y1, T x2, T y2)
+		LineSeg& Set(T x1 = 0.0, T y1 = 0.0, T x2 = 0.0, T y2 = 0.0)
 		{
 			p1.x = x1;
 			p1.y = y1;
@@ -267,8 +264,8 @@ namespace lio
 		}
 		Vec2<double> Section(double r1, double r2) const
 		{
-			auto x = (r1 * p2.x + r2 * p1.x) / r1 + r2);
-			auto y = (r1 * p2.y + r2 * p1.y) / r1 + r2);
+			auto x = (r1 * p2.x + r2 * p1.x) / r1 + r2;
+			auto y = (r1 * p2.y + r2 * p1.y) / r1 + r2;
 			return Vec2<double>(x, y);
 		}
 
