@@ -32,61 +32,61 @@ namespace lio
 			return *this;
 		}
 
-		template<typename U>
+		template <typename U>
 		Vec2 operator+(const Vec2<U>& v) const
 		{
 			return Vec2(x + v.x, y + v.y);
 		}
-		template<typename U>
+		template <typename U>
 		Vec2 operator-(const Vec2<U>& v) const
 		{
 			return Vec2(x - v.x, y - v.y);
 		}
-		template<typename U>
+		template <typename U>
 		Vec2 operator*(const Vec2<U>& v) const
 		{
 			return Vec2(x * v.x, y * v.y);
 		}
-		template<typename U>
+		template <typename U>
 		Vec2 operator/(const Vec2<U>& v) const 
 		{
 			return Vec2(x / v.x, y / v.y);
 		}
-		template<typename U>
+		template <typename U>
 		Vec2 operator%(const Vec2<U>& v) const 
 		{
 			return Vec2(fmod(x, v.x), fmod(y, v.y));
 		}
 
-		template<typename U>
+		template <typename U>
 		Vec2& operator+=(const Vec2<U>& v)
 		{
 			x += v.x;
 			y += v.y;
 			return *this;
 		}
-		template<typename U>
+		template <typename U>
 		Vec2& operator-=(const Vec2<U>& v)
 		{
 			x -= v.x;
 			y -= v.y;
 			return *this;
 		}
-		template<typename U>
+		template <typename U>
 		Vec2& operator*=(const Vec2<U>& v)
 		{
 			x *= v.x;
 			y *= v.y;
 			return *this;
 		}
-		template<typename U>
+		template <typename U>
 		Vec2& operator/=(const Vec2<U>& v)
 		{
 			x /= v.x;
 			y /= v.y;
 			return *this;
 		}
-		template<typename U>
+		template <typename U>
 		Vec2& operator%=(const Vec2<U>& v)
 		{
 			x = fmod(x, v.x);
