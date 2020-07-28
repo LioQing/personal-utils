@@ -14,184 +14,34 @@ namespace lio
 		Vec2<T> p1, p2;
 
 		LineSeg(T x1 = 0.0, T y1 = 0.0, T x2 = 0.0, T y2 = 0.0) : p1(x1, y1), p2(x2, y2) {}
-		template <typename U, typename S> LineSeg(const Vec2<U>& p1, const Vec2<S>& p2 = Vec2<T>::Zero()) : p1(p1), p2(p2) {}
-		template <typename U> LineSeg(const LineSeg<U>& l) : p1(l.p1), p2(l.p2) {}
+		LineSeg(const Vec2<T>& p1, const Vec2<T>& p2 = Vec2<T>::Zero()) : p1(p1), p2(p2) {}
+		LineSeg(const LineSeg& l) : p1(l.p1), p2(l.p2) {}
 
 		template <typename U>
-		LineSeg& operator=(const LineSeg<U>& l)
+		operator LineSeg<U>() const
+		{
+			return LineSeg<U>(p1, p2);
+		}
+		template <typename U>
+		LineSeg<U> Cast() const
+		{
+			return LineSeg<U>(p1, p2);
+		}
+
+		LineSeg& operator=(const LineSeg& l)
 		{
 			p1 = l.p1;
 			p2 = l.p2;
 			return *this;
 		}
-		template <typename U>
-		LineSeg& operator=(const Vec2<U>& v)
+		LineSeg& operator=(const Vec2<T>& v)
 		{
-			p1 = Vec2<U>::Zero();
+			p1 = Vec2<T>::Zero();
 			p2 = v;
 			return *this;
 		}
 
-		template <typename U, typename S>
-		friend LineSeg<S> operator+(const Vec2<U>& v, const LineSeg<S>& l)
-		{
-			return LineSeg<S>(l.p1 + v, l.p2 + v);
-		}
-		template <typename U, typename S>
-		friend LineSeg<S> operator-(const Vec2<U>& v, const LineSeg<S>& l)
-		{
-			return LineSeg<S>(l.p1 - v, l.p2 - v);
-		}
-		template <typename U, typename S>
-		friend LineSeg<S> operator*(const Vec2<U>& v, const LineSeg<S>& l)
-		{
-			return LineSeg<S>(l.p1 * v, l.p2 * v);
-		}
-		template <typename U, typename S>
-		friend LineSeg<S> operator/(const Vec2<U>& v, const LineSeg<S>& l)
-		{
-			return LineSeg<S>(l.p1 / v, l.p2 / v);
-		}
-		template <typename U, typename S>
-		friend LineSeg<S> operator%(const Vec2<U>& v, const LineSeg<S>& l)
-		{
-			return LineSeg<S>(l.p1 % v, l.p2 % v);
-		}
-
-		template <typename U>
-		LineSeg operator+(const Vec2<U>& v) const
-		{
-			return LineSeg(p1 + v, p2 + v);
-		}
-		template <typename U>
-		LineSeg operator-(const Vec2<U>& v) const
-		{
-			return LineSeg(p1 - v, p2 - v);
-		}
-		template <typename U>
-		LineSeg operator*(const Vec2<U>& v) const 
-		{
-			return LineSeg(p1 * v, p2 * v);
-		}
-		template <typename U>
-		LineSeg operator/(const Vec2<U>& v) const
-		{
-			return LineSeg(p1 / v, p2 / v);
-		}
-		template <typename U>
-		LineSeg operator%(const Vec2<U>& v) const
-		{
-			return LineSeg(p1 % v, p2 % v);
-		}
-
-		template <typename U>
-		LineSeg& operator+=(const Vec2<U>& v)
-		{
-			p1 += v;
-			p2 += v;
-			return *this;
-		}
-		template <typename U>
-		LineSeg& operator-=(const Vec2<U>& v)
-		{
-			p1 -= v;
-			p2 -= v;
-			return *this;
-		}
-		template <typename U>
-		LineSeg& operator*=(const Vec2<U>& v)
-		{
-			p1 *= v;
-			p2 *= v;
-			return *this;
-		}
-		template <typename U>
-		LineSeg& operator/=(const Vec2<U>& v)
-		{
-			p1 /= v;
-			p2 /= v;
-			return *this;
-		}
-		template <typename U>
-		LineSeg& operator%=(const Vec2<U>& v)
-		{
-			p1 %= v;
-			p2 %= v;
-			return *this;
-		}
-
-		template <typename U>
-		friend LineSeg<U> operator*(U s, const LineSeg<U>& l)
-		{
-			return LineSeg<U>(l.p1 * s, l.p2 * s);
-		}
-		template <typename U>
-		friend LineSeg<U> operator/(U s, const LineSeg<U>& l)
-		{
-			return LineSeg<U>(l.p1 / s, l.p2 / s);
-		}
-		template <typename U>
-		friend LineSeg<U> operator%(U s, const LineSeg<U>& l)
-		{
-			return LineSeg<U>(l.p1 % s, l.p2 % s);
-		}
-
-		LineSeg operator*(T s) const 
-		{
-			return LineSeg(p1 * s, p2 * s);
-		}
-		LineSeg operator/(T s) const
-		{
-			return LineSeg(p1 / s, p2 / s);
-		}
-		LineSeg operator%(T s) const
-		{
-			return LineSeg(p1 % s, p2 % s);
-		}
-
-		LineSeg& operator*=(T s)
-		{
-			p1 *= s;
-			p2 *= s;
-			return *this;
-		}
-		LineSeg& operator/=(T s)
-		{
-			p1 /= s;
-			p2 /= s;
-			return *this;
-		}
-		LineSeg& operator%=(T s)
-		{
-			p1 %= s;
-			p2 %= s;
-			return *this;
-		}
-
-		template <typename U>
-		friend bool operator==(const LineSeg& l1, const LineSeg<U>& l2)
-		{
-			return l1.p1 == l2.p1 && l1.p2 == l2.p2;
-		}
-		template <typename U>
-		friend bool operator!=(const LineSeg& l1, const LineSeg<U>& l2)
-		{
-			return !(l1.p1 == l2.p1 && l1.p2 == l2.p2);
-		}
-
-		friend std::ostream& operator<<(std::ostream& os, const LineSeg& l)
-		{
-			os << "(" << l.p1 << "), (" << l.p2 << ")";
-			return os;
-		}
-		friend std::istream& operator>>(std::istream& is, LineSeg& l)
-		{
-			is >> l.p1 >> l.p2;
-			return is;
-		}
-
-		template <typename U, typename S>
-		LineSeg& Set(const Vec2<U>& p1, const Vec2<S>& p2 = Vec2<T>::Zero())
+		LineSeg& Set(const Vec2<T>& p1, const Vec2<T>& p2 = Vec2<T>::Zero())
 		{
 			this->p1 = p1;
 			this->p2 = p2;
@@ -209,10 +59,8 @@ namespace lio
 		template <typename S = double>
 		LineSeg<double> Rotated(double theta, const Vec2<S>& pt = Vec2<S>::Zero()) const
 		{
-			Vec2<double> _p1 = this->p1 - pt;
-			Vec2<double> _p2 = this->p2 - pt;
-			Vec2<double> p1 = _p1.Rotated(theta) + pt;
-			Vec2<double> p2 = _p2.Rotated(theta) + pt;
+			Vec2<double> p1 = (this->p1 - pt).Rotated(theta) + pt;
+			Vec2<double> p2 = (this->p2 - pt).Rotated(theta) + pt;
 
 			return LineSeg<double>(p1, p2);
 		}
@@ -328,13 +176,179 @@ namespace lio
 
 			return it;
 		}
-
-		template <typename U>
-		LineSeg<U> Cast() const
+		std::vector<Vec2<int>> Plot() const
 		{
-			return LineSeg<U>(p1, p2);
+			std::vector<Vec2<int>> results;
+			Plot(results);
+			return results;
 		}
 	};
+
+	template <typename T, typename U>
+	auto operator+(const Vec2<U>& v, const LineSeg<T>& l)
+	{
+		return LineSeg<decltype(std::declval<T&>() + std::declval<U&>())>(l.p1 + v, l.p2 + v);
+	}
+	template <typename T, typename U>
+	auto operator-(const Vec2<U>& v, const LineSeg<T>& l)
+	{
+		return LineSeg<decltype(std::declval<T&>() - std::declval<U&>())>(l.p1 - v, l.p2 - v);
+	}
+	template <typename T, typename U>
+	auto operator*(const Vec2<U>& v, const LineSeg<T>& l)
+	{
+		return LineSeg<decltype(std::declval<T&>() * std::declval<U&>())>(l.p1 * v, l.p2 * v);
+	}
+	template <typename T, typename U>
+	auto operator/(const Vec2<U>& v, const LineSeg<T>& l)
+	{
+		return LineSeg<decltype(std::declval<T&>() / std::declval<U&>())>(l.p1 / v, l.p2 / v);
+	}
+	template <typename T, typename U>
+	auto operator%(const Vec2<U>& v, const LineSeg<T>& l)
+	{
+		return LineSeg<decltype(fmod(std::declval<T&>(), std::declval<U&>()))>(l.p1 % v, l.p2 % v);
+	}
+
+	template <typename T, typename U>
+	auto operator+(const LineSeg<T>& l, const Vec2<U>& v)
+	{
+		return LineSeg<decltype(std::declval<T&>() + std::declval<U&>())>(l.p1 + v, l.p2 + v);
+	}
+	template <typename T, typename U>
+	auto operator-(const LineSeg<T>& l, const Vec2<U>& v)
+	{
+		return LineSeg<decltype(std::declval<T&>() - std::declval<U&>())>(l.p1 - v, l.p2 - v);
+	}
+	template <typename T, typename U>
+	auto operator*(const LineSeg<T>& l, const Vec2<U>& v)
+	{
+		return LineSeg<decltype(std::declval<T&>() * std::declval<U&>())>(l.p1 * v, l.p2 * v);
+	}
+	template <typename T, typename U>
+	auto operator/(const LineSeg<T>& l, const Vec2<U>& v)
+	{
+		return LineSeg<decltype(std::declval<T&>() / std::declval<U&>())>(l.p1 / v, l.p2 / v);
+	}
+	template <typename T, typename U>
+	auto operator%(const LineSeg<T>& l, const Vec2<U>& v)
+	{
+		return LineSeg<decltype(fmod(std::declval<T&>(), std::declval<U&>()))>(l.p1 % v, l.p2 % v);
+	}
+
+	template <typename T, typename U>
+	LineSeg<T>& operator+=(LineSeg<T>& l, const Vec2<U>& v)
+	{
+		l.p1 += v;
+		l.p2 += v;
+		return l;
+	}
+	template <typename T, typename U>
+	LineSeg<T>& operator-=(LineSeg<T>& l, const Vec2<U>& v)
+	{
+		l.p1 -= v;
+		l.p2 -= v;
+		return l;
+	}
+	template <typename T, typename U>
+	LineSeg<T>& operator*=(LineSeg<T>& l, const Vec2<U>& v)
+	{
+		l.p1 *= v;
+		l.p2 *= v;
+		return l;
+	}
+	template <typename T, typename U>
+	LineSeg<T>& operator/=(LineSeg<T>& l, const Vec2<U>& v)
+	{
+		l.p1 /= v;
+		l.p2 /= v;
+		return l;
+	}
+	template <typename T, typename U>
+	LineSeg<T>& operator%=(LineSeg<T>& l, const Vec2<U>& v)
+	{
+		l.p1 %= v;
+		l.p2 %= v;
+		return l;
+	}
+
+	template <typename T>
+	auto operator*(double s, const LineSeg<T>& l)
+	{
+		return LineSeg<decltype(s * std::declval<T&>())>(l.p1 * s, l.p2 * s);
+	}
+	template <typename T>
+	auto operator/(double s, const LineSeg<T>& l)
+	{
+		return LineSeg<decltype(s / std::declval<T&>())>(l.p1 / s, l.p2 / s);
+	}
+	template <typename T>
+	auto operator%(double s, const LineSeg<T>& l)
+	{
+		return LineSeg<decltype(fmod(s, std::declval<T&>()))>(l.p1 % s, l.p2 % s);
+	}
+
+	template <typename T>
+	auto operator*(const LineSeg<T>& l, double s)
+	{
+		return LineSeg<decltype(s * std::declval<T&>())>(l.p1 * s, l.p2 * s);
+	}
+	template <typename T>
+	auto operator/(const LineSeg<T>& l, double s)
+	{
+		return LineSeg<decltype(s / std::declval<T&>())>(l.p1 / s, l.p2 / s);
+	}
+	template <typename T>
+	auto operator%(const LineSeg<T>& l, double s)
+	{
+		return LineSeg<decltype(fmod(s, std::declval<T&>()))>(l.p1 % s, l.p2 % s);
+	}
+
+	template <typename T>
+	LineSeg<T>& operator*=(LineSeg<T>& l, double s)
+	{
+		l.p1 *= s;
+		l.p2 *= s;
+		return l;
+	}
+	template <typename T>
+	LineSeg<T>& operator/=(LineSeg<T>& l, double s)
+	{
+		l.p1 /= s;
+		l.p2 /= s;
+		return l;
+	}
+	template <typename T>
+	LineSeg<T>& operator%=(LineSeg<T>& l, double s)
+	{
+		l.p1 %= s;
+		l.p2 %= s;
+		return l;
+	}
+
+	template <typename T, typename U>
+	bool operator==(const LineSeg<T>& l1, const LineSeg<U>& l2)
+	{
+		return l1.p1 == l2.p1 && l1.p2 == l2.p2;
+	}
+	template <typename T, typename U>
+	bool operator!=(const LineSeg<T>& l1, const LineSeg<U>& l2)
+	{
+		return !(l1.p1 == l2.p1 && l1.p2 == l2.p2);
+	}
+
+	template <typename T>
+	std::ostream& operator<<(std::ostream& os, const LineSeg<T>& l)
+	{
+		os << "(" << l.p1 << "), (" << l.p2 << ")";
+		return os;
+	}
+	template <typename T>
+	std::istream& operator>>(std::istream& is, LineSeg<T>& l)
+	{
+		is >> l.p1 >> l.p2;
+		return is;
+	}
 
 	typedef LineSeg<double> LineSegd;
 	typedef LineSeg<float> LineSegf;
