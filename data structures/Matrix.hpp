@@ -14,6 +14,8 @@ namespace lio
 
 		uint32_t width, height;
 
+		Matrix() : width(0), height(0) {}
+
 		Matrix(std::vector<std::vector<T>> matrix) : matrix(matrix)
 		{
 			width = matrix.at(0).size();

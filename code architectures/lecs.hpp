@@ -674,10 +674,10 @@ namespace lecs
 	public:
 
 		// function to be called when the system is added to system manager
-		virtual void Init(EntityManager*, EventManager*, SystemManager*) {}
+		virtual void Init(EntityManager&, EventManager&, SystemManager&) {}
 
 		// function to be called everytime system manager is updated
-		virtual void Update(EntityManager*, EventManager*, DeltaTime) {}
+		virtual void Update(EntityManager&, EventManager&, DeltaTime) {}
 	};
 
 	// system manager class to manager all systems
@@ -752,7 +752,7 @@ namespace lecs
 			std::unique_ptr<System> u_ptr{ s };
 			systems.resize(systems.size() + 1);
 			systems.at(GetSystemID<T>()) = std::move(u_ptr);
-			s->Init(entity_manager, event_manager, this);
+			s->Init(*entity_manager, *event_manager, *this);
 
 			logger.AddLog
 			(
@@ -780,7 +780,7 @@ namespace lecs
 		{
 			for (auto& s : systems)
 			{
-				s->Update(entity_manager, event_manager, delta_time);
+				s->Update(*entity_manager, *event_manager, delta_time);
 			}
 		}
 	};
@@ -800,6 +800,19 @@ namespace lecs
 			entity_manager = new EntityManager();
 			event_manager = new EventManager(entity_manager);
 			system_manager = new SystemManager(entity_manager, event_manager);
+		}
+
+		ECSManagers& operator=(const ECSManagers& other)
+		{
+			if (entity_manager) delete entity_manager;
+			if (event_manager) delete event_manager;
+			if (system_manager) delete system_manager;
+
+			entity_manager = other.entity_manager;
+			event_manager = other.event_manager;
+			system_manager = other.system_manager;
+
+			return *this;
 		}
 
 		// update all ecs managers
