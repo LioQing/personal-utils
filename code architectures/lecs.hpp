@@ -374,12 +374,13 @@ namespace lecs
 				if (!e) continue;
 				if (!e->IsActive())
 				{
+					auto tmp = e->id;
 					empty_id.push_back(e->id);
 					delete e.release();
 
 					logger.AddLog
 					(
-						"Entity destroyed: Entity " + std::to_string(e->id) + " destroyed",
+						"Entity destroyed: Entity " + std::to_string(tmp) + " destroyed",
 						LT_ENTITY, LT_DELETE
 					);
 				}
