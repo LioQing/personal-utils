@@ -1,69 +1,104 @@
+#pragma once
+
+#ifndef M_PI
+#define M_PI 3.1415926535897932384
+#endif
+
 #include "Vec2.hpp"
+#include "Transformable.hpp"
 
 namespace lio
 {
 	template <typename T, typename _Ty = T>
-	class Circle
+	class Circle : public Transformable<T>
 	{
+	private:
+
+		_Ty m_radius;
+
 	public:
 
-		Vec2<T> center;
-		_Ty radius;
-
-		Circle(_Ty r = 0.0, T x = 0.0, T y = 0.0) : radius(r), center(x, y) {}
-		template <typename U> Circle(_Ty r, const Vec2<U>& ctr) : radius(r), center(ctr.x, ctr.y) {}
-		template <typename U, typename _Uy> Circle(const Circle<U, _Uy>& c) : radius(c.radius), center(c.center) {}
+		Circle(_Ty radius = 0.0, Vec2<T> position = Vec2<T>::Zero())
+			: m_radius(radius), Transformable<T>(position) {}
 
 		template <typename U, typename _Uy>
-		Circle& operator=(const Circle<U, _Uy>& c)
+		operator Circle<U, _Uy>() const
 		{
-			center = c.center;
-			radius = c.radius;
-			return *this;
-		}
-		Circle& operator=(_Ty r)
-		{
-			center = Vec2<T>::Zero();
-			radius = r;
-			return *this;
-		}
-
-		template <typename U, typename _Uy>
-		friend bool operator==(const Circle& c1, const Circle<U, _Uy>& c2)
-		{
-			return c1.center == c2.center && c1.radius == c2.radius;
+			return Circle<U, _Uy>(m_radius, Transformable<T>::GetPosition());
 		}
 		template <typename U, typename _Uy>
-		friend bool operator!=(const Circle& c1, const Circle<U, _Uy>& c2)
+		Circle<U, _Uy> Cast() const
 		{
-			return !(c1.center == c2.center && c1.radius == c2.radius);
+			return Circle<U, _Uy>(m_radius, Transformable<T>::GetPosition());
+		}
+		
+		_Ty GetRadius() const { return m_radius; }
+		void SetRadius(_Ty radius)
+		{
+			m_radius = radius;
 		}
 
-		friend std::ostream& operator<<(std::ostream& os, const Circle& c)
+		Vec2<T> GetCenter() const { return Transformable<T>::GetPosition() + Vec2<_Ty>(m_radius, m_radius); }
+		void SetCenter(const Vec2<T>& center)
 		{
-			os << "center(" << c.center << "), radius = " << c.radius;
-			return os;
+			Transformable<T>::SetPosition(center - Vec2<_Ty>(m_radius, m_radius));
 		}
-		friend std::istream& operator>>(std::istream& is, Circle& c)
+		void SetCenter(T x, T y)
 		{
-			is >> c.radius >> c.center;
-			return is;
+			Transformable<T>::SetPosition(x - m_radius, y - m_radius);
 		}
 
+		double Diameter() const
+		{
+			return 2 * m_radius;
+		}
+		double Circumference() const
+		{
+			return 2 * M_PI * m_radius;
+		}
+		double Area() const
+		{
+			return M_PI * m_radius * m_radius;
+		}
+
+		// <0 -> overlapped
+		// 0 --> touch each other
+		// >0 -> not overlapped
+		template <typename U, typename _Uy>
+		double OverlapEx(const Circle<U, _Uy>& c) const
+		{
+			return GetCenter().Distance(c.GetCenter()) - m_radius - c.GetRadius();
+		}
+		// -1 -> overlapped
+		// 0 --> touch each other
+		// 1 --> not overlapped
+		template <typename U, typename _Uy>
+		int Overlap(const Circle<U, _Uy>& c) const
+		{
+			int val = OverlapEx(c);
+
+			if (val == 0) return 0;
+			return (val > 0) ? 1 : -1;
+		}
+
+		// <0 -> lies inside circle
+		// 0 --> lies on circle
+		// >0 -> lies outside circle
 		template <typename U>
-		Circle& Set(_Ty r, const Vec2<U>& ctr)
+		double LiesEx(const Vec2<U>& v) const
 		{
-			radius = r;
-			center.x = ctr.x;
-			center.y = ctr.y;
-			return *this;
+			return GetCenter().Distance(v) - m_radius;
 		}
-		Circle& Set(_Ty r = 0.0, T x = 0.0, T y = 0.0)
+		// -1 -> lies inside circle
+		// 0 --> lies on circle
+		// 1 --> lies outside circle
+		template <typename U>
+		int Lies(const Vec2<U>& v) const
 		{
-			radius = r;
-			center.x = x;
-			center.y = y;
-			return *this;
+			int val = LiesEx(v);
+
+			if (val == 0) return 0;
+			return (val > 0) ? 1 : -1;
 		}
 	};
 }
