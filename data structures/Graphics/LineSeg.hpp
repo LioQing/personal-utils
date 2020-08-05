@@ -5,9 +5,6 @@
 #include <algorithm>
 #include "Vec2.hpp"
 
-#undef max
-#undef min
-
 namespace lio
 {
 	template <typename T>

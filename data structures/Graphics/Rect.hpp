@@ -17,7 +17,7 @@ namespace lio
 		Rect(const Vec2<T>& position = Vec2<T>::Zero(), const Vec2<T>& size = Vec2<T>::One())
 			: m_size(size), Transformable<T>(position) {}
 		Rect(const Rect<T>& rect)
-			: m_size(rect.m_size), Transformable<T>(rect.operator lio::Transformable<T>) {}
+			: m_size(rect.m_size), Transformable<T>(rect) {}
 
 		template <typename U>
 		operator Rect<U>() const
@@ -45,6 +45,10 @@ namespace lio
 		{
 			return m_size.x * m_size.y;
 		}
+		T Perimeter() const
+		{
+			return (m_size.x + m_size.y) * 2.0;
+		}
 		double Diagonal() const
 		{
 			return m_size.Magnitude();
@@ -54,15 +58,72 @@ namespace lio
 		bool Overlap(const Rect<U>& rect) const
 		{
 			if (
+				Transformable<T>::GetPosition().x + m_size.x > rect.GetPosition().x &&
+				rect.GetPosition().x + rect.m_size.x > Transformable<T>::GetPosition().x &&
+				Transformable<T>::GetPosition().y + m_size.y > rect.GetPosition().y &&
+				rect.GetPosition().y + rect.m_size.y > Transformable<T>::GetPosition().y
+				)
+			{
+				return true;
+			}
+			return false;
+		}
+		// -1 -> overlapped
+		// 0 --> touch each other
+		// 1 --> not overlapped
+		template <typename U>
+		int OverlapEx(const Rect<U>& rect) const
+		{
+			if (Overlap(rect))
+			{
+				return -1;
+			}
+			else if (
 				Transformable<T>::GetPosition().x + m_size.x >= rect.GetPosition().x &&
 				rect.GetPosition().x + rect.m_size.x >= Transformable<T>::GetPosition().x &&
 				Transformable<T>::GetPosition().y + m_size.y >= rect.GetPosition().y &&
 				rect.GetPosition().y + rect.m_size.y >= Transformable<T>::GetPosition().y
 				)
 			{
+				return 0;
+			}
+			return 1;
+		}
+
+		template <typename U>
+		bool Lies(const Vec2<U>& v) const
+		{
+			if (
+				v.x > Transformable<T>::GetPosition().x &&
+				v.x < Transformable<T>::GetPosition().x + m_size.x &&
+				v.y > Transformable<T>::GetPosition().y &&
+				v.y < Transformable<T>::GetPosition().y + m_size.y
+				)
+			{
 				return true;
 			}
 			return false;
+		}
+		// -1 -> overlapped
+		// 0 --> touch each other
+		// 1 --> not overlapped
+		template <typename U>
+		int LiesEx(const Vec2<U>& v) const
+		{
+			if (Lies(v))
+			{
+				return -1;
+			}
+			else if (
+				v.x >= Transformable<T>::GetPosition().x &&
+				v.x <= Transformable<T>::GetPosition().x + m_size.x &&
+				v.y >= Transformable<T>::GetPosition().y &&
+				v.y <= Transformable<T>::GetPosition().y + m_size.y
+				)
+			{
+				return 0;
+			}
+			return 1;
 		}
 	};
 }
