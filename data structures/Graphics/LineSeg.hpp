@@ -2,7 +2,11 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "Vec2.hpp"
+
+#undef max
+#undef min
 
 namespace lio
 {
@@ -342,12 +346,6 @@ namespace lio
 	{
 		os << "(" << l.p1 << "), (" << l.p2 << ")";
 		return os;
-	}
-	template <typename T>
-	std::istream& operator>>(std::istream& is, LineSeg<T>& l)
-	{
-		is >> l.p1 >> l.p2;
-		return is;
 	}
 
 	typedef LineSeg<double> LineSegd;

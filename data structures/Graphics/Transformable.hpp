@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Vec2.hpp"
 
 namespace lio
@@ -11,8 +13,10 @@ namespace lio
 		
 	public:
 
-		Transformable(Vec2<T> position = Vec2<T>::Zero())
+		Transformable(const Vec2<T>& position = Vec2<T>::Zero())
 			: m_position(position) {}
+		Transformable(const Transformable& transform)
+			: m_position(transform.m_position) {}
 
 		virtual ~Transformable() {}
 

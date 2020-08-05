@@ -18,8 +18,10 @@ namespace lio
 
 	public:
 
-		Circle(_Ty radius = 0.0, Vec2<T> position = Vec2<T>::Zero())
+		Circle(_Ty radius = 0.0, const Vec2<T>& position = Vec2<T>::Zero())
 			: m_radius(radius), Transformable<T>(position) {}
+		Circle(const Circle& c)
+			: m_radius(c.m_radius), Transformable<T>(c.operator lio::Transformable<T>) {}
 
 		template <typename U, typename _Uy>
 		operator Circle<U, _Uy>() const

@@ -134,12 +134,12 @@ namespace lio
 			return (val > 0) ? 1 : -1;
 		}
 
-		static Vec2 One()	{ return Vec2(1.0, 1.0); }
-		static Vec2 Zero()	{ return Vec2(0.0, 0.0); }
-		static Vec2 Up()	{ return Vec2(0.0, 1.0); }
-		static Vec2 Down()	{ return Vec2(0.0, -1.0); }
-		static Vec2 Left()	{ return Vec2(-1.0, 0.0); }
-		static Vec2 Right()	{ return Vec2(1.0, 0.0); }
+		static const Vec2 One()		{ return Vec2(1.0, 1.0); }
+		static const Vec2 Zero()	{ return Vec2(0.0, 0.0); }
+		static const Vec2 Up()		{ return Vec2(0.0, 1.0); }
+		static const Vec2 Down()	{ return Vec2(0.0, -1.0); }
+		static const Vec2 Left()	{ return Vec2(-1.0, 0.0); }
+		static const Vec2 Right()	{ return Vec2(1.0, 0.0); }
 	};
 
 	template <typename T, typename U>
@@ -343,6 +343,11 @@ namespace lio
 		return tmp;
 	}
 
+	template <typename T>
+	Vec2<T> operator-(const Vec2<T>& v)
+	{
+		return Vec2<T>(-v.x, -v.y);
+	}
 	
 	template <typename T, typename U>
 	bool operator==(const Vec2<T>& v1, const Vec2<U>& v2)
@@ -360,12 +365,6 @@ namespace lio
 	{
 		os << v.x << ", " << v.y;
 		return os;
-	}
-	template <typename T>
-	std::istream& operator>>(std::istream& is, Vec2<T>& v)
-	{
-		is >> v.x >> v.y;
-		return is;
 	}
 
 	typedef Vec2<double> Vec2d;
