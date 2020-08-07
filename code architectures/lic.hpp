@@ -24,10 +24,13 @@ namespace lic
 
 	class Manager
 	{
-	private:
+	public:
 
 		// list of list of components
 		std::array<std::vector<std::unique_ptr<Component>>, MAX_COMPONENT> m_components;
+
+		// list of removed components
+		std::array<std::vector<size_t>, MAX_COMPONENT> m_empty_component;
 
 		// list of entities
 		std::vector<std::unique_ptr<Entity>> m_entities;
@@ -51,7 +54,7 @@ namespace lic
 		}
 
 		// get entity
-		Entity& GetEntity(EntityID entity) const
+		Entity& GetEntity(EntityID entity)
 		{
 			return *m_entities.at(entity).get();
 		}
@@ -71,13 +74,38 @@ namespace lic
 			T* c(new T(std::forward<TArgs>(args)...));
 			c->entity = entity;
 			c->manager = this;
-
-			std::unique_ptr<Component> u_ptr{ c };
 			auto& ref = *c;
 
-			m_components.at(GetComponentID<T>()).push_back(std::move(u_ptr));
-			m_checklist.at(entity).set(GetComponentID<T>());
+			ComponentID id = GetComponentID<T>();
+			if (m_empty_component.at(GetComponentID<T>()).empty())
+			{
+				std::unique_ptr<Component> u_ptr{ c };
+				m_components.at(id).push_back(std::move(u_ptr));
+			}
+			else
+			{
+				m_components.at(id).at(m_empty_component.at(id).back()).reset(c);
+				m_empty_component.at(id).pop_back();
+			}
+
+			m_checklist.at(entity).set(id);
 			return ref;
+		}
+
+		// remove component
+		template <typename T>
+		void RemoveComponent(EntityID entity)
+		{
+			for (auto& cptr : m_components.at(0))
+			{
+				if (cptr != nullptr && cptr->entity == entity)
+				{
+					m_empty_component.at(GetComponentID<T>()).push_back(&cptr - &m_components.at(GetComponentID<T>())[0]);
+					m_checklist.at(cptr->entity).set(GetComponentID<T>(), false);
+					cptr.reset();
+					break;
+				}
+			}
 		}
 
 		// get component
@@ -86,7 +114,7 @@ namespace lic
 		{
 			for (auto& cptr : m_components.at(GetComponentID<T>()))
 			{
-				if (cptr->entity == entity)
+				if (cptr != nullptr && cptr->entity == entity)
 					return *static_cast<T*>(cptr.get());
 			}
 		}
@@ -100,11 +128,12 @@ namespace lic
 
 	private:
 
+		// filter out component U from view
 		template <typename U, typename T, typename ...Ts>
 		void _ProcessMultiFilter(View<T, Ts...>& view)
 		{
-			std::erase_if(view.m_components.m_vec, 
-						  [](T*& c) -> bool 
+			std::erase_if(view.m_components.m_vec,
+						  [](T*& c) -> bool
 						  { return !c->GetEntity().HasComponent<U>(); }
 			);
 		}
@@ -116,12 +145,19 @@ namespace lic
 		View<T, Ts...> Filter()
 		{
 			View<T, Ts...> view;
-			for (auto& c : m_components.at(GetComponentID<T>()))
-				view.m_components.m_vec.push_back(static_cast<T*>(c.get()));
 
+			// get vector of component T
+			for (auto& cptr : m_components.at(GetComponentID<T>()))
+			{
+				if (cptr == nullptr) continue;
+				view.m_components.m_vec.push_back(static_cast<T*>(cptr.get()));
+			}
+
+			// filter out components Ts...
 			int process[] = { 0, (_ProcessMultiFilter<Ts>(view), 0)... };
 			(void)process;
 
+			// push entities
 			for (auto& c : view.m_components)
 				view.m_entities.m_vec.push_back(&c.GetEntity());
 
@@ -147,10 +183,10 @@ namespace lic
 
 	public:
 
-		virtual ~Component() {}
+		virtual ~Component() = default;
 
 		// get entity
-		Entity& GetEntity() const
+		Entity& GetEntity()
 		{
 			return manager->GetEntity(entity);
 		}
@@ -185,14 +221,21 @@ namespace lic
 
 		// add component
 		template <typename T, typename ...TArgs>
-		T& AddComponent(TArgs&& ...args) const
+		T& AddComponent(TArgs&& ...args)
 		{
 			return manager->AddComponent<T>(id, std::forward<TArgs>(args)...);
 		}
 
+		// remove component
+		template <typename T>
+		void RemoveComponent()
+		{
+			manager->RemoveComponent<T>(id);
+		}
+
 		// get component
 		template <typename T>
-		T& GetComponent() const
+		T& GetComponent()
 		{
 			return manager->GetComponent<T>(id);
 		}
@@ -222,7 +265,7 @@ namespace lic
 
 	public:
 
-		Container() {}
+		Container() = default;
 		Container(std::vector<T*> vec, const size_t index = 0)
 			: m_index(index), m_vec(vec) {}
 
@@ -265,7 +308,7 @@ namespace lic
 
 	public:
 
-		TupleList() {}
+		TupleList() = default;
 		TupleList(std::vector<Entity*> vec, const size_t index = 0)
 			: m_index(index), m_vec(vec) {}
 
@@ -304,7 +347,7 @@ namespace lic
 	template <typename ...Ts>
 	class View
 	{
-	public:
+	private:
 
 		friend class Manager;
 
@@ -314,7 +357,7 @@ namespace lic
 
 	public:
 
-		View() {}
+		View() = default;
 
 		// begin and end methods for entities iterator
 		Container<Entity> begin()
@@ -327,7 +370,7 @@ namespace lic
 		}
 
 		// get component T
-		Container<Ts...> Component() const
+		Container<Ts...> Component()
 		{
 			return m_components;
 		}
