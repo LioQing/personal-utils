@@ -8,7 +8,7 @@
 #include <tuple>
 #include <cstdint>
 
-namespace lics
+namespace lic
 {
 	// units
 	using ComponentID = uint32_t;
