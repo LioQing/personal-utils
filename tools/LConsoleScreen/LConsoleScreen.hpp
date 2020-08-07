@@ -13,63 +13,43 @@ https://www.avrfreaks.net/sites/default/files/triangles.c
 
 #include <Windows.h>
 #include <string>
-#include <cwchar>
-
-typedef struct _CONSOLE_FONT_INFOEX
-{
-    ULONG cbSize;
-    DWORD nFont;
-    COORD dwFontSize;
-    UINT  FontFamily;
-    UINT  FontWeight;
-    WCHAR FaceName[LF_FACESIZE];
-} CONSOLE_FONT_INFOEX, *PCONSOLE_FONT_INFOEX;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-BOOL WINAPI SetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
-BOOL WINAPI GetCurrentConsoleFontEx(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
-#ifdef __cplusplus
-}
-#endif
 
 namespace lio
 {
 	enum COLOUR
 	{
-		FG_BLACK        = 0x0000,
-		FG_DARK_BLUE    = 0x0001,	
-		FG_DARK_GREEN   = 0x0002,
-		FG_DARK_CYAN    = 0x0003,
-		FG_DARK_RED     = 0x0004,
+		FG_BLACK = 0x0000,
+		FG_DARK_BLUE = 0x0001,
+		FG_DARK_GREEN = 0x0002,
+		FG_DARK_CYAN = 0x0003,
+		FG_DARK_RED = 0x0004,
 		FG_DARK_MAGENTA = 0x0005,
-		FG_DARK_YELLOW  = 0x0006,
-		FG_GREY         = 0x0007,
-		FG_DARK_GREY    = 0x0008,
-		FG_BLUE         = 0x0009,
-		FG_GREEN		= 0x000A,
-		FG_CYAN			= 0x000B,
-		FG_RED          = 0x000C,
-		FG_MAGENTA      = 0x000D,
-		FG_YELLOW       = 0x000E,
-		FG_WHITE        = 0x000F,
-		BG_BLACK        = 0x0000,
-		BG_DARK_BLUE    = 0x0010,
-		BG_DARK_GREEN   = 0x0020,
-		BG_DARK_CYAN    = 0x0030,
-		BG_DARK_RED     = 0x0040,
+		FG_DARK_YELLOW = 0x0006,
+		FG_GREY = 0x0007,
+		FG_DARK_GREY = 0x0008,
+		FG_BLUE = 0x0009,
+		FG_GREEN = 0x000A,
+		FG_CYAN = 0x000B,
+		FG_RED = 0x000C,
+		FG_MAGENTA = 0x000D,
+		FG_YELLOW = 0x000E,
+		FG_WHITE = 0x000F,
+		BG_BLACK = 0x0000,
+		BG_DARK_BLUE = 0x0010,
+		BG_DARK_GREEN = 0x0020,
+		BG_DARK_CYAN = 0x0030,
+		BG_DARK_RED = 0x0040,
 		BG_DARK_MAGENTA = 0x0050,
-		BG_DARK_YELLOW  = 0x0060,
-		BG_GREY         = 0x0070,
-		BG_DARK_GREY    = 0x0080,
-		BG_BLUE         = 0x0090,
-		BG_GREEN        = 0x00A0,
-		BG_CYAN         = 0x00B0,
-		BG_RED          = 0x00C0,
-		BG_MAGENTA      = 0x00D0,
-		BG_YELLOW       = 0x00E0,
-		BG_WHITE        = 0x00F0,
+		BG_DARK_YELLOW = 0x0060,
+		BG_GREY = 0x0070,
+		BG_DARK_GREY = 0x0080,
+		BG_BLUE = 0x0090,
+		BG_GREEN = 0x00A0,
+		BG_CYAN = 0x00B0,
+		BG_RED = 0x00C0,
+		BG_MAGENTA = 0x00D0,
+		BG_YELLOW = 0x00E0,
+		BG_WHITE = 0x00F0,
 	};
 
 	enum PIXEL_TYPE
@@ -88,7 +68,7 @@ namespace lio
 		LConsoleScreen();
 		~LConsoleScreen();
 
-		void Init(int width, int height, int fontw = 8, int fonth = 16, std::string title = "LConsoleScreen", short background_col = 0x0000);
+		void Init(int width, int height, int fontw = 8, int fonth = 16, const std::string& title = "LConsoleScreen", short background_col = 0x0000);
 
 		void Display();
 
@@ -116,9 +96,9 @@ namespace lio
 
 		void Clear();
 
-		void DrawString(int x, int y, std::string c, short col = 0x000F);
+		void DrawString(int x, int y, const std::string& c, short col = 0x000F);
 
-		void DrawStringAlpha(int x, int y, std::string c, short col = 0x000F);
+		void DrawStringAlpha(int x, int y, const std::string& c, short col = 0x000F);
 
 		void Clip(int& x, int& y);
 
@@ -156,7 +136,7 @@ namespace lio
 		TConsoleScreen();
 		~TConsoleScreen();
 
-		void Init(int width, int height, int size = 16, std::string title = "TConsoleScreen");
+		void Init(int width, int height, int size = 16, const std::string& title = "TConsoleScreen");
 
 		/* DRAW METHODS */
 

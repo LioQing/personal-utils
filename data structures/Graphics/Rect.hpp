@@ -41,11 +41,11 @@ namespace lio
 			m_size.y = y;
 		}
 
-		T Area() const
+		double Area() const
 		{
 			return m_size.x * m_size.y;
 		}
-		T Perimeter() const
+		double Perimeter() const
 		{
 			return (m_size.x + m_size.y) * 2.0;
 		}
@@ -59,9 +59,9 @@ namespace lio
 		{
 			if (
 				Transformable<T>::GetPosition().x + m_size.x > rect.GetPosition().x &&
-				rect.GetPosition().x + rect.m_size.x > Transformable<T>::GetPosition().x &&
+				rect.GetPosition().x + rect.GetSize().x > Transformable<T>::GetPosition().x &&
 				Transformable<T>::GetPosition().y + m_size.y > rect.GetPosition().y &&
-				rect.GetPosition().y + rect.m_size.y > Transformable<T>::GetPosition().y
+				rect.GetPosition().y + rect.GetSize().y > Transformable<T>::GetPosition().y
 				)
 			{
 				return true;
@@ -80,9 +80,9 @@ namespace lio
 			}
 			else if (
 				Transformable<T>::GetPosition().x + m_size.x >= rect.GetPosition().x &&
-				rect.GetPosition().x + rect.m_size.x >= Transformable<T>::GetPosition().x &&
+				rect.GetPosition().x + rect.GetSize().x >= Transformable<T>::GetPosition().x &&
 				Transformable<T>::GetPosition().y + m_size.y >= rect.GetPosition().y &&
-				rect.GetPosition().y + rect.m_size.y >= Transformable<T>::GetPosition().y
+				rect.GetPosition().y + rect.GetSize().y >= Transformable<T>::GetPosition().y
 				)
 			{
 				return 0;
