@@ -5,10 +5,12 @@
 #include <vector>
 #include <bitset>
 #include <algorithm>
+#include <tuple>
 #include <cstdint>
 
 namespace lics
 {
+	// units
 	using ComponentID = uint32_t;
 	using EntityID = uint32_t;
 
@@ -17,7 +19,7 @@ namespace lics
 	// forward declaration
 	class Entity;
 	class Component;
-	template <typename T>
+	template <typename ...Ts>
 	class View;
 
 	class Manager
@@ -98,8 +100,8 @@ namespace lics
 
 	private:
 
-		template <typename U, typename T>
-		void _ProcessMultiFilter(View<T>& view)
+		template <typename U, typename T, typename ...Ts>
+		void _ProcessMultiFilter(View<T, Ts...>& view)
 		{
 			std::erase_if(view.m_components.m_vec, 
 						  [](T*& c) -> bool 
@@ -111,9 +113,9 @@ namespace lics
 
 		// component filter
 		template <typename T, typename ...Ts>
-		View<T> Filter()
+		View<T, Ts...> Filter()
 		{
-			View<T> view;
+			View<T, Ts...> view;
 			for (auto& c : m_components.at(GetComponentID<T>()))
 				view.m_components.m_vec.push_back(static_cast<T*>(c.get()));
 
@@ -126,6 +128,10 @@ namespace lics
 			return view;
 		}
 	};
+
+
+	/*--------COMPONENT----------*/
+
 
 	class Component
 	{
@@ -149,6 +155,10 @@ namespace lics
 			return manager->GetEntity(entity);
 		}
 	};
+
+
+	/*-------------ENTITY-------------*/
+
 
 	class Entity
 	{
@@ -175,7 +185,7 @@ namespace lics
 
 		// add component
 		template <typename T, typename ...TArgs>
-		T& AddComponent(TArgs&& ...args)
+		T& AddComponent(TArgs&& ...args) const
 		{
 			return manager->AddComponent<T>(id, std::forward<TArgs>(args)...);
 		}
@@ -195,29 +205,34 @@ namespace lics
 		}
 	};
 
-	template <typename T>
-	class Container;
 
-	template <typename T>
-	class ContainerIteratorType
+	/*-----------CONTAINERS------------*/
+
+
+	template <typename T, typename ...Ts>
+	class Container
 	{
 	private:
 
+		friend class View<Ts...>;
+		friend class Manager;
+
 		size_t m_index;
-		Container<T>& m_container;
+		std::vector<T*> m_vec;
 
 	public:
 
-		ContainerIteratorType(Container<T>& container, const size_t index)
-			: m_index(index), m_container(container) {}
+		Container() {}
+		Container(std::vector<T*> vec, const size_t index = 0)
+			: m_index(index), m_vec(vec) {}
 
 		// operators for range-based for loop
-		bool operator!=(const ContainerIteratorType& itr) const
+		bool operator!=(const Container& itr) const
 		{
 			return m_index != itr.m_index;
 		}
 
-		const ContainerIteratorType& operator++()
+		const Container& operator++()
 		{
 			++m_index;
 			return *this;
@@ -225,87 +240,102 @@ namespace lics
 
 		T& operator*() const
 		{
-			return *((std::vector<T*>)m_container).at(m_index);;
-		}
-	};
-
-	// alias
-	template <typename T>
-	using ContainerIterator = ContainerIteratorType<T>;
-	template <typename T>
-	using ConstContainerIterator = ContainerIteratorType<const T>;
-
-	template <typename T>
-	class Container
-	{
-	private:
-
-		friend class Manager;
-
-		// the backing vector of T
-		std::vector<T*> m_vec;
-
-	public:
-
-		operator std::vector<T*>()
-		{
-			return m_vec;
+			return *m_vec.at(m_index);
 		}
 
 		// begin and end methods for iterator
-		ContainerIterator<T> begin()
+		Container<T, Ts...> begin()
 		{
-			return ContainerIterator<T>(*this, 0);
+			return Container<T, Ts...>(m_vec, 0);
 		}
-		ContainerIterator<T> end()
+		Container<T, Ts...> end()
 		{
-			return ContainerIterator<T>(*this, m_vec.size());
-		}
-		ConstContainerIterator<T> begin() const
-		{
-			return ConstContainerIterator<T>(*this, 0);
-		}
-		ConstContainerIterator<T> end() const
-		{
-			return ConstContainerIterator<T>(*this, m_vec.size());
+			return Container<T, Ts...>(m_vec, m_vec.size());
 		}
 	};
 
-	template <typename T>
-	class View
+	// tuple list
+	template <typename ...Ts>
+	class TupleList
 	{
 	private:
+
+		size_t m_index;
+		std::vector<Entity*> m_vec;
+
+	public:
+
+		TupleList() {}
+		TupleList(std::vector<Entity*> vec, const size_t index = 0)
+			: m_index(index), m_vec(vec) {}
+
+		// operators for range-based for loop
+		bool operator!=(const TupleList& itr) const
+		{
+			return m_index != itr.m_index;
+		}
+
+		const TupleList& operator++()
+		{
+			++m_index;
+			return *this;
+		}
+
+		std::tuple<Ts&...> operator*() const
+		{
+			return std::tie(m_vec.at(m_index)->GetComponent<Ts>()...);
+		}
+
+		// begin and end methods for iterator
+		TupleList<Ts...> begin()
+		{
+			return TupleList<Ts...>(m_vec, 0);
+		}
+		TupleList<Ts...> end()
+		{
+			return TupleList<Ts...>(m_vec, m_vec.size());
+		}
+	};
+
+
+	/*----------VIEW----------*/
+
+
+	template <typename ...Ts>
+	class View
+	{
+	public:
 
 		friend class Manager;
 
 		// entities and component T
-		Container<Entity> m_entities;
-		Container<T> m_components;
+		Container<Entity, Ts...> m_entities;
+		Container<Ts...> m_components;
 
 	public:
 
+		View() {}
+
 		// begin and end methods for entities iterator
-		ContainerIterator<Entity> begin()
+		Container<Entity> begin()
 		{
 			return m_entities.begin();
 		}
-		ContainerIterator<Entity> end()
-		{
-			return m_entities.end();
-		}
-		ConstContainerIterator<Entity> begin() const
-		{
-			return m_entities.begin();
-		}
-		ConstContainerIterator<Entity> end() const
+		Container<Entity> end()
 		{
 			return m_entities.end();
 		}
 
 		// get component T
-		Container<T> Components() const
+		Container<Ts...> Component() const
 		{
 			return m_components;
+		}
+
+		// get each component T, Ts...
+		TupleList<Ts...> Each()
+		{
+			return TupleList<Ts...>(m_entities.m_vec);
 		}
 	};
 }
