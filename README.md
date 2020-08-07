@@ -9,6 +9,7 @@
 File | Name | Description
 ------------ | ------------- | -------------
 [lecs.hpp](https://github.com/LioQing/PersonalUtils/blob/master/code%20architectures/lecs.hpp) | Lio's ECS | Single header ECS library with an event system
+[lics.hpp](https://github.com/LioQing/PersonalUtils/blob/master/code%20architectures/lics.hpp) | Lio's ICS | Single header ECS library, simpler and better than LECS
 
 ### Data Structures
 
