@@ -24,7 +24,7 @@ namespace lic
 
 	class Manager
 	{
-	public:
+	private:
 
 		// list of list of components
 		std::array<std::vector<std::unique_ptr<Component>>, MAX_COMPONENT> m_components;
@@ -35,22 +35,68 @@ namespace lic
 		// list of entities
 		std::vector<std::unique_ptr<Entity>> m_entities;
 
-		// component check list for entities
+		// list of removed entities
+		std::vector<EntityID> m_empty_entity;
+
+		// component checklist for entities
 		std::vector<std::bitset<MAX_COMPONENT>> m_checklist;
 
-		// next id for entity and component
+		// next id for entity
 		EntityID m_next_entity_id = 0u;
-		ComponentID m_next_component_id = 0u;
+
+		// next id for component
+		// as a method for other const methods
+		ComponentID GetNextComponentID() const
+		{
+			static ComponentID m_next_component_id = 0u;
+			return m_next_component_id++;
+		}
 
 	public:
 
 		// add entity
 		Entity& AddEntity()
 		{
-			auto id = m_next_entity_id++;
-			m_entities.push_back(std::make_unique<Entity>(this, id));
-			m_checklist.emplace_back(false);
+			EntityID id;
+
+			if (m_empty_entity.empty())
+			{
+				id = m_next_entity_id++;
+				m_entities.push_back(std::make_unique<Entity>(this, id));
+				m_checklist.emplace_back(false);
+			}
+			else
+			{
+				id = m_empty_entity.back();
+				m_entities.at(id) = std::make_unique<Entity>(this, id);
+			}
+			
+#ifdef LIC_DEBUG
+			std::cout << "Entity " << id << " created." << std::endl;
+#endif
 			return *m_entities.at(id).get();
+		}
+
+		// destroy entity
+		void DestroyEntity(EntityID entity)
+		{
+			// remove components
+			for (ComponentID cid = 0u; cid < MAX_COMPONENT; ++cid)
+			{
+				if (HasComponent(entity, cid))
+					RemoveComponent(entity, cid);
+			}
+
+			// reset checklist
+			m_checklist.at(entity).reset();
+
+			// destroy entity
+			m_empty_entity.push_back(entity);
+			m_entities.at(entity).reset();
+
+#ifdef LIC_DEBUG
+			std::cout << "Entity " << entity << " destroyed." << std::endl;
+#endif
 		}
 
 		// get entity
@@ -61,9 +107,9 @@ namespace lic
 
 		// get component id
 		template <typename T>
-		ComponentID GetComponentID()
+		ComponentID GetComponentID() const
 		{
-			static ComponentID id = m_next_component_id++;
+			static ComponentID id = GetNextComponentID();
 			return id;
 		}
 
@@ -71,24 +117,28 @@ namespace lic
 		template <typename T, typename ...TArgs>
 		T& AddComponent(EntityID entity, TArgs&& ...args)
 		{
-			T* c(new T(std::forward<TArgs>(args)...));
-			c->entity = entity;
-			c->manager = this;
-			auto& ref = *c;
+			T* cptr(new T(std::forward<TArgs>(args)...));
+			cptr->entity = entity;
+			cptr->manager = this;
+			auto& ref = *cptr;
 
 			ComponentID id = GetComponentID<T>();
-			if (m_empty_component.at(GetComponentID<T>()).empty())
+			if (m_empty_component.at(id).empty())
 			{
-				std::unique_ptr<Component> u_ptr{ c };
+				std::unique_ptr<Component> u_ptr{ cptr };
 				m_components.at(id).push_back(std::move(u_ptr));
 			}
 			else
 			{
-				m_components.at(id).at(m_empty_component.at(id).back()).reset(c);
+				m_components.at(id).at(m_empty_component.at(id).back()).reset(cptr);
 				m_empty_component.at(id).pop_back();
 			}
 
 			m_checklist.at(entity).set(id);
+
+#ifdef LIC_DEBUG
+			std::cout << "Component " << typeid(T).name() << " added to Entity " << entity << "." << std::endl;
+#endif
 			return ref;
 		}
 
@@ -96,7 +146,15 @@ namespace lic
 		template <typename T>
 		void RemoveComponent(EntityID entity)
 		{
-			for (auto& cptr : m_components.at(0))
+			if (!HasComponent(entity, GetComponentID<T>()))
+			{
+#ifdef LIC_DEBUG
+				std::cout << "No Component " << GetComponentID<T>() << " found in Entity " << entity << "." << std::endl;
+#endif
+				return;
+			}
+
+			for (auto& cptr : m_components.at(GetComponentID<T>()))
 			{
 				if (cptr != nullptr && cptr->entity == entity)
 				{
@@ -106,7 +164,15 @@ namespace lic
 					break;
 				}
 			}
+
+#ifdef LIC_DEBUG
+			std::cout << "Component " << typeid(T).name() << " removed from Entity " << entity << "." << std::endl;
+#endif
 		}
+
+		// remove component with component id
+		// defined after entity class definition
+		void RemoveComponent(EntityID entity, ComponentID cid);
 
 		// get component
 		template <typename T>
@@ -121,9 +187,14 @@ namespace lic
 
 		// has component
 		template <typename T>
-		bool HasComponent(EntityID entity)
+		bool HasComponent(EntityID entity) const
 		{
-			return m_checklist.at(entity)[GetComponentID<T>()];
+			return m_checklist.at(entity).test(GetComponentID<T>());
+		}
+		// has component with component id
+		bool HasComponent(EntityID entity, ComponentID cid) const
+		{
+			return m_checklist.at(entity).test(cid);
 		}
 
 	private:
@@ -219,6 +290,12 @@ namespace lic
 			return id;
 		}
 
+		// destroy this entity
+		void Destroy()
+		{
+			manager->DestroyEntity(id);
+		}
+
 		// add component
 		template <typename T, typename ...TArgs>
 		T& AddComponent(TArgs&& ...args)
@@ -231,6 +308,12 @@ namespace lic
 		void RemoveComponent()
 		{
 			manager->RemoveComponent<T>(id);
+		}
+
+		// remove component with component id
+		void RemoveComponent(ComponentID cid)
+		{
+			manager->RemoveComponent(id, cid);
 		}
 
 		// get component
@@ -246,7 +329,39 @@ namespace lic
 		{
 			return manager->HasComponent<T>(id);
 		}
+
+		// has component with component id
+		bool HasComponent(ComponentID cid) const
+		{
+			return manager->HasComponent(id, cid);
+		}
 	};
+
+	void Manager::RemoveComponent(EntityID entity, ComponentID cid)
+	{
+		if (!HasComponent(entity, cid))
+		{
+#ifdef LIC_DEBUG
+			std::cout << "No Component " << cid << " found in Entity " << entity << "." << std::endl;
+#endif
+			return;
+		}
+
+		for (auto& cptr : m_components.at(cid))
+		{
+			if (cptr != nullptr && cptr->entity == entity)
+			{
+				m_empty_component.at(cid).push_back(&cptr - &m_components.at(cid)[0]);
+				m_checklist.at(cptr->entity).set(cid, false);
+				cptr.reset();
+				break;
+			}
+		}
+
+#ifdef LIC_DEBUG
+		std::cout << "Component " << cid << " removed from Entity " << entity << "." << std::endl;
+#endif
+	}
 
 
 	/*-----------CONTAINERS------------*/
