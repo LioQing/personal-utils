@@ -22,6 +22,10 @@ namespace lic
 	template <typename ...Ts>
 	class View;
 
+
+	/*-------------Manager--------------*/
+
+
 	class Manager
 	{
 	private:
@@ -45,12 +49,8 @@ namespace lic
 		EntityID m_next_entity_id = 0u;
 
 		// next id for component
-		// as a method for other const methods
-		ComponentID GetNextComponentID() const
-		{
-			static ComponentID m_next_component_id = 0u;
-			return m_next_component_id++;
-		}
+		// mutable for const GetComponentID<T>() function
+		mutable ComponentID m_next_component_id = 0u;
 
 	public:
 
@@ -113,7 +113,7 @@ namespace lic
 		template <typename T>
 		ComponentID GetComponentID() const
 		{
-			static ComponentID id = GetNextComponentID();
+			static ComponentID id = m_next_component_id++;
 			return id;
 		}
 
@@ -121,6 +121,14 @@ namespace lic
 		template <typename T, typename ...TArgs>
 		T& AddComponent(EntityID entity, TArgs&& ...args)
 		{
+			if (HasComponent<T>(entity))
+			{
+#ifdef LIC_DEBUG
+				std::cout << "Component " << typeid(T).name() << " already in Entity " << entity << "." << std::endl;
+#endif
+				return GetComponent<T>(entity);
+			}
+
 			T* cptr(new T(std::forward<TArgs>(args)...));
 			cptr->entity = entity;
 			cptr->manager = this;
