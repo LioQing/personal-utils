@@ -10,6 +10,7 @@ File | Name | Description
 ------------ | ------------- | -------------
 [lecs.hpp](https://github.com/LioQing/PersonalUtils/blob/master/code%20architectures/lecs.hpp) | Lio's ECS | Single header ECS library, managers for components, entities, and systems, with an event system, also managed by an event Manager
 [lic.hpp](https://github.com/LioQing/PersonalUtils/blob/master/code%20architectures/lic.hpp) | Lio's IC | Single header data oriented and data driven library, centralized and managed Entity-Component relataionship (Can be used for ECS, but not ECS as it does not have the system manager)
+[lic_lite.hpp](https://github.com/LioQing/PersonalUtils/blob/master/code%20architectures/lic_lite.hpp) | Lio's IC Lite | Lite version of LIC, Entity is only represented by integral type (uint32_t), with the sacrifice of Entity member functions
 
 ### Data Structures
 
