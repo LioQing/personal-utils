@@ -70,7 +70,7 @@ namespace lic
 				id = m_empty_entity.back();
 				m_entities.at(id) = std::make_unique<Entity>(this, id);
 			}
-			
+
 #ifdef LIC_DEBUG
 			std::cout << "Entity " << id << " created." << std::endl;
 #endif
@@ -308,6 +308,12 @@ namespace lic
 
 		Entity(Manager* manager, EntityID id)
 			: manager(manager), id(id) {}
+
+		// conversion to id
+		operator EntityID() const
+		{
+			return id;
+		}
 
 		// get entity id
 		EntityID GetID() const
