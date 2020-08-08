@@ -104,6 +104,10 @@ namespace lic
 		{
 			return *m_entities.at(entity).get();
 		}
+		const Entity& GetEntity(EntityID entity) const
+		{
+			return *m_entities.at(entity).get();
+		}
 
 		// get component id
 		template <typename T>
@@ -177,6 +181,15 @@ namespace lic
 		// get component
 		template <typename T>
 		T& GetComponent(EntityID entity)
+		{
+			for (auto& cptr : m_components.at(GetComponentID<T>()))
+			{
+				if (cptr != nullptr && cptr->entity == entity)
+					return *static_cast<T*>(cptr.get());
+			}
+		}
+		template <typename T>
+		const T& GetComponent(EntityID entity) const
 		{
 			for (auto& cptr : m_components.at(GetComponentID<T>()))
 			{
@@ -261,6 +274,10 @@ namespace lic
 		{
 			return manager->GetEntity(entity);
 		}
+		const Entity& GetEntity() const
+		{
+			return manager->GetEntity(entity);
+		}
 	};
 
 
@@ -322,6 +339,11 @@ namespace lic
 		{
 			return manager->GetComponent<T>(id);
 		}
+		template <typename T>
+		const T& GetComponent() const
+		{
+			return manager->GetComponent<T>(id);
+		}
 
 		// has component
 		template <typename T>
@@ -372,6 +394,7 @@ namespace lic
 	{
 	private:
 
+		friend class View<T, Ts...>;
 		friend class View<Ts...>;
 		friend class Manager;
 
@@ -402,11 +425,11 @@ namespace lic
 		}
 
 		// begin and end methods for iterator
-		Container<T, Ts...> begin()
+		Container<T, Ts...> begin() const
 		{
 			return Container<T, Ts...>(m_vec, 0);
 		}
-		Container<T, Ts...> end()
+		Container<T, Ts...> end() const
 		{
 			return Container<T, Ts...>(m_vec, m_vec.size());
 		}
@@ -445,11 +468,11 @@ namespace lic
 		}
 
 		// begin and end methods for iterator
-		TupleList<Ts...> begin()
+		TupleList<Ts...> begin() const
 		{
 			return TupleList<Ts...>(m_vec, 0);
 		}
-		TupleList<Ts...> end()
+		TupleList<Ts...> end() const
 		{
 			return TupleList<Ts...>(m_vec, m_vec.size());
 		}
@@ -470,28 +493,72 @@ namespace lic
 		Container<Entity, Ts...> m_entities;
 		Container<Ts...> m_components;
 
+		// filter out non-component U from view
+		template <typename U, typename S, typename ...Ss>
+		void _ProcessMultiFilterOut(View<S, Ss...>& view) const
+		{
+			std::erase_if(view.m_components.m_vec,
+						  [](S*& c) -> bool
+						  { return c->GetEntity().HasComponent<U>(); }
+			);
+		}
+
 	public:
 
 		View() = default;
 
+		// filter out component
+		template <typename ...Us>
+		View<Ts...> FilterOut()
+		{
+			int process[] = { 0, (_ProcessMultiFilterOut<Us, Ts...>(*this), 0)... };
+			(void)process;
+
+			m_entities.m_vec.clear();
+			for (auto& c : m_components)
+				m_entities.m_vec.push_back(&c.GetEntity());
+
+			return *this;
+		}
+		template <typename ...Us>
+		View<Ts...> FilterOut() const
+		{
+			View<Ts...> view(*this);
+
+			int process[] = { 0, (_ProcessMultiFilterOut<Us, Ts...>(view), 0)... };
+			(void)process;
+
+			view.m_entities.m_vec.clear();
+			for (auto& c : view.m_components)
+				view.m_entities.m_vec.push_back(&c.GetEntity());
+
+			return view;
+		}
+
 		// begin and end methods for entities iterator
-		Container<Entity> begin()
+		Container<Entity, Ts...> begin() const
 		{
 			return m_entities.begin();
 		}
-		Container<Entity> end()
+		Container<Entity, Ts...> end() const
 		{
 			return m_entities.end();
 		}
 
 		// get component T
-		Container<Ts...> Component()
+		Container<Ts...> Component() const
 		{
 			return m_components;
 		}
 
+		// get entity
+		Container<Entity, Ts...> Entity() const
+		{
+			return m_entities;
+		}
+
 		// get each component T, Ts...
-		TupleList<Ts...> Each()
+		TupleList<Ts...> Each() const
 		{
 			return TupleList<Ts...>(m_entities.m_vec);
 		}
