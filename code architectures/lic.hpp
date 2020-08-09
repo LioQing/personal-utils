@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <tuple>
 #include <cstdint>
+#include <concepts>
 
 namespace lic
 {
@@ -19,7 +20,13 @@ namespace lic
 	// forward declaration
 	class Entity;
 	class Component;
-	template <typename ...Ts>
+	
+	// concepts
+	template <typename T>
+	concept IsComponent = std::is_base_of<Component, T>::value;
+
+	// ...also forward declaration... with concepts
+	template <IsComponent ...Ts>
 	class View;
 
 
@@ -90,7 +97,7 @@ namespace lic
 		}
 
 		// add component to entity
-		template <typename T, typename ...TArgs>
+		template <IsComponent T, typename ...TArgs>
 		T& AddComponent(EntityID entity, TArgs&& ...args)
 		{
 			if (HasComponent<T>(entity))
@@ -127,7 +134,7 @@ namespace lic
 		}
 
 		// remove component
-		template <typename T>
+		template <IsComponent T>
 		void RemoveComponent(EntityID entity)
 		{
 			if (!HasComponent(entity, GetComponentID<T>()))
@@ -159,7 +166,7 @@ namespace lic
 		void RemoveComponent(EntityID entity, ComponentID cid);
 
 		// get component
-		template <typename T>
+		template <IsComponent T>
 		T& GetComponent(EntityID entity)
 		{
 			for (auto& cptr : m_components.at(GetComponentID<T>()))
@@ -168,7 +175,7 @@ namespace lic
 					return *static_cast<T*>(cptr.get());
 			}
 		}
-		template <typename T>
+		template <IsComponent T>
 		const T& GetComponent(EntityID entity) const
 		{
 			for (auto& cptr : m_components.at(GetComponentID<T>()))
@@ -179,7 +186,7 @@ namespace lic
 		}
 
 		// has component
-		template <typename T>
+		template <IsComponent T>
 		bool HasComponent(EntityID entity) const
 		{
 			return m_checklist.at(entity).test(GetComponentID<T>());
@@ -193,7 +200,7 @@ namespace lic
 	private:
 
 		// filter out component U from view
-		template <typename U, typename T, typename ...Ts>
+		template <IsComponent U, IsComponent T, IsComponent ...Ts>
 		void _ProcessMultiFilter(View<T, Ts...>& view)
 		{
 			std::erase_if(view.m_components.m_vec,
@@ -205,7 +212,7 @@ namespace lic
 	public:
 
 		// component filter
-		template <typename T, typename ...Ts>
+		template <IsComponent T, IsComponent ...Ts>
 		View<T, Ts...> Filter()
 		{
 			View<T, Ts...> view(*this);
@@ -300,14 +307,14 @@ namespace lic
 		}
 
 		// add component
-		template <typename T, typename ...TArgs>
+		template <IsComponent T, typename ...TArgs>
 		T& AddComponent(TArgs&& ...args)
 		{
 			return manager->AddComponent<T>(id, std::forward<TArgs>(args)...);
 		}
 
 		// remove component
-		template <typename T>
+		template <IsComponent T>
 		void RemoveComponent()
 		{
 			manager->RemoveComponent<T>(id);
@@ -320,19 +327,19 @@ namespace lic
 		}
 
 		// get component
-		template <typename T>
+		template <IsComponent T>
 		T& GetComponent()
 		{
 			return manager->GetComponent<T>(id);
 		}
-		template <typename T>
+		template <IsComponent T>
 		const T& GetComponent() const
 		{
 			return manager->GetComponent<T>(id);
 		}
 
 		// has component
-		template <typename T>
+		template <IsComponent T>
 		bool HasComponent() const
 		{
 			return manager->HasComponent<T>(id);
@@ -411,7 +418,7 @@ namespace lic
 
 
 	//ccontainer iterator
-	template <typename T>
+	template <IsComponent T>
 	class CContainerItr
 	{
 	private:
@@ -446,7 +453,7 @@ namespace lic
 	};
 
 	// component container
-	template <typename T, typename ...Ts>
+	template <IsComponent T, IsComponent ...Ts>
 	class CContainer
 	{
 	private:
@@ -474,7 +481,7 @@ namespace lic
 	};
 
 	// econtainer iterator
-	template <typename T, typename ...Ts>
+	template <typename T, IsComponent ...Ts>
 	class EContainerItr
 	{
 	private:
@@ -514,7 +521,7 @@ namespace lic
 	};
 
 	// entity container
-	template <typename T, typename ...Ts>
+	template <typename T, IsComponent ...Ts>
 	class EContainer
 	{
 	private:
@@ -548,7 +555,7 @@ namespace lic
 	/*----------VIEW----------*/
 
 
-	template <typename ...Ts>
+	template <IsComponent ...Ts>
 	class View
 	{
 	private:
@@ -562,7 +569,7 @@ namespace lic
 		CContainer<Ts...> m_components;
 
 		// filter out non-component U from view
-		template <typename U, typename S, typename ...Ss>
+		template <IsComponent U, IsComponent S, IsComponent ...Ss>
 		void _ProcessMultiFilterOut(View<S, Ss...>& view) const
 		{
 			std::erase_if(view.m_components.m_vec,
@@ -576,7 +583,7 @@ namespace lic
 		View(Manager& manager) : manager(manager), m_entities(manager) {}
 
 		// filter out component
-		template <typename ...Us>
+		template <IsComponent ...Us>
 		View<Ts...> FilterOut()
 		{
 			int process[] = { 0, (_ProcessMultiFilterOut<Us, Ts...>(*this), 0)... };
@@ -588,7 +595,7 @@ namespace lic
 
 			return *this;
 		}
-		template <typename ...Us>
+		template <IsComponent ...Us>
 		View<Ts...> FilterOut() const
 		{
 			View<Ts...> view(*this);
