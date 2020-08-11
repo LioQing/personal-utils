@@ -411,10 +411,10 @@ namespace lic
 			return *this;
 		}
 
-		T operator*() const
+		auto operator*() const
 		{
 			if constexpr (std::is_same<T, std::tuple<Ts...>>::value == true)
-				return { manager.GetComponent<Ts>(m_vec.at(m_index))... };
+				return std::tie(manager.GetComponent<Ts>(m_vec.at(m_index))...);
 			if constexpr (std::is_same<T, Entity>::value == true)
 				return Entity(&manager, m_vec.at(m_index));
 		}
