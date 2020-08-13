@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstdint>
 #include <vector>
 
 namespace lio
@@ -12,7 +11,7 @@ namespace lio
 
 		std::vector<std::vector<T>> matrix;
 
-		uint32_t width, height;
+		size_t width, height;
 
 		Matrix() : width(0), height(0) {}
 
@@ -22,7 +21,7 @@ namespace lio
 			height = matrix.size();
 		}
 
-		Matrix(uint32_t width, uint32_t height, T val) : width(width), height(height)
+		Matrix(size_t width, size_t height, T val) : width(width), height(height)
 		{
 			matrix.resize(height);
 			for (auto& h : matrix) h.resize(width);
@@ -49,7 +48,7 @@ namespace lio
 			return *this;
 		}
 
-		void SetSize(uint32_t w, uint32_t h, T val)
+		void SetSize(size_t w, size_t h, T val)
 		{
 			matrix.resize(h);
 			for (auto& h : matrix) h.resize(w);
@@ -67,23 +66,23 @@ namespace lio
 			height = h;
 		}
 
-		std::vector<T>& Row(uint32_t r)
+		std::vector<T>& Row(size_t r)
 		{
 			return matrix.at(r);
 		}
 		// to not affect the performance, returning pointers is necessary
-		std::vector<T*> Column(uint32_t c)
+		std::vector<T*> Column(size_t c)
 		{
 			std::vector<T*> col;
 			for (auto h = 0u; h < height; ++h) col.push_back(&matrix.at(h).at(c));
 			return col;
 		}
 
-		T& At(uint32_t x, uint32_t y)
+		T& At(size_t x, size_t y)
 		{
 			return matrix.at(y).at(x);
 		}
-		T At(uint32_t x, uint32_t y) const
+		T At(size_t x, size_t y) const
 		{
 			return matrix.at(y).at(x);
 		}
