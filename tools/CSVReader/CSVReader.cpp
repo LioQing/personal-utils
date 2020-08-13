@@ -12,6 +12,9 @@ namespace lio
 		std::ifstream csv_file;
 		csv_file.open(path);
 
+		if (!csv_file.good())
+			std::cerr << "Failed to read csv file from " << path << std::endl;
+
 		char buf_c;
 		std::string buf_s = "";
 		size_t row = 0u;
@@ -21,7 +24,9 @@ namespace lio
 			if (buf_c == '\n')
 			{
 				m_val.push_back(std::vector<std::string>());
-				m_val.at(row++).push_back(buf_s);
+				if (!end_line_comma)
+					m_val.at(row).push_back(buf_s);
+				++row;
 				buf_s.clear();
 			}
 			else if (buf_c == ',')
@@ -64,6 +69,20 @@ namespace lio
 	}
 
 	void CSVReader::PrintAll(char delimiter, bool end_line_delimiter) const
+	{
+		for (auto& row : m_val)
+		{
+			for (auto& str : row)
+			{
+				std::cout << str;
+				if (end_line_delimiter || &str - &row[0] != row.size() - 1 && !end_line_delimiter)
+					std::cout << delimiter;
+			}
+			std::cout << std::endl;
+		}
+	}
+
+	void CSVReader::PrintAll(const std::string& delimiter, bool end_line_delimiter) const
 	{
 		for (auto& row : m_val)
 		{

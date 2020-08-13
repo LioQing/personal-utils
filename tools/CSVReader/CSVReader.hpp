@@ -24,5 +24,6 @@ namespace lio
 		size_t Row() const;
 
 		void PrintAll(char delimiter = ',', bool end_line_delimiter = false) const;
+		void PrintAll(const std::string& delimiter, bool end_line_delimiter = false) const;
 	};
 }
