@@ -1,34 +1,85 @@
 #pragma once
 
-#include <map>
-#include <typeinfo>
+#include <vector>
 
 namespace lev
 {
-	struct Event
-	{
-		virtual ~Event() = default;
-	};
+	class Event;
+	struct Listener;
 
 	template <typename T>
 	concept IsEvent = std::is_base_of<Event, T>::value;
 
-	template <IsEvent E>
-	static std::multimap<const std::type_info*, void (*)(const E&)> m_event_map;
-
-	template <IsEvent E>
-	void On(void (*fn)(const E&))
+	namespace
 	{
-		m_event_map<E>.emplace(&typeid(E), fn);
+		using EventID = uint32_t;
+
+		template <IsEvent E>
+		EventID GetEventID();
 	}
 
-	template <IsEvent E>
-	void Emit(const E& event)
+	class Event
 	{
-		auto range = m_event_map<E>.equal_range(&typeid(event));
-		for (auto it = m_event_map<E>.begin(); it != m_event_map<E>.end(); ++it)
+	private:
+
+		template <IsEvent E, typename ...TArgs>
+		friend void Emit(TArgs&& ...args);
+
+		EventID id;
+
+	public:
+
+		virtual ~Event() = default;
+
+		template <IsEvent E>
+		bool Is() const
 		{
-			it->second(event);
+			return id == GetEventID<E>();
+		}
+	};
+
+	namespace
+	{
+		std::vector<std::vector<Listener*>> listeners;
+
+		EventID GetNextEventID()
+		{
+			static EventID next_id = 0u;
+			listeners.push_back(std::vector<Listener*>());
+			return next_id++;
+		}
+
+		template <IsEvent E>
+		EventID GetEventID()
+		{
+			static EventID id = GetNextEventID();
+			return id;
+		}
+	}
+
+	struct Listener
+	{
+		virtual ~Listener() = default;
+
+		template <IsEvent E>
+		void Listen()
+		{
+			listeners.at(GetEventID<E>()).push_back(this);
+		}
+
+		virtual void On(const Event& event) = 0;
+	};
+
+	template <IsEvent E, typename ...TArgs>
+	void Emit(TArgs&& ...args)
+	{
+		E event(std::forward<TArgs>(args)...);
+		event.id = GetEventID<E>();
+		const auto& ev = static_cast<const Event&>(event);
+
+		for (auto& listener : listeners.at(GetEventID<E>()))
+		{
+			listener->On(ev);
 		}
 	}
 }
