@@ -212,13 +212,6 @@ namespace lio
 		return Vec2<decltype(std::declval<double&>() * std::declval<T&>())>(v.x + abs(v.x) * scale, v.y + abs(v.y) * scale);
 	}
 	template <typename T>
-	auto operator-(double s, const Vec2<T>& v)
-	{
-		if (v.Magnitude() == 0) return v;
-		double scale = s / v.Magnitude();
-		return Vec2<decltype(std::declval<double&>() * std::declval<T&>())>(v.x - abs(v.x) * scale, v.y - abs(v.y) * scale);
-	}
-	template <typename T>
 	auto operator*(double s, const Vec2<T>& v)
 	{
 		return Vec2<decltype(s * std::declval<T&>())>(v.x * s, v.y * s);
@@ -226,12 +219,12 @@ namespace lio
 	template <typename T>
 	auto operator/(double s, const Vec2<T>& v)
 	{
-		return Vec2<decltype(s / std::declval<T&>())>(v.x / s, v.y / s);
+		return Vec2<decltype(s / std::declval<T&>())>(s / v.x, s / v.y);
 	}
 	template <typename T>
 	auto operator%(double s, const Vec2<T>& v)
 	{
-		return Vec2<decltype(fmod(s, std::declval<T&>()))>(fmod(v.x, s), fmod(v.y, s));
+		return Vec2<decltype(fmod(std::declval<T&>(), s))>(fmod(s, v.x), fmod(s, v.y));
 	}
 
 	template <typename T>
@@ -347,6 +340,11 @@ namespace lio
 	Vec2<T> operator-(const Vec2<T>& v)
 	{
 		return Vec2<T>(-v.x, -v.y);
+	}
+	template <typename T>
+	Vec2<T> operator+(const Vec2<T>& v)
+	{
+		return Vec2<T>(v.x, v.y);
 	}
 	
 	template <typename T, typename U>
