@@ -15,6 +15,7 @@ namespace lic
 		else
 		{
 			id = m_empty_entity.back();
+			m_empty_entity.pop_back();
 		}
 
 #ifdef LIC_DEBUG

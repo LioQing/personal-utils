@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <array>
 #include <memory>
 #include <vector>
@@ -365,6 +366,7 @@ namespace lic
 		else
 		{
 			id = m_empty_entity.back();
+			m_empty_entity.pop_back();
 		}
 
 #ifdef LIC_DEBUG

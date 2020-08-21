@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include <array>
 #include <memory>
 #include <vector>
@@ -20,7 +21,7 @@ namespace lic
 	// forward declaration
 	class Entity;
 	class Component;
-	
+
 	// concepts
 	template <typename T>
 	concept IsComponent = std::is_base_of<Component, T>::value;
@@ -261,6 +262,7 @@ namespace lic
 
 	public:
 
+		Entity() = default;
 		Entity(Manager* manager, EntityID id)
 			: manager(manager), id(id) {}
 
@@ -361,7 +363,7 @@ namespace lic
 		friend class View<T, Ts...>;
 		friend class View<Ts...>;
 		friend class Manager;
-		
+
 		//backing vector
 		std::vector<T*> m_vec;
 
