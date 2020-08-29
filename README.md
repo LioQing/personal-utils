@@ -30,4 +30,4 @@ File | Name | Description | C++ Standard
 File | Name | Description | C++ Standard
 --- | --- | --- | ---
 [CSVReader](https://github.com/LioQing/PersonalUtils/blob/master/tools/CSVReader) | CSV Reader | CSV (Comma Separated Values) file reader and parser | C++11
-[LConsoleScreen](https://github.com/LioQing/PersonalUtils/tree/master/tools/LConsoleScreen) | Lio's Console Screen | Display Ascii characters as 2D screen in cmd (Windows only) (no delay refresh rate) (better than the one above!!) | C++11
+[LConsoleScreen](https://github.com/LioQing/PersonalUtils/tree/master/tools/LConsoleScreen) | Lio's Console Screen | Display Ascii characters as 2D screen in cmd (Windows only) | C++11 / C99
