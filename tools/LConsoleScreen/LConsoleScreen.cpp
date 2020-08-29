@@ -108,8 +108,8 @@ namespace lio
 	{
 		Clip(x1, y1);
 		Clip(x2, y2);
-		for (int x = x1; x < x2; x++)
-			for (int y = y1; y < y2; y++)
+		for (size_t x = x1; x < x2; x++)
+			for (size_t y = y1; y < y2; y++)
 				Draw(x, y, c, col);
 	}
 
@@ -411,7 +411,6 @@ namespace lio
 
 	TConsoleScreen::~TConsoleScreen()
 	{
-		delete[] m_bufscrn;
 	}
 
 	void TConsoleScreen::Init(int width, int height, int size, const std::string& title)
