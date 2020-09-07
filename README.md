@@ -12,7 +12,7 @@ Unless specified otherwise, all the symbols are under the namespace **lio**.
 
 File | Name | Description | C++ Standard | Dependcies
 --- | --- | --- | --- | ---
-[AStarPathfinder.hpp](https://github.com/LioQing/PersonalUtils/blob/master/tools/CSVReader) | A Star Pathfinder | An A* path finder class can be used on a 2D std::vector | C++14 | [Vec2.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Vec2.hpp)
+[AStarPathfinder.hpp](https://github.com/LioQing/PersonalUtils/blob/master/algorithms/AStarPathfinder.hpp) | A Star Pathfinder | An A* path finder class can be used on a 2D std::vector | C++14 | [Vec2.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Vec2.hpp)
 
 ### Code Architectures
 
