@@ -5,6 +5,9 @@
 #include <algorithm>
 #include "Vec2.hpp"
 
+#undef max()
+#undef min()
+
 namespace lio
 {
 	template <typename T>
@@ -21,12 +24,12 @@ namespace lio
 		template <typename U>
 		operator LineSeg<U>() const
 		{
-			return std::move(LineSeg<U>(p1, p2));
+			return LineSeg<U>(p1, p2);
 		}
 		template <typename U>
-		LineSeg<U>&& Cast() const
+		LineSeg<U> Cast() const
 		{
-			return std::move(LineSeg<U>(p1, p2));
+			return LineSeg<U>(p1, p2);
 		}
 
 		LineSeg& operator=(const LineSeg& l)
@@ -89,8 +92,8 @@ namespace lio
 		template <typename U>
 		bool Intersect(const LineSeg<U>& l) const
 		{
-			if (p1.Orientation(p2, l.p1) != p1.Orientation(p2, l.p2) && 
-				l.p1.Orientation(l.p2, p1) != l.p1.Orientation(l.p2, p2)) 
+			if (p1.Orientation(p2, l.p1) != p1.Orientation(p2, l.p2) &&
+				l.p1.Orientation(l.p2, p1) != l.p1.Orientation(l.p2, p2))
 				return true;
 
 			if (Lies(l.p1)) return true;
@@ -151,12 +154,16 @@ namespace lio
 			if (dy1 <= dx1)
 			{
 				if (dx >= 0)
-					{ x = x1; y = y1; xe = x2; }
+				{
+					x = x1; y = y1; xe = x2;
+				}
 				else
-					{ x = x2; y = y2; xe = x1;}
+				{
+					x = x2; y = y2; xe = x1;
+				}
 
 				out.emplace_back(x, y);
-				
+
 				for (i = 0; x < xe; i++)
 				{
 					x = x + 1;
@@ -173,9 +180,13 @@ namespace lio
 			else
 			{
 				if (dy >= 0)
-					{ x = x1; y = y1; ye = y2; }
+				{
+					x = x1; y = y1; ye = y2;
+				}
 				else
-					{ x = x2; y = y2; ye = y1; }
+				{
+					x = x2; y = y2; ye = y1;
+				}
 
 				out.emplace_back(x, y);
 

@@ -6,7 +6,7 @@
 namespace lio
 {
 	template <typename T>
-	class Vec2 
+	class Vec2
 	{
 	public:
 
@@ -128,12 +128,12 @@ namespace lio
 			return (val > 0) ? 1 : -1;
 		}
 
-		static constexpr Vec2 One()		{ return Vec2(1.0, 1.0); }
-		static constexpr Vec2 Zero()	{ return Vec2(0.0, 0.0); }
-		static constexpr Vec2 Up()		{ return Vec2(0.0, 1.0); }
-		static constexpr Vec2 Down()	{ return Vec2(0.0, -1.0); }
-		static constexpr Vec2 Left()	{ return Vec2(-1.0, 0.0); }
-		static constexpr Vec2 Right()	{ return Vec2(1.0, 0.0); }
+		static constexpr Vec2 One() 	{ return Vec2(1.0, 1.0); }
+		static constexpr Vec2 Zero() 	{ return Vec2(0.0, 0.0); }
+		static constexpr Vec2 Up() 		{ return Vec2(0.0, 1.0); }
+		static constexpr Vec2 Down() 	{ return Vec2(0.0, -1.0); }
+		static constexpr Vec2 Left() 	{ return Vec2(-1.0, 0.0); }
+		static constexpr Vec2 Right() 	{ return Vec2(1.0, 0.0); }
 	};
 
 	template <typename T, typename U>
@@ -340,7 +340,7 @@ namespace lio
 	{
 		return Vec2<T>(v.x, v.y);
 	}
-	
+
 	template <typename T, typename U>
 	bool operator==(const Vec2<T>& v1, const Vec2<U>& v2)
 	{

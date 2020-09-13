@@ -1,54 +1,51 @@
 #pragma once
 
+#include <array>
 #include "Vec2.hpp"
 
 namespace lio
 {
 	template <typename T>
-	class Transformable
+	class Triangle
 	{
 	private:
 
-		Vec2<T> m_position;
-		
+		std::array<Vec2<T>, 3> p;
+
 	public:
 
-		Transformable(const Vec2<T>& position = Vec2<T>::Zero())
-			: m_position(position) {}
-		Transformable(const Transformable& transform)
-			: m_position(transform.m_position) {}
-
-		virtual ~Transformable() {}
+		Triangle(const Vec2<T>& p1 = lio::Vec2<T>::Zero(), const Vec2<T>& p2 = lio::Vec2<T>::Zero(),
+			const Vec2<T>& p3 = lio::Vec2<T>::Zero())
+			: p({ p1, p2, p3 }) {}
+		Triangle(const Triangle<T>& tri)
+			: p(tri.p) {}
 
 		template <typename U>
-		operator Transformable<U>() const
+		operator Triangle<U>() const
 		{
-			return std::move(Transformable<U>(m_position));
+			return Triangle<U>(*this);
 		}
 		template <typename U>
-		Transformable<U>&& Cast() const
+		Triangle<U> Cast() const
 		{
-			return std::move(Transformable<U>(m_position));
+			return Triangle<U>(*this);
 		}
 
-		const Vec2<T>& GetPosition() const { return m_position; }
-		void SetPosition(const Vec2<T>& pos)
+		const Vec2<T>& GetPoint(size_t i) const
 		{
-			m_position = pos;
+			return p.at(i);
 		}
-		void SetPosition(T x, T y)
+		const std::array<Vec2<T>, 3>& GetPoints() const
 		{
-			m_position.x = x;
-			m_position.y = y;
+			return p;
 		}
-
-		void Move(const Vec2<T>& offset)
+		void SetPoint(size_t i, const Vec2<T>& val) const
 		{
-			SetPosition(m_position.x + offset.x, m_position.y + offset.y);
+			p.at(i) = val;
 		}
-		void Move(T offset_x, T offset_y)
+		void SetPoints(const Vec2<T>& p1, const Vec2<T>& p2, const Vec2<T>& p3)
 		{
-			SetPosition(m_position.x + offset_x, m_position.y + offset_y);
+			p = { p1, p2, p3 }
 		}
 	};
 }

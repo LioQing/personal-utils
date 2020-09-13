@@ -23,12 +23,12 @@ namespace lio
 		template <typename U>
 		operator Transformable<U>() const
 		{
-			return std::move(Transformable<U>(m_position));
+			return Transformable<U>(m_position);
 		}
 		template <typename U>
-		Transformable<U>&& Cast() const
+		Transformable<U> Cast() const
 		{
-			return std::move(Transformable<U>(m_position));
+			return Transformable<U>(m_position);
 		}
 
 		const Vec2<T>& GetPosition() const { return m_position; }

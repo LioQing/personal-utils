@@ -26,21 +26,21 @@ namespace lio
 		template <typename U, typename _Uy>
 		operator Circle<U, _Uy>() const
 		{
-			return std::move(Circle<U, _Uy>(m_radius, Transformable<T>::GetPosition()));
+			return Circle<U, _Uy>(m_radius, Transformable<T>::GetPosition());
 		}
 		template <typename U, typename _Uy>
-		Circle<U, _Uy>&& Cast() const
+		Circle<U, _Uy> Cast() const
 		{
-			return std::move(Circle<U, _Uy>(m_radius, Transformable<T>::GetPosition()));
+			return Circle<U, _Uy>(m_radius, Transformable<T>::GetPosition());
 		}
-		
+
 		const _Ty& GetRadius() const { return m_radius; }
 		void SetRadius(_Ty radius)
 		{
 			m_radius = radius;
 		}
 
-		Vec2<T>&& GetCenter() const { return std::move(Transformable<T>::GetPosition() + Vec2<_Ty>(m_radius, m_radius)); }
+		Vec2<T> GetCenter() const { return Transformable<T>::GetPosition() + Vec2<_Ty>(m_radius, m_radius); }
 		void SetCenter(const Vec2<T>& center)
 		{
 			Transformable<T>::SetPosition(center - Vec2<_Ty>(m_radius, m_radius));
