@@ -21,24 +21,18 @@ namespace lio
 		template <typename U>
 		operator LineSeg<U>() const
 		{
-			return LineSeg<U>(p1, p2);
+			return std::move(LineSeg<U>(p1, p2));
 		}
 		template <typename U>
-		LineSeg<U> Cast() const
+		LineSeg<U>&& Cast() const
 		{
-			return LineSeg<U>(p1, p2);
+			return std::move(LineSeg<U>(p1, p2));
 		}
 
 		LineSeg& operator=(const LineSeg& l)
 		{
 			p1 = l.p1;
 			p2 = l.p2;
-			return *this;
-		}
-		LineSeg& operator=(const Vec2<T>& v)
-		{
-			p1 = Vec2<T>::Zero();
-			p2 = v;
 			return *this;
 		}
 

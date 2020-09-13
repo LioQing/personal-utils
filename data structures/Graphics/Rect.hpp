@@ -22,15 +22,15 @@ namespace lio
 		template <typename U>
 		operator Rect<U>() const
 		{
-			return Rect<U>(Transformable<T>::GetPosition(), m_size);
+			return std::move(Rect<U>(Transformable<T>::GetPosition(), m_size));
 		}
 		template <typename U>
-		Rect<U> Cast() const
+		Rect<U>&& Cast() const
 		{
-			return Rect<U>(Transformable<T>::GetPosition(), m_size);
+			return std::move(Rect<U>(Transformable<T>::GetPosition(), m_size));
 		}
 
-		Vec2<T> GetSize() const { return m_size; }
+		const Vec2<T>& GetSize() const { return m_size; }
 		void SetSize(const Vec2<T>& size)
 		{
 			m_size = size;

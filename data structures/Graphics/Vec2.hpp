@@ -32,12 +32,6 @@ namespace lio
 			y = v.y;
 			return *this;
 		}
-		Vec2& operator=(T s)
-		{
-			x = s;
-			y = 0.0;
-			return *this;
-		}
 
 		Vec2& Set(T x, T y)
 		{
@@ -134,12 +128,12 @@ namespace lio
 			return (val > 0) ? 1 : -1;
 		}
 
-		static const Vec2 One()		{ return Vec2(1.0, 1.0); }
-		static const Vec2 Zero()	{ return Vec2(0.0, 0.0); }
-		static const Vec2 Up()		{ return Vec2(0.0, 1.0); }
-		static const Vec2 Down()	{ return Vec2(0.0, -1.0); }
-		static const Vec2 Left()	{ return Vec2(-1.0, 0.0); }
-		static const Vec2 Right()	{ return Vec2(1.0, 0.0); }
+		static constexpr Vec2 One()		{ return Vec2(1.0, 1.0); }
+		static constexpr Vec2 Zero()	{ return Vec2(0.0, 0.0); }
+		static constexpr Vec2 Up()		{ return Vec2(0.0, 1.0); }
+		static constexpr Vec2 Down()	{ return Vec2(0.0, -1.0); }
+		static constexpr Vec2 Left()	{ return Vec2(-1.0, 0.0); }
+		static constexpr Vec2 Right()	{ return Vec2(1.0, 0.0); }
 	};
 
 	template <typename T, typename U>
