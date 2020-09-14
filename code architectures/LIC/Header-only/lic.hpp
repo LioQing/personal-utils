@@ -202,11 +202,18 @@ namespace lic
 
 		// filter out component U from view
 		template <IsComponent U, IsComponent T, IsComponent ...Ts>
-		void _ProcessMultiFilter(View<T, Ts...>& view)
+		void _ProcessMultiFilter(View<T, Ts...>& view, bool include_non_active)
 		{
 			std::erase_if(view.m_components.m_vec,
 						  [](T*& c) -> bool
-						  { return !c->GetEntity().HasComponent<U>(); }
+				{ 
+					if (!c->GetEntity().HasComponent<U>())
+						return true;
+					else if (!c->GetEntity().GetComponent<U>().is_active)
+						return true;
+					else
+						return false;
+				}
 			);
 		}
 
@@ -214,19 +221,21 @@ namespace lic
 
 		// component filter
 		template <IsComponent T, IsComponent ...Ts>
-		View<T, Ts...> Filter()
+		View<T, Ts...> Filter(bool include_non_active = false)
 		{
 			View<T, Ts...> view(*this);
 
 			// get vector of component T
 			for (auto& cptr : m_components.at(GetComponentID<T>()))
 			{
-				if (cptr == nullptr) continue;
+				if (cptr == nullptr || !include_non_active && !cptr->is_active) 
+					continue;
+
 				view.m_components.m_vec.push_back(static_cast<T*>(cptr.get()));
 			}
 
 			// filter out components Ts...
-			int process[] = { 0, (_ProcessMultiFilter<Ts>(view), 0)... };
+			int process[] = { 0, (_ProcessMultiFilter<Ts>(view, include_non_active), 0)... };
 			(void)process;
 
 			// push entities
@@ -256,6 +265,9 @@ namespace lic
 	public:
 
 		virtual ~Component() = default;
+
+		// active
+		bool is_active = true;
 
 		// get entity
 		Entity GetEntity();
