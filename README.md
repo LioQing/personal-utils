@@ -31,6 +31,7 @@ File | Name | Description | C++ Standard | Dependcies | Namespace
 [Rect.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Rect.hpp) | Rectangle | 2D rectangle class | C++14 | [Vec2.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Vec2.hpp), [Transformable.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Transformable.hpp) | lio
 [Triangle.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Triangle.hpp) | Triangle | 2D triangle class | C++14 | [Vec2.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Vec2.hpp) | lio
 [Transformable.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Transformable.hpp) | Transformable | Transformable for other 2D shape classes to inherit from | C++14 | [Vec2.hpp](https://github.com/LioQing/PersonalUtils/blob/master/data%20structures/Graphics/Vec2.hpp) | lio
+[String (C)](https://github.com/LioQing/PersonalUtils/tree/master/data%20structures/String%20(C)) | String for C | String struct for C with a lot of dedicated functions, many are from C++ std::string class | C99 | N/A | N/A
 
 ### Tools
 
