@@ -67,6 +67,15 @@ namespace lev
 			listeners.at(GetEventID<E>()).push_back(this);
 		}
 
+		template <IsEvent E>
+		void StopListen()
+		{
+			std::erase_if(listeners.at(GetEventID<E>()), [this](Listener* ptr)
+				{
+					return ptr == this;
+				});
+		}
+
 		virtual void On(const Event& event) = 0;
 	};
 
