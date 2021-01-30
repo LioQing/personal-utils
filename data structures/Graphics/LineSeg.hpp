@@ -45,7 +45,7 @@ namespace lio
 			this->p2 = p2;
 			return *this;
 		}
-		LineSeg& Set(T x1 = 0.0, T y1 = 0.0, T x2 = 0.0, T y2 = 0.0)
+		LineSeg& Set(T x1, T y1, T x2, T y2)
 		{
 			p1.x = x1;
 			p1.y = y1;
@@ -54,26 +54,21 @@ namespace lio
 			return *this;
 		}
 
-		template <typename S = double>
-		LineSeg<double> Rotated(double theta, const Vec2<S>& pt = Vec2<S>::Zero()) const
+		template <typename U, typename S = T>
+		LineSeg<T> Rotated(U theta, const Vec2<S>& pt = Vec2<S>::Zero()) const
 		{
-			Vec2<double> p1 = (this->p1 - pt).Rotated(theta) + pt;
-			Vec2<double> p2 = (this->p2 - pt).Rotated(theta) + pt;
+			Vec2<T> p1 = (this->p1 - pt).Rotated(theta) + pt;
+			Vec2<T> p2 = (this->p2 - pt).Rotated(theta) + pt;
 
-			return LineSeg<double>(p1, p2);
+			return LineSeg<T>(p1, p2);
 		}
-		template <typename S = double>
-		LineSeg& Rotate(double theta, const Vec2<S>& pt = Vec2<S>::Zero())
+		template <typename U, typename S = T>
+		LineSeg& Rotate(U theta, const Vec2<S>& pt = Vec2<S>::Zero())
 		{
-			Vec2<double> _p1 = this->p1 - pt;
-			Vec2<double> _p2 = this->p2 - pt;
-			p1 = _p1.Rotated(theta) + pt;
-			p2 = _p2.Rotated(theta) + pt;
-
-			return *this;
+			return *this = this->Rotated(theta, pt);
 		}
 
-		double Length() const
+		auto Length() const
 		{
 			return p1.Distance(p2);
 		}

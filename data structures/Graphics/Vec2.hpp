@@ -40,29 +40,28 @@ namespace lio
 			return *this;
 		}
 
-		Vec2<double> Rotated(double theta) const
+		template <typename U>
+		Vec2<T> Rotated(U theta) const
 		{
-			double c = cos(theta);
-			double s = sin(theta);
-			double tx = c * x - s * y;
-			double ty = s * x + c * y;
+			U c = std::cos(theta);
+			U s = std::sin(theta);
+			T tx = c * x - s * y;
+			T ty = s * x + c * y;
 
-			return Vec2<double>(tx, ty);
+			return Vec2<T>(tx, ty);
 		}
-		Vec2& Rotate(double theta)
+		template <typename U>
+		Vec2& Rotate(U theta)
 		{
-			double c = cos(theta);
-			double s = sin(theta);
-			x = c * x - s * y;
-			y = s * x + c * y;
+			*this = Rotated(theta);
 
 			return *this;
 		}
 
-		Vec2<double> Normalized() const
+		Vec2 Normalized() const
 		{
 			if (Magnitude() == 0) return *this;
-			return Vec2<double>(*this / Magnitude());
+			return Vec2(*this / Magnitude());
 		}
 		Vec2& Normalize()
 		{
@@ -77,17 +76,18 @@ namespace lio
 		}
 
 		template <typename U>
-		double Distance(const Vec2<U>& v) const
+		auto Distance(const Vec2<U>& v) const
 		{
-			Vec2<double> d(v.x - x, v.y - y);
+			Vec2<decltype(std::declval<U&>() - std::declval<T&>())> d(v.x - x, v.y - y);
 			return d.Magnitude();
 		}
 
-		double SqrMagnitude() const
+		T SqrMagnitude() const
 		{
 			return x * x + y * y;
 		}
-		double Magnitude() const
+
+		T Magnitude() const
 		{
 			return std::hypot(x, y);
 		}
@@ -98,12 +98,12 @@ namespace lio
 		}
 
 		template <typename U>
-		double Dot(const Vec2<U>& v) const
+		auto Dot(const Vec2<U>& v) const
 		{
 			return x * v.x + y * v.y;
 		}
 		template <typename U>
-		double Cross(const Vec2<U>& v) const
+		auto Cross(const Vec2<U>& v) const
 		{
 			return (x * v.x) - (y * v.y);
 		}
@@ -112,7 +112,7 @@ namespace lio
 		// >0 -> clockwise 
 		// <0 -> counterclockwise 
 		template <typename U, typename S>
-		double OrientationEx(const Vec2<U>& v2, const Vec2<S>& v3) const
+		auto OrientationEx(const Vec2<U>& v2, const Vec2<S>& v3) const
 		{
 			return (v2.y - y) * (v3.x - v2.x) - (v2.x - x) * (v3.y - v2.y);
 		}
@@ -122,7 +122,7 @@ namespace lio
 		template <typename U, typename S>
 		int Orientation(const Vec2<U>& v2, const Vec2<S>& v3) const
 		{
-			int val = OrientationEx(v2, v3);
+			auto val = OrientationEx(v2, v3);
 
 			if (val == 0) return 0;
 			return (val > 0) ? 1 : -1;
@@ -159,175 +159,81 @@ namespace lio
 	template <typename T, typename U>
 	auto operator%(const Vec2<T>& v1, const Vec2<U>& v2)
 	{
-		return Vec2<decltype(fmod(std::declval<T&>(), std::declval<U&>()))>(fmod(v1.x, v2.x), fmod(v1.y, v2.y));
+		return Vec2<decltype(std::fmod(std::declval<T&>(), std::declval<U&>()))>(std::fmod(v1.x, v2.x), std::fmod(v1.y, v2.y));
 	}
 
 	template <typename T, typename U>
 	Vec2<T>& operator+=(Vec2<T>& v1, const Vec2<U>& v2)
 	{
-		v1.x += v2.x;
-		v1.y += v2.y;
-		return v1;
+		return v1 = v1 + v2;
 	}
 	template <typename T, typename U>
 	Vec2<T>& operator-=(Vec2<T>& v1, const Vec2<U>& v2)
 	{
-		v1.x -= v2.x;
-		v1.y -= v2.y;
-		return v1;
+		return v1 = v1 - v2;
 	}
 	template <typename T, typename U>
 	Vec2<T>& operator*=(Vec2<T>& v1, const Vec2<U>& v2)
 	{
-		v1.x *= v2.x;
-		v1.y *= v2.y;
-		return v1;
+		return v1 = v1 * v2;
 	}
 	template <typename T, typename U>
 	Vec2<T>& operator/=(Vec2<T>& v1, const Vec2<U>& v2)
 	{
-		v1.x /= v2.x;
-		v1.y /= v2.y;
-		return v1;
+		return v1 = v1 / v2;
 	}
 	template <typename T, typename U>
 	Vec2<T>& operator%=(Vec2<T>& v1, const Vec2<U>& v2)
 	{
-		v1.x = fmod(v1.x, v2.x);
-		v1.y = fmod(v1.y, v2.y);
-		return v1;
+		return v1 = v1 % v2;
 	}
 
-	template <typename T>
-	auto operator+(double s, const Vec2<T>& v)
-	{
-		if (v.Magnitude() == 0) return v;
-		double scale = s / v.Magnitude();
-		return Vec2<decltype(std::declval<double&>() * std::declval<T&>())>(v.x + abs(v.x) * scale, v.y + abs(v.y) * scale);
-	}
-	template <typename T>
-	auto operator*(double s, const Vec2<T>& v)
+	template <typename T, typename U>
+	auto operator*(U s, const Vec2<T>& v)
 	{
 		return Vec2<decltype(s * std::declval<T&>())>(v.x * s, v.y * s);
 	}
-	template <typename T>
-	auto operator/(double s, const Vec2<T>& v)
+	template <typename T, typename U>
+	auto operator/(U s, const Vec2<T>& v)
 	{
 		return Vec2<decltype(s / std::declval<T&>())>(s / v.x, s / v.y);
 	}
-	template <typename T>
-	auto operator%(double s, const Vec2<T>& v)
+	template <typename T, typename U>
+	auto operator%(U s, const Vec2<T>& v)
 	{
-		return Vec2<decltype(fmod(std::declval<T&>(), s))>(fmod(s, v.x), fmod(s, v.y));
+		return Vec2<decltype(std::fmod(std::declval<T&>(), s))>(std::fmod(s, v.x), std::fmod(s, v.y));
 	}
 
-	template <typename T>
-	auto operator+(const Vec2<T>& v, double s)
-	{
-		if (v.Magnitude() == 0) return v;
-		double scale = s / v.Magnitude();
-		return Vec2<decltype(std::declval<double&>() * std::declval<T&>())>(v.x + abs(v.x) * scale, v.y + abs(v.y) * scale);
-	}
-	template <typename T>
-	auto operator-(const Vec2<T>& v, double s)
-	{
-		if (v.Magnitude() == 0) return v;
-		double scale = s / v.Magnitude();
-		return Vec2<decltype(std::declval<double&>() * std::declval<T&>())>(v.x - abs(v.x) * scale, v.y - abs(v.y) * scale);
-	}
-	template <typename T>
-	auto operator*(const Vec2<T>& v, double s)
+	template <typename T, typename U>
+	auto operator*(const Vec2<T>& v, U s)
 	{
 		return Vec2<decltype(s * std::declval<T&>())>(v.x * s, v.y * s);
 	}
-	template <typename T>
-	auto operator/(const Vec2<T>& v, double s)
+	template <typename T, typename U>
+	auto operator/(const Vec2<T>& v, U s)
 	{
 		return Vec2<decltype(s / std::declval<T&>())>(v.x / s, v.y / s);
 	}
-	template <typename T>
-	auto operator%(const Vec2<T>& v, double s)
+	template <typename T, typename U>
+	auto operator%(const Vec2<T>& v, U s)
 	{
-		return Vec2<decltype(fmod(s, std::declval<T&>()))>(fmod(v.x, s), fmod(v.y, s));
+		return Vec2<decltype(std::fmod(s, std::declval<T&>()))>(std::fmod(v.x, s), std::fmod(v.y, s));
 	}
 
-	template <typename T>
-	Vec2<T>& operator+=(Vec2<T>& v, double s)
+	template <typename T, typename U>
+	Vec2<T>& operator*=(Vec2<T>& v, U s)
 	{
-		if (v.Magnitude() == 0) return v;
-		auto scale = s / v.Magnitude();
-		v.x += abs(v.x) * scale;
-		v.y += abs(v.y) * scale;
-		return v;
+		return v = v * s;
 	}
-	template <typename T>
-	Vec2<T>& operator-=(Vec2<T>& v, double s)
+	template <typename T, typename U>
+	Vec2<T>& operator/=(Vec2<T>& v, U s)
 	{
-		if (v.Magnitude() == 0) return v;
-		double scale = s / v.Magnitude();
-		v.x -= abs(v.x) * scale;
-		v.y -= abs(v.y) * scale;
-		return v;
+		return v = v / s;
 	}
-	template <typename T>
-	Vec2<T>& operator*=(Vec2<T>& v, double s)
+	template <typename T, typename U>
+	Vec2<T>& operator%=(Vec2<T>& v, U s)
 	{
-		v.x *= s;
-		v.y *= s;
-		return v;
-	}
-	template <typename T>
-	Vec2<T>& operator/=(Vec2<T>& v, double s)
-	{
-		v.x /= s;
-		v.y /= s;
-		return v;
-	}
-	template <typename T>
-	Vec2<T>& operator%=(Vec2<T>& v, double s)
-	{
-		v.x = fmod(v.x, s);
-		v.y = fmod(v.y, s);
-		return v;
-	}
-
-	template <typename T>
-	Vec2<T>& operator++(Vec2<T>& v)
-	{
-		if (v.Magnitude() == 0) return v;
-		double scale = 1.0 / v.Magnitude();
-		v.x += abs(v.x) * scale;
-		v.y += abs(v.y) * scale;
-		return v;
-	}
-	template <typename T>
-	Vec2<T>& operator--(Vec2<T>& v)
-	{
-		if (v.Magnitude() == 0) return v;
-		double scale = 1.0 / v.Magnitude();
-		v.x -= abs(v.x) * scale;
-		v.y -= abs(v.y) * scale;
-		return v;
-	}
-	template <typename T>
-	Vec2<T> operator++(Vec2<T>& v, int)
-	{
-		if (v.Magnitude() == 0) return v;
-		Vec2<T> tmp(v.x, v.y);
-		double scale = 1.0 / v.Magnitude();
-		v.x += abs(v.x) * scale;
-		v.y += abs(v.y) * scale;
-		return tmp;
-	}
-	template <typename T>
-	Vec2<T> operator--(Vec2<T>& v, int)
-	{
-		if (v.Magnitude() == 0) return v;
-		Vec2<T> tmp(v.x, v.y);
-		double scale = 1.0 / v.Magnitude();
-		v.x -= abs(v.x) * scale;
-		v.y -= abs(v.y) * scale;
-		return tmp;
+		return v = v % s;
 	}
 
 	template <typename T>
