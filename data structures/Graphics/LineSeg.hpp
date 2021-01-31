@@ -1,12 +1,9 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
 #include <algorithm>
+#include <limits>
 #include "Vec2.hpp"
-
-#undef max()
-#undef min()
 
 namespace lio
 {
@@ -55,12 +52,12 @@ namespace lio
 		}
 
 		template <typename U, typename S = T>
-		LineSeg<T> Rotated(U theta, const Vec2<S>& pt = Vec2<S>::Zero()) const
+		LineSeg Rotated(U theta, const Vec2<S>& pt = Vec2<S>::Zero()) const
 		{
 			Vec2<T> p1 = (this->p1 - pt).Rotated(theta) + pt;
 			Vec2<T> p2 = (this->p2 - pt).Rotated(theta) + pt;
 
-			return LineSeg<T>(p1, p2);
+			return LineSeg(p1, p2);
 		}
 		template <typename U, typename S = T>
 		LineSeg& Rotate(U theta, const Vec2<S>& pt = Vec2<S>::Zero())
@@ -99,27 +96,29 @@ namespace lio
 			return false;
 		}
 		template <typename U>
-		auto IntersectPt(const LineSeg<U>& l) const -> Vec2<decltype(std::declval<T&>() + std::declval<U&>())>
+		auto IntersectPt(const LineSeg<U>& l) const
 		{
-			double a1 = p2.y - p1.y;
-			double b1 = p1.x - p2.x;
-			double c1 = a1 * (p1.x) + b1 * (p1.y);
+			auto a1 = p2.y - p1.y;
+			auto b1 = p1.x - p2.x;
+			auto c1 = a1 * (p1.x) + b1 * (p1.y);
 
-			double a2 = l.p2.y - l.p1.y;
-			double b2 = l.p1.x - l.p2.x;
-			double c2 = a2 * (l.p1.x) + b2 * (l.p1.y);
+			auto a2 = l.p2.y - l.p1.y;
+			auto b2 = l.p1.x - l.p2.x;
+			auto c2 = a2 * (l.p1.x) + b2 * (l.p1.y);
 
-			double determinant = a1 * b2 - a2 * b1;
+			auto determinant = a1 * b2 - a2 * b1;
 
-			if (determinant == 0)
+			if (determinant == 0.0)
 			{
-				return Vec2<double>(DBL_MAX, DBL_MAX);
+				return Vec2<decltype(std::declval<T&>() + std::declval<U&>())>(
+					std::numeric_limits<decltype(std::declval<T&>() + std::declval<U&>())>::max(), 
+					std::numeric_limits<decltype(std::declval<T&>() + std::declval<U&>())>::max());
 			}
 			else
 			{
-				double x = (b2 * c1 - b1 * c2) / determinant;
-				double y = (a1 * c2 - a2 * c1) / determinant;
-				return Vec2<double>(x, y);
+				auto x = (b2 * c1 - b1 * c2) / determinant;
+				auto y = (a1 * c2 - a2 * c1) / determinant;
+				return Vec2<decltype(std::declval<T&>() + std::declval<U&>())>(x, y);
 			}
 		}
 
@@ -127,7 +126,8 @@ namespace lio
 		{
 			return Vec2<T>((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
 		}
-		Vec2<T> Section(double r1, double r2) const
+		template <typename U>
+		Vec2<T> Section(U r1, U r2) const
 		{
 			auto x = (r1 * p2.x + r2 * p1.x) / r1 + r2;
 			auto y = (r1 * p2.y + r2 * p1.y) / r1 + r2;
@@ -227,7 +227,7 @@ namespace lio
 	template <typename T, typename U>
 	auto operator%(const Vec2<U>& v, const LineSeg<T>& l)
 	{
-		return LineSeg<decltype(fmod(std::declval<U&>(), std::declval<T&>()))>(v % l.p1, v % l.p2);
+		return LineSeg<decltype(std::fmod(std::declval<U&>(), std::declval<T&>()))>(v % l.p1, v % l.p2);
 	}
 
 	template <typename T, typename U>
@@ -253,7 +253,7 @@ namespace lio
 	template <typename T, typename U>
 	auto operator%(const LineSeg<T>& l, const Vec2<U>& v)
 	{
-		return LineSeg<decltype(fmod(std::declval<T&>(), std::declval<U&>()))>(l.p1 % v, l.p2 % v);
+		return LineSeg<decltype(std::fmod(std::declval<T&>(), std::declval<U&>()))>(l.p1 % v, l.p2 % v);
 	}
 
 	template <typename T, typename U>
@@ -292,58 +292,52 @@ namespace lio
 		return l;
 	}
 
-	template <typename T>
-	auto operator*(double s, const LineSeg<T>& l)
+	template <typename T, typename U>
+	auto operator*(U s, const LineSeg<T>& l)
 	{
 		return LineSeg<decltype(s * std::declval<T&>())>(l.p1 * s, l.p2 * s);
 	}
-	template <typename T>
-	auto operator/(double s, const LineSeg<T>& l)
+	template <typename T, typename U>
+	auto operator/(U s, const LineSeg<T>& l)
 	{
 		return LineSeg<decltype(s / std::declval<T&>())>(s / l.p1, s / l.p2);
 	}
-	template <typename T>
-	auto operator%(double s, const LineSeg<T>& l)
+	template <typename T, typename U>
+	auto operator%(U s, const LineSeg<T>& l)
 	{
-		return LineSeg<decltype(fmod(std::declval<T&>(), s))>(s % l.p1, s % l.p2);
+		return LineSeg<decltype(std::fmod(std::declval<T&>(), s))>(s % l.p1, s % l.p2);
 	}
 
-	template <typename T>
-	auto operator*(const LineSeg<T>& l, double s)
+	template <typename T, typename U>
+	auto operator*(const LineSeg<T>& l, U s)
 	{
 		return LineSeg<decltype(s * std::declval<T&>())>(l.p1 * s, l.p2 * s);
 	}
-	template <typename T>
-	auto operator/(const LineSeg<T>& l, double s)
+	template <typename T, typename U>
+	auto operator/(const LineSeg<T>& l, U s)
 	{
 		return LineSeg<decltype(s / std::declval<T&>())>(l.p1 / s, l.p2 / s);
 	}
-	template <typename T>
-	auto operator%(const LineSeg<T>& l, double s)
+	template <typename T, typename U>
+	auto operator%(const LineSeg<T>& l, U s)
 	{
-		return LineSeg<decltype(fmod(s, std::declval<T&>()))>(l.p1 % s, l.p2 % s);
+		return LineSeg<decltype(std::fmod(s, std::declval<T&>()))>(l.p1 % s, l.p2 % s);
 	}
 
-	template <typename T>
-	LineSeg<T>& operator*=(LineSeg<T>& l, double s)
+	template <typename T, typename U>
+	LineSeg<T>& operator*=(LineSeg<T>& l, U s)
 	{
-		l.p1 *= s;
-		l.p2 *= s;
-		return l;
+		return l = l * s;
 	}
-	template <typename T>
-	LineSeg<T>& operator/=(LineSeg<T>& l, double s)
+	template <typename T, typename U>
+	LineSeg<T>& operator/=(LineSeg<T>& l, U s)
 	{
-		l.p1 /= s;
-		l.p2 /= s;
-		return l;
+		return l = l / s;
 	}
-	template <typename T>
-	LineSeg<T>& operator%=(LineSeg<T>& l, double s)
+	template <typename T, typename U>
+	LineSeg<T>& operator%=(LineSeg<T>& l, U s)
 	{
-		l.p1 %= s;
-		l.p2 %= s;
-		return l;
+		return l = l % s;
 	}
 
 	template <typename T, typename U>
