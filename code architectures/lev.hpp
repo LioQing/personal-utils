@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <functional>
+#include <any>
 
 namespace lev
 {
@@ -18,22 +19,15 @@ namespace lev
 		template <IsEvent E>
 		EventID GetEventID();
 
-		struct EventListWrapper
-		{
-			struct List;
-			List* list;
-		};
-
-		std::vector<EventListWrapper> listeners;
+		std::vector<std::any> listeners;
 
 		template <IsEvent E>
 		EventID GetNextEventID()
 		{
 			static EventID next_id = 0u;
 
-			EventListWrapper wrapper;
-			wrapper.list = (EventListWrapper::List*)new std::vector<std::function<void(E&)>>();
-			listeners.push_back(wrapper);
+			std::any functions = std::vector<std::function<void(E&)>>();
+			listeners.push_back(functions);
 
 			return next_id++;
 		}
@@ -58,19 +52,13 @@ namespace lev
 	public:
 
 		virtual ~Event() = default;
-
-		template <IsEvent E>
-		bool Is() const
-		{
-			return id == GetEventID<E>();
-		}
 	};
 
 	template <IsEvent E, typename T>
 	void Listen(T& listener, void(T::*function)(E&))
 	{
-		auto list = (std::vector<std::function<void(E&)>>*)listeners.at(GetEventID<E>()).list;
-		list->push_back([&listener, function](E& event) { (listener.*function)(event); });
+		std::any_cast<std::vector<std::function<void(E&)>>&>(listeners.at(GetEventID<E>()))
+			.push_back([&listener, function](E& event) { (listener.*function)(event); });
 	}
 
 	template <IsEvent E, typename ...TArgs>
@@ -79,7 +67,16 @@ namespace lev
 		E event(std::forward<TArgs>(args)...);
 		event.id = GetEventID<E>();
 
-		for (auto& function : *(std::vector<std::function<void(E&)>>*)listeners.at(GetEventID<E>()).list)
+		for (auto& function : std::any_cast<std::vector<std::function<void(E&)>>&>(listeners.at(GetEventID<E>())))
+		{
+			function(event);
+		}
+	}
+
+	template <IsEvent E>
+	void Emit(E& event)
+	{
+		for (auto& function : std::any_cast<std::vector<std::function<void(E&)>>&>(listeners.at(GetEventID<E>())))
 		{
 			function(event);
 		}
