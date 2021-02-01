@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <functional>
 
 namespace lev
 {
@@ -16,6 +17,33 @@ namespace lev
 
 		template <IsEvent E>
 		EventID GetEventID();
+
+		struct EventListWrapper
+		{
+			struct List;
+			List* list;
+		};
+
+		std::vector<EventListWrapper> listeners;
+
+		template <IsEvent E>
+		EventID GetNextEventID()
+		{
+			static EventID next_id = 0u;
+
+			EventListWrapper wrapper;
+			wrapper.list = (EventListWrapper::List*)new std::vector<std::function<void(E&)>>();
+			listeners.push_back(wrapper);
+
+			return next_id++;
+		}
+
+		template <IsEvent E>
+		EventID GetEventID()
+		{
+			static EventID id = GetNextEventID<E>();
+			return id;
+		}
 	}
 
 	class Event
@@ -38,57 +66,22 @@ namespace lev
 		}
 	};
 
-	namespace
+	template <IsEvent E, typename T>
+	void Listen(T& listener, void(T::*function)(E&))
 	{
-		std::vector<std::vector<Listener*>> listeners;
-
-		EventID GetNextEventID()
-		{
-			static EventID next_id = 0u;
-			listeners.push_back(std::vector<Listener*>());
-			return next_id++;
-		}
-
-		template <IsEvent E>
-		EventID GetEventID()
-		{
-			static EventID id = GetNextEventID();
-			return id;
-		}
+		auto list = (std::vector<std::function<void(E&)>>*)listeners.at(GetEventID<E>()).list;
+		list->push_back([&listener, function](E& event) { (listener.*function)(event); });
 	}
-
-	struct Listener
-	{
-		virtual ~Listener() = default;
-
-		template <IsEvent E>
-		void Listen()
-		{
-			listeners.at(GetEventID<E>()).push_back(this);
-		}
-
-		template <IsEvent E>
-		void StopListen()
-		{
-			std::erase_if(listeners.at(GetEventID<E>()), [this](Listener* ptr)
-				{
-					return ptr == this;
-				});
-		}
-
-		virtual void On(const Event& event) = 0;
-	};
 
 	template <IsEvent E, typename ...TArgs>
 	void Emit(TArgs&& ...args)
 	{
 		E event(std::forward<TArgs>(args)...);
 		event.id = GetEventID<E>();
-		const auto& ev = static_cast<const Event&>(event);
 
-		for (auto& listener : listeners.at(GetEventID<E>()))
+		for (auto& function : *(std::vector<std::function<void(E&)>>*)listeners.at(GetEventID<E>()).list)
 		{
-			listener->On(ev);
+			function(event);
 		}
 	}
 }
