@@ -2,12 +2,11 @@
 
 #include <vector>
 #include <functional>
-#include <any>
 
 namespace lev
 {
 	template <typename T, typename ...TArgs>
-	auto MakeListener(T& obj, void(T::*function)(TArgs...))
+	auto MakeListener(T& obj, void(T::* function)(TArgs...))
 	{
 		return [&obj, function](TArgs... args) { (obj.*function)(args...); };
 	}
@@ -36,12 +35,5 @@ namespace lev
 				function(std::forward<TArgs>(args)...);
 			}
 		}
-	};
-
-	class Event
-	{
-	public:
-
-		virtual ~Event() = default;
 	};
 }
