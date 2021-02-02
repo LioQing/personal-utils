@@ -6,79 +6,42 @@
 
 namespace lev
 {
-	class Event;
-	struct Listener;
-
-	template <typename T>
-	concept IsEvent = std::is_base_of<Event, T>::value;
-
-	namespace
+	template <typename T, typename ...TArgs>
+	auto MakeListener(T& obj, void(T::*function)(TArgs...))
 	{
-		using EventID = uint32_t;
-
-		template <IsEvent E>
-		EventID GetEventID();
-
-		std::vector<std::any> listeners;
-
-		template <IsEvent E>
-		EventID GetNextEventID()
-		{
-			static EventID next_id = 0u;
-
-			std::any functions = std::vector<std::function<void(E&)>>();
-			listeners.push_back(functions);
-
-			return next_id++;
-		}
-
-		template <IsEvent E>
-		EventID GetEventID()
-		{
-			static EventID id = GetNextEventID<E>();
-			return id;
-		}
+		return [&obj, function](TArgs... args) { (obj.*function)(args...); };
 	}
 
-	class Event
+	template <typename ...TArgs>
+	class EventHandler
 	{
 	private:
 
-		template <IsEvent E, typename ...TArgs>
-		friend void Emit(TArgs&& ...args);
+		std::vector<std::function<void(TArgs...)>> listeners;
 
-		EventID id;
+	public:
 
+		EventHandler() = default;
+
+		EventHandler& operator+=(std::function<void(TArgs...)> function)
+		{
+			listeners.push_back(function);
+			return *this;
+		}
+
+		void operator()(TArgs&&... args) const
+		{
+			for (auto& function : listeners)
+			{
+				function(std::forward<TArgs>(args)...);
+			}
+		}
+	};
+
+	class Event
+	{
 	public:
 
 		virtual ~Event() = default;
 	};
-
-	template <IsEvent E, typename T>
-	void Listen(T& listener, void(T::*function)(E&))
-	{
-		std::any_cast<std::vector<std::function<void(E&)>>&>(listeners.at(GetEventID<E>()))
-			.push_back([&listener, function](E& event) { (listener.*function)(event); });
-	}
-
-	template <IsEvent E, typename ...TArgs>
-	void Emit(TArgs&& ...args)
-	{
-		E event(std::forward<TArgs>(args)...);
-		event.id = GetEventID<E>();
-
-		for (auto& function : std::any_cast<std::vector<std::function<void(E&)>>&>(listeners.at(GetEventID<E>())))
-		{
-			function(event);
-		}
-	}
-
-	template <IsEvent E>
-	void Emit(E& event)
-	{
-		for (auto& function : std::any_cast<std::vector<std::function<void(E&)>>&>(listeners.at(GetEventID<E>())))
-		{
-			function(event);
-		}
-	}
 }
