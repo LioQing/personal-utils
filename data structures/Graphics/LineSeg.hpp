@@ -16,7 +16,6 @@ namespace lio
 
 		LineSeg(T x1 = 0.0, T y1 = 0.0, T x2 = 0.0, T y2 = 0.0) : p1(x1, y1), p2(x2, y2) {}
 		LineSeg(const Vec2<T>& p1, const Vec2<T>& p2 = Vec2<T>::Zero()) : p1(p1), p2(p2) {}
-		LineSeg(const LineSeg& l) : p1(l.p1), p2(l.p2) {}
 
 		template <typename U>
 		operator LineSeg<U>() const
@@ -27,13 +26,6 @@ namespace lio
 		LineSeg<U> Cast() const
 		{
 			return LineSeg<U>(p1, p2);
-		}
-
-		LineSeg& operator=(const LineSeg& l)
-		{
-			p1 = l.p1;
-			p2 = l.p2;
-			return *this;
 		}
 
 		LineSeg& Set(const Vec2<T>& p1, const Vec2<T>& p2 = Vec2<T>::Zero())

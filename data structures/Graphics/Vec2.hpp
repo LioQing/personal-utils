@@ -13,7 +13,6 @@ namespace lio
 		T x, y;
 
 		Vec2(T x = 0.0, T y = 0.0) : x(x), y(y) {}
-		Vec2(const Vec2& v) : x(v.x), y(v.y) {}
 
 		template <typename U>
 		operator Vec2<U>() const
@@ -24,13 +23,6 @@ namespace lio
 		Vec2<U> Cast() const
 		{
 			return Vec2<U>(x, y);
-		}
-
-		Vec2& operator=(const Vec2& v)
-		{
-			x = v.x;
-			y = v.y;
-			return *this;
 		}
 
 		Vec2& Set(T x, T y)
