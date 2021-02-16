@@ -27,10 +27,6 @@ File | Name | Description | C++ Standard | Dependcies | Namespace
 [Matrix.hpp](data%20structures/Matrix.hpp) | Matrix | A half-finished matrix class | C++14 | N/A | lio
 [Vec2.hpp](data%20structures/Graphics/Vec2.hpp) | Vector2 | 2D Vector class with many graphical functions | C++14 | N/A | lio
 [LineSeg.hpp](data%20structures/Graphics/LineSeg.hpp) | Line Segment | 2D line segment class | C++14 | [Vec2.hpp](data%20structures/Graphics/Vec2.hpp) | lio
-[Circle.hpp](data%20structures/Graphics/Circle.hpp) | Circle | 2D circle class | C++14 | [Vec2.hpp](data%20structures/Graphics/Vec2.hpp), [Transformable.hpp](data%20structures/Graphics/Transformable.hpp) | lio
-[Rect.hpp](data%20structures/Graphics/Rect.hpp) | Rectangle | 2D rectangle class | C++14 | [Vec2.hpp](data%20structures/Graphics/Vec2.hpp), [Transformable.hpp](data%20structures/Graphics/Transformable.hpp) | lio
-[Triangle.hpp](data%20structures/Graphics/Triangle.hpp) | Triangle | 2D triangle class | C++14 | [Vec2.hpp](data%20structures/Graphics/Vec2.hpp) | lio
-[Transformable.hpp](data%20structures/Graphics/Transformable.hpp) | Transformable | Transformable for other 2D shape classes to inherit from | C++14 | [Vec2.hpp](data%20structures/Graphics/Vec2.hpp) | lio
 [String (C)](data%20structures/String%20(C)) | String for C | String struct for C with a lot of dedicated functions, many are from C++ std::string class | C99 | N/A | N/A
 
 ### Tools
