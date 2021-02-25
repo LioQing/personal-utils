@@ -6,7 +6,7 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 
-namespace ImGuiSFML_Test
+namespace ImGuiSFML_Example
 {
 	class Program
 	{
@@ -14,7 +14,7 @@ namespace ImGuiSFML_Test
 		{
 			var window = new RenderWindow(new VideoMode(640, 480), "");
 			window.SetFramerateLimit(60);
-			SFMLImpl.Init(window);
+			ImGuiSFML.Init(window);
 
 			var io = ImGui.GetIO();
 			io.ConfigFlags |= ImGuiConfigFlags.NavEnableGamepad;
@@ -32,7 +32,7 @@ namespace ImGuiSFML_Test
 			{
 				Joystick.Update();
 				window.DispatchEvents();
-				SFMLImpl.Update(window, deltaClock.Restart());
+				ImGuiSFML.Update(window, deltaClock.Restart());
 
 				ImGui.Begin("Hello World!");
 				
@@ -53,11 +53,11 @@ namespace ImGuiSFML_Test
 				ImGui.End();
 
 				window.Clear(bgColor);
-				SFMLImpl.Render();
+				ImGuiSFML.Render();
 				window.Display();
 			}
 
-			SFMLImpl.Shutdown();
+			ImGuiSFML.Shutdown();
 		}
 	}
 }

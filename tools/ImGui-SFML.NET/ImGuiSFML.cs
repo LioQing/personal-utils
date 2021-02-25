@@ -9,7 +9,7 @@ using SFML.Window;
 
 namespace ImGuiNET
 {
-	public static class SFMLImpl
+	public static class ImGuiSFML
 	{
 		private static bool _windowHasFocus = false;
 		private static readonly bool[] _mousePressed = new bool[] { false, false, false };
@@ -35,17 +35,10 @@ namespace ImGuiNET
 			public float threshold;
 		}
 
-		private static StickInfo _dPadInfo = new StickInfo();
-		private static StickInfo _lStickInfo = new StickInfo();
+		private static readonly StickInfo _dPadInfo = new StickInfo();
+		private static readonly StickInfo _lStickInfo = new StickInfo();
 
 		private static readonly Cursor[] _mouseCursors = new Cursor[(int)ImGuiMouseCursor.COUNT];
-		private static readonly bool[] _mouseCursorLoaded = new bool[(int)ImGuiMouseCursor.COUNT];
-
-		private static string ClipboadText
-		{
-			get => Clipboard.Contents;
-			set => Clipboard.Contents = value;
-		}
 
 
 		public static void Init(RenderWindow window, bool loadDefaultFont = true)
@@ -102,17 +95,6 @@ namespace ImGuiNET
 
 			// init rendering
 			io.DisplaySize = new Vector2(displaySize.X, displaySize.Y);
-
-			// TODO: Implement
-			// clipboard
-			// io.SetClipboardTextFn = ClipboardText;
-			// io.GetClipboardTextFn = getClipboadText;
-
-			// load mouse cursors
-			for (var i = 0; i < (int)ImGuiMouseCursor.COUNT; ++i)
-			{
-				_mouseCursorLoaded[i] = false;
-			}
 
 			LoadMouseCursor(ImGuiMouseCursor.Arrow, Cursor.CursorType.Arrow);
 			LoadMouseCursor(ImGuiMouseCursor.TextInput, Cursor.CursorType.Text);
@@ -500,6 +482,19 @@ namespace ImGuiNET
 				size, framePadding, bgColor, tintColor);
 		}
 
+		public static bool ImageButton(RenderTexture texture, int framePadding, Color bgColor, Color tintColor)
+		{
+			return ImageButton(texture.Texture, (Vector2f)texture.Size, framePadding, bgColor, tintColor);
+		}
+
+		public static bool ImageButton(RenderTexture texture, Vector2f size, int framePadding, Color bgColor,
+			Color tintColor)
+		{
+			var textureSize = texture.Size;
+			return ImageButtonImpl(texture.Texture, new FloatRect(0, textureSize.Y, textureSize.X, 0),
+				size, framePadding, bgColor, tintColor);
+		}
+
 		public static bool ImageButton(Sprite sprite, int framePadding, Color bgColor, Color tintColor)
 		{
 			var spriteSize = sprite.GetGlobalBounds();
@@ -586,7 +581,7 @@ namespace ImGuiNET
 		}
 
 		// Rendering callback
-		[DllImport("RenderDataImpl.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("ImGuiSFML.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
 		private static extern void RenderDrawLists(ImDrawDataPtr drawData, ImGuiIOPtr io);
 
 		// return first id of connected joystick
@@ -687,7 +682,6 @@ namespace ImGuiNET
 		private static void LoadMouseCursor(ImGuiMouseCursor imguiCursorType, Cursor.CursorType sfmlCursorType)
 		{
 			_mouseCursors[(int)imguiCursorType] = new Cursor(sfmlCursorType);
-			_mouseCursorLoaded[(int)imguiCursorType] = true;
 		}
 
 		private static void UpdateMouseCursor(Window window)

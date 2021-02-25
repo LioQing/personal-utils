@@ -38,4 +38,4 @@ File | Name | Description | Language Standard/Version | Dependcies | Namespace/C
 [LConsoleScreen](tools/LConsoleScreen) | Lio's Console Screen | Display Ascii characters as 2D screen in cmd (Windows only) | C++11 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) | lio
 [PortableSystemFunctions.h](tools/PortableSystemFunctions.h) | Portable System Functions | Cross-platform system functions | C++17 / C17 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) / [unistd.h](https://en.wikipedia.org/wiki/Unistd.h) | N/A
 [mem_usage](tools/mem_usage) | Memory Usage | To track and print out heap memory informations in console | C++14 | N/A | lio
-[ImGui-SFML.NET](tools/ImGui-SFML.NET) | ImGui.Net-SFML.NET Implementation | Use Dear ImGui.NET with SFML.NET | C# 9.0 | SFML.NET, ImGui.NET | ImGui.SFMLImpl
+[ImGui-SFML.NET](tools/ImGui-SFML.NET) | ImGui</span>.Net-SFML</span>.NET Implementation | Use Dear ImGui</span>.NET with SFML</span>.NET | C# 9.0, .NET 5.0 | [SFML.NET 2.5.0](https://www.sfml-dev.org/download/sfml.net/), [ImGui.NET 1.78.0](https://github.com/mellinoe/ImGui.NET) | ImGui.SFMLImpl
