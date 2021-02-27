@@ -22,24 +22,24 @@ void String_delete(String this)
 	free(this);
 }
 
-void String_copy_c_str(String this, const char* other)
+void String_assign_c_str(String this, const char* other)
 {
 	this->c_str = (char*)realloc(this->c_str, sizeof(char) * (strlen(other) + 1));
-	
+
 	strcpy(this->c_str, other);
 	this->size = strlen(other);
 }
 
-void String_copy(String this, const String other)
+void String_assign(String this, ConstString other)
 {
-	String_copy_c_str(this, other->c_str);
+	String_assign_c_str(this, other->c_str);
 }
 
-char String_at(const String this, size_t index)
+char String_at(ConstString this, size_t index)
 {
 	if (index >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\nindex out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "index out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 	return this->c_str[index];
@@ -49,7 +49,7 @@ void String_set_at(String this, size_t index, char c)
 {
 	if (index >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\nindex out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "index out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 	this->c_str[index] = c;
@@ -77,7 +77,7 @@ void String_set_at_if_pos(String this, char c, int (*pred)(size_t))
 	}
 }
 
-int String_empty(const String this)
+int String_empty(ConstString this)
 {
 	return this->size == 0;
 }
@@ -96,12 +96,12 @@ void String_append_c_str(String this, const char* other)
 	strcpy(tmp, this->c_str);
 	strcat(tmp, other);
 
-	String_copy_c_str(this, tmp);
+	String_assign_c_str(this, tmp);
 
 	free(tmp);
 }
 
-void String_append(String this, const String other)
+void String_append(String this, ConstString other)
 {
 	String_append_c_str(this, other->c_str);
 }
@@ -113,7 +113,7 @@ void String_append_char(String this, char c)
 	tmp[this->size] = c;
 	tmp[this->size + 1] = '\0';
 
-	String_copy_c_str(this, tmp);
+	String_assign_c_str(this, tmp);
 
 	free(tmp);
 }
@@ -126,26 +126,26 @@ void String_append_char_fill(String this, size_t count, char c)
 	}
 }
 
-int String_compare_c_str(const String this, const char* other)
+int String_compare_c_str(ConstString this, const char* other)
 {
 	return strcmp(this->c_str, other);
 }
 
-int String_compare(const String this, const String other)
+int String_compare(ConstString this, ConstString other)
 {
 	return strcmp(this->c_str, other->c_str);
 }
 
-String String_substr(const String this, size_t pos, size_t len)
+String String_substr(ConstString this, size_t pos, size_t len)
 {
 	if (pos >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 	else if (pos + len > this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos + len out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 
@@ -163,13 +163,13 @@ void String_insert_c_str(String this, size_t pos, const char* other)
 {
 	if (pos >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 
 	String tmp_str = String_substr(this, pos, this->size - pos);
 	String tmp_str1 = String_substr(this, 0, pos);
-	String_copy(this, tmp_str1);
+	String_assign(this, tmp_str1);
 	String_delete(tmp_str1);
 
 	String_append_c_str(this, other);
@@ -178,7 +178,7 @@ void String_insert_c_str(String this, size_t pos, const char* other)
 	String_delete(tmp_str);
 }
 
-void String_insert(String this, size_t pos, const String other)
+void String_insert(String this, size_t pos, ConstString other)
 {
 	String_insert_c_str(this, pos, other->c_str);
 }
@@ -187,13 +187,13 @@ void String_insert_char(String this, size_t pos, char c)
 {
 	if (pos >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 
 	String tmp_str = String_substr(this, pos, this->size - pos);
 	String tmp_str1 = String_substr(this, 0, pos);
-	String_copy(this, tmp_str1);
+	String_assign(this, tmp_str1);
 	String_delete(tmp_str1);
 
 	String_append_char(this, c);
@@ -206,13 +206,13 @@ void String_insert_char_fill(String this, size_t pos, size_t count, char c)
 {
 	if (pos >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 
 	String tmp_str = String_substr(this, pos, this->size - pos);
 	String tmp_str1 = String_substr(this, 0, pos);
-	String_copy(this, tmp_str1);
+	String_assign(this, tmp_str1);
 	String_delete(tmp_str1);
 
 	for (size_t i = 0; i < count; ++i)
@@ -226,7 +226,7 @@ void String_erase(String this, size_t pos, size_t len)
 {
 	if (pos >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 
@@ -265,11 +265,11 @@ void String_erase_if_pos(String this, int (*pred)(size_t))
 	}
 }
 
-void String_replace(String this, size_t pos, const String other)
+void String_replace(String this, size_t pos, ConstString other)
 {
 	if (pos >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 
@@ -279,11 +279,11 @@ void String_replace(String this, size_t pos, const String other)
 	}
 }
 
-void String_replace_append(String this, size_t pos, const String other)
+void String_replace_append(String this, size_t pos, ConstString other)
 {
 	if (pos >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 
@@ -294,7 +294,7 @@ void String_replace_append(String this, size_t pos, const String other)
 	}
 
 	String tmp_str = String_substr(this, 0, pos);
-	String_copy(this, tmp_str);
+	String_assign(this, tmp_str);
 	String_delete(tmp_str);
 
 	String_append(this, other);
@@ -304,7 +304,7 @@ void String_replace_c_str(String this, size_t pos, const char* other)
 {
 	if (pos >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 
@@ -319,7 +319,7 @@ void String_replace_append_c_str(String this, size_t pos, const char* other)
 {
 	if (pos >= this->size)
 	{
-		fprintf(stderr, "at line no. %d from file %s\npos out of range\n", __LINE__, __FILE__);
+		fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__);
 		exit(1);
 	}
 
@@ -330,7 +330,7 @@ void String_replace_append_c_str(String this, size_t pos, const char* other)
 	}
 
 	String tmp_str = String_substr(this, 0, pos);
-	String_copy(this, tmp_str);
+	String_assign(this, tmp_str);
 	String_delete(tmp_str);
 
 	String_append_c_str(this, other);
