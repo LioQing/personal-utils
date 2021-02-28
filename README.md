@@ -29,7 +29,7 @@ File | Name | Description | Language Standard/Version | Dependcies | Namespace/C
 [Vec2.hpp](data%20structures/Graphics/Vec2.hpp) | Vector2 | 2D Vector class with many graphical functions | C++14 | N/A | lio
 [LineSeg.hpp](data%20structures/Graphics/LineSeg.hpp) | Line Segment | 2D line segment class | C++14 | [Vec2.hpp](data%20structures/Graphics/Vec2.hpp) | lio
 [String (C)](data%20structures/String%20(C)) | String Class for C | String struct for C with a lot of dedicated functions, many are from C++ std::string class | C99 | N/A | N/A
-[Vector.h](data%20structures/Vector.h) | Template Vector Class for C | Template vector struct for C with a lot of functions from C++ std::vector class | C99 | N/A | N/A
+[Data Structures for C](data%20structures/Data%20Structure%20for%20C) | Template Data Structures for C | Template structs for C with a lot of functions from C++ STL classes | C99 | N/A | N/A
 
 ### Tools
 

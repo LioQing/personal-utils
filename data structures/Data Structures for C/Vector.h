@@ -1,8 +1,11 @@
 #pragma once
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#include "VectorIterator.h"
 
 #define Vector_define(T) \
  \
@@ -17,10 +20,10 @@
         size_t capacity; \
         T* data;         \
                          \
-        void (*delete)(Vector_##T this); \
+        void (*delete)(ConstVector_##T this);          \
         				 \
-        void (*assign_array)(Vector_##T this, const T* other, size_t count); \
-        void (*assign)(Vector_##T this, ConstVector_##T other);              \
+        void (*copy)(Vector_##T this, ConstVector_##T other);              \
+        void (*copy_array)(Vector_##T this, const T* other, size_t count); \
         \
         void (*reserve)(Vector_##T this, size_t new_cap); \
         void (*resize)(Vector_##T this, size_t count); \
@@ -37,14 +40,17 @@
         void (*clear)(Vector_##T this);     \
                          \
         void (*insert)(Vector_##T this, size_t pos, T element);              \
-        void (*erase)(Vector_##T this, size_t pos); \
+        void (*erase)(Vector_##T this, size_t pos);    \
+                         \
+        void (*swap)(Vector_##T this, Vector_##T other); \
     }; \
                        \
-    Vector_##T Vector_##T##_new();     \
-    void Vector_##T##_delete(Vector_##T this); \
+    Vector_##T Vector_##T##_new();          \
+    ConstVector_##T ConstVector_##T##_new(); \
+    void Vector_##T##_delete(ConstVector_##T this); \
                          \
-    void Vector_##T##_assign_array(Vector_##T this, const T* other, size_t count); \
-    void Vector_##T##_assign(Vector_##T this, ConstVector_##T other);        \
+    void Vector_##T##_copy_array(Vector_##T this, const T* other, size_t count); \
+    void Vector_##T##_copy(Vector_##T this, ConstVector_##T other);        \
                          \
     void Vector_##T##_reserve(Vector_##T this, size_t new_cap); \
     void Vector_##T##_resize(Vector_##T this, size_t count);    \
@@ -61,7 +67,9 @@
     void Vector_##T##_clear(Vector_##T this);          \
                          \
     void Vector_##T##_insert(Vector_##T this, size_t pos, T element);        \
-    void Vector_##T##_erase(Vector_##T this, size_t pos); \
+    void Vector_##T##_erase(Vector_##T this, size_t pos);                    \
+                         \
+    void Vector_##T##_swap(Vector_##T this, Vector_##T other); \
                        \
     Vector_##T Vector_##T##_new()      \
     {                  \
@@ -72,8 +80,8 @@
         new_vec->capacity = 1;     \
                          \
         new_vec->delete = &Vector_##T##_delete;             \
-        new_vec->assign_array = &Vector_##T##_assign_array;         \
-        new_vec->assign = &Vector_##T##_assign;        \
+        new_vec->copy_array = &Vector_##T##_copy_array;         \
+        new_vec->copy = &Vector_##T##_copy;        \
                          \
         new_vec->reserve = &Vector_##T##_reserve;           \
         new_vec->resize = &Vector_##T##_resize;        \
@@ -90,29 +98,36 @@
         new_vec->clear = &Vector_##T##_clear;          \
                          \
         new_vec->insert = &Vector_##T##_insert;        \
-        new_vec->erase = &Vector_##T##_erase; \
+        new_vec->erase = &Vector_##T##_erase;          \
+                         \
+        new_vec->swap = &Vector_##T##_swap; 		   \
         \
         return new_vec; \
     }                    \
                          \
-    void Vector_##T##_delete(Vector_##T this)          \
+    ConstVector_##T ConstVector_##T##_new() \
+	{                       \
+		return Vector_##T##_new(); \
+	}\
+                         \
+    void Vector_##T##_delete(ConstVector_##T this)          \
 	{                       \
 		if (!this) return;     \
                          \
 		free(this->data);      \
-		free(this); \
+		free((Vector_##T)this); \
 	}\
                          \
-    void Vector_##T##_assign_array(Vector_##T this, const T* other, size_t count)     \
+    void Vector_##T##_copy_array(Vector_##T this, const T* other, size_t count)     \
     {                       \
         if (count > this->size) Vector_##T##_resize(this, count);           \
                          \
         memcpy(this->data, other, sizeof(T) * count); \
     }                       \
                          \
-    void Vector_##T##_assign(Vector_##T this, ConstVector_##T other)               \
+    void Vector_##T##_copy(Vector_##T this, ConstVector_##T other)               \
     {                       \
-        Vector_##T##_assign_array(this, other->data, other->size); \
+        Vector_##T##_copy_array(this, other->data, other->size); \
     }                    \
                          \
     void Vector_##T##_reserve(Vector_##T this, size_t new_cap)    \
@@ -220,15 +235,34 @@
         	this->data[i - 1] = this->data[i];     \
                          \
         Vector_##T##_resize(this, this->size - 1);     \
-    } \
-
+    }                    \
+                         \
+    void Vector_##T##_swap(Vector_##T this, Vector_##T other)                \
+	{                       \
+		T* tmp = this->data; \
+		this->data = other->data;          \
+		other->data = tmp;     \
+                         \
+		this->size = this->size ^ other->size;    \
+		other->size = this->size ^ other->size;   \
+		this->size = this->size ^ other->size;    \
+		\
+		this->capacity = this->capacity ^ other->capacity;    \
+		other->capacity = this->capacity ^ other->capacity;   \
+		this->capacity = this->capacity ^ other->capacity;    \
+	}                       \
+                         \
+    VectorIterator_define(T) \
+	
 #define Vector(T) Vector_##T
 #define ConstVector(T) ConstVector_##T
+
 #define Vector_new(T) Vector_##T##_new()
+#define ConstVector_new(T) ConstVector_##T##_new()
 #define delete(this) this->delete(this)
 
-#define assign_array(this, other, count) this->assign_array(this, other, count)
-#define assign(this, other) this->assign(this, other)
+#define copy_array(this, other, count) this->copy_array(this, other, count)
+#define copy(this, other) this->copy(this, other)
 
 #define reserve(this, new_cap) this->reserve(this, new_cap)
 #define resize(this, count) this->resize(this, count)
@@ -246,3 +280,5 @@
 
 #define insert(this, pos, element) this->insert(this, pos, element)
 #define erase(this, pos) this->erase(this, pos)
+
+#define swap(this, other) this->swap(this, other)
