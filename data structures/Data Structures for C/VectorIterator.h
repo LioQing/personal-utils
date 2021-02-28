@@ -18,12 +18,12 @@
                                  \
 		Iterator_VectorIterator_##T* iterator;                \
 		\
-		Vector_##T vec;\
+		Vector_##T* vec;\
         size_t pos;              \
 	};                              \
                                  \
-	VectorIterator_##T VectorIterator_##T##_construct(Vector_##T vec, size_t pos);          \
-	VectorIterator_##T* VectorIterator_##T##_new(Vector_##T vec, size_t pos);          \
+	VectorIterator_##T VectorIterator_##T##_construct(Vector_##T* vec, size_t pos);          \
+	VectorIterator_##T* VectorIterator_##T##_new(Vector_##T* vec, size_t pos);          \
 	void VectorIterator_##T##_delete(const VectorIterator_##T* this); \
                                  \
 	void VectorIterator_##T##_copy(VectorIterator_##T* this, const VectorIterator_##T* other); \
@@ -47,18 +47,18 @@
         &VectorIterator_##T##_prev, \
 	};                              \
                                  \
-	struct _VectorIterator_##T _vector_iterator_##T##_default =                       \
+	struct _VectorIterator_##T vector_iterator_##T##_default =                       \
 	{                               \
         &VectorIterator_##T##_delete, \
 		\
 		&VectorIterator_##T##_copy,    \
                                  \
 		&_vector_iterator_##T,\
-	};\
+	}; \
 	\
-	VectorIterator_##T VectorIterator_##T##_construct(Vector_##T vec, size_t pos)           \
+	VectorIterator_##T VectorIterator_##T##_construct(Vector_##T* vec, size_t pos)           \
 	{                               \
-        VectorIterator_##T new_vec = _vector_iterator_##T##_default;\
+        VectorIterator_##T new_vec = vector_iterator_##T##_default;\
 		\
 		new_vec.vec = vec;      \
 		new_vec.pos = pos;             \
@@ -66,7 +66,7 @@
 		return new_vec;\
 	}                               \
 	\
-	VectorIterator_##T* VectorIterator_##T##_new(Vector_##T vec, size_t pos)           \
+	VectorIterator_##T* VectorIterator_##T##_new(Vector_##T* vec, size_t pos)           \
 	{                               \
 		VectorIterator_##T* new_itr = (VectorIterator_##T*)malloc(sizeof(*new_itr));   \
                                  \
