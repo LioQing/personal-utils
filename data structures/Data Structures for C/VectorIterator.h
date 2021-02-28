@@ -153,4 +153,4 @@
 
 #define VectorIterator_construct(T, vec, pos) VectorIterator_##T##_construct(vec, pos)
 #define VectorIterator_new(T, vec, pos) VectorIterator_##T##_new(vec, pos)
-#define delete(this) this->delete(this)
+#define delete(this) (*this).delete(this)

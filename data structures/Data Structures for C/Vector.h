@@ -291,26 +291,26 @@
 
 #define Vector_construct(T) Vector_##T##_construct()
 #define Vector_new(T) Vector_##T##_new()
-#define delete(this) this->delete(this)
+#define delete(this) (*this).delete(this)
 
-#define copy_array(this, other, count) this->copy_array(this, other, count)
-#define copy(this, other) this->copy(this, other)
+#define copy_array(this, other, count) (*this).copy_array(this, other, count)
+#define copy(this, other) (*this).copy(this, other)
 
-#define reserve(this, new_cap) this->reserve(this, new_cap)
-#define resize(this, count) this->resize(this, count)
+#define reserve(this, new_cap) (*this).reserve(this, new_cap)
+#define resize(this, count) (*this).resize(this, count)
 
-#define count(this) this->count(this)
-#define empty(this) this->empty(this)
+#define count(this) (*this).count(this)
+#define empty(this) (*this).empty(this)
 
-#define get_at(this, index) this->get_at(this, index)
-#define set_at(this, index, element) this->set_at(this, index, element)
+#define get_at(this, index) (*this).get_at(this, index)
+#define set_at(this, index, element) (*this).set_at(this, index, element)
 
-#define push_back(this, element) this->push_back(this, element)
-#define pop_back(this) this->pop_back(this)
+#define push_back(this, element) (*this).push_back(this, element)
+#define pop_back(this) (*this).pop_back(this)
 
-#define clear(this) this->clear(this)
+#define clear(this) (*this).clear(this)
 
-#define insert(this, pos, element) this->insert(this, pos, element)
-#define erase(this, pos) this->erase(this, pos)
+#define insert(this, pos, element) (*this).insert(this, pos, element)
+#define erase(this, pos) (*this).erase(this, pos)
 
-#define swap(this, other) this->swap(this, other)
+#define swap(this, other) (*this).swap(this, other)

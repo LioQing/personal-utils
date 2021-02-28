@@ -15,10 +15,10 @@
                                 \
 	typedef struct _Iterator_##Itr Iterator_##Itr; \
 
-#define get(itr) itr->iterator->get(itr)
-#define set(itr, element) itr->iterator->set(itr, element)
+#define get(this) (*this).iterator->get(this)
+#define set(this, element) (*this).iterator->set(this, element)
 
-#define advance(itr, n) itr->iterator->advance(itr, n)
-#define distance(first, last) first->iterator->distance(first, last)
-#define next(itr) itr->iterator->next(itr)
-#define prev(itr) itr->iterator->prev(itr)
+#define advance(this, n) (*this).iterator->advance(this, n)
+#define distance(first, last) (*first).iterator->distance(first, last)
+#define next(this) (*this).iterator->next(this)
+#define prev(this) (*this).iterator->prev(this)
