@@ -1,6 +1,6 @@
 #pragma once
 
-#define Iterator_define(Itr, T) \
+#define Iterator_declare(Itr, T) \
                            \
  	struct _Iterator_##Itr \
 	{                                   \
@@ -13,7 +13,12 @@
 		Itr (*prev)(const Itr* this);      \
 	};                             \
                                 \
-	typedef struct _Iterator_##Itr Iterator_##Itr; \
+	typedef struct _Iterator_##Itr Iterator_##Itr;          \
+
+#define Iterator_define(Itr, T) \
+                                \
+	struct _Iterator_##Itr; \
+	typedef struct _Iterator_##Itr Iterator_##Itr;          \
 
 #define get(this) (*this).iterator->get(this)
 #define set(this, element) (*this).iterator->set(this, element)
