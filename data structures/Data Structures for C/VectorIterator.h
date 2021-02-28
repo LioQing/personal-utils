@@ -6,34 +6,35 @@
                                  \
 	struct _VectorIterator_##T;      \
                                  \
-	typedef struct _VectorIterator_##T* VectorIterator_##T; \
+	typedef struct _VectorIterator_##T VectorIterator_##T; \
                                  \
     Iterator_define(VectorIterator_##T, T) \
                                  \
 	struct _VectorIterator_##T      \
 	{                               \
+        void (*delete)(const VectorIterator_##T* this);                         \
+		\
+        void (*copy)(VectorIterator_##T* this, const VectorIterator_##T* other); \
+                                 \
+		Iterator_VectorIterator_##T* iterator;                \
+		\
 		Vector_##T vec;\
         size_t pos;              \
-                                 \
-        void (*delete)(VectorIterator_##T this); \
-                                 \
-        void (*copy)(VectorIterator_##T this, VectorIterator_##T other); \
-                                 \
-		Iterator_VectorIterator_##T iterator; \
 	};                              \
                                  \
-	VectorIterator_##T VectorIterator_##T##_new(Vector_##T vec, size_t pos);          \
-	void VectorIterator_##T##_delete(VectorIterator_##T this); \
+	VectorIterator_##T VectorIterator_##T##_construct(Vector_##T vec, size_t pos);          \
+	VectorIterator_##T* VectorIterator_##T##_new(Vector_##T vec, size_t pos);          \
+	void VectorIterator_##T##_delete(const VectorIterator_##T* this); \
                                  \
-	void VectorIterator_##T##_copy(VectorIterator_##T this, VectorIterator_##T other); \
+	void VectorIterator_##T##_copy(VectorIterator_##T* this, const VectorIterator_##T* other); \
                                  \
-	T VectorIterator_##T##_get(VectorIterator_##T this);           \
-	void VectorIterator_##T##_set(VectorIterator_##T this, T element); \
+	T VectorIterator_##T##_get(const VectorIterator_##T* this);           \
+	void VectorIterator_##T##_set(VectorIterator_##T* this, T element); \
                                  \
-	void VectorIterator_##T##_advance(VectorIterator_##T this, long n);    \
-	size_t VectorIterator_##T##_distance(VectorIterator_##T first, VectorIterator_##T last); \
-	VectorIterator_##T VectorIterator_##T##_next(VectorIterator_##T this);       \
-	VectorIterator_##T VectorIterator_##T##_prev(VectorIterator_##T this);       \
+	void VectorIterator_##T##_advance(VectorIterator_##T* this, long n);    \
+	size_t VectorIterator_##T##_distance(const VectorIterator_##T* first, const VectorIterator_##T* last); \
+	VectorIterator_##T VectorIterator_##T##_next(const VectorIterator_##T* this);       \
+	VectorIterator_##T VectorIterator_##T##_prev(const VectorIterator_##T* this);       \
                                  \
 	struct _Iterator_VectorIterator_##T _vector_iterator_##T =                 \
 	{                               \
@@ -45,10 +46,29 @@
 		&VectorIterator_##T##_next,          \
         &VectorIterator_##T##_prev, \
 	};                              \
-	\
-	VectorIterator_##T VectorIterator_##T##_new(Vector_##T vec, size_t pos)           \
+                                 \
+	struct _VectorIterator_##T _vector_iterator_##T##_default =                       \
 	{                               \
-		VectorIterator_##T new_itr = (VectorIterator_##T)malloc(sizeof(*new_itr));   \
+        &VectorIterator_##T##_delete, \
+		\
+		&VectorIterator_##T##_copy,    \
+                                 \
+		&_vector_iterator_##T,\
+	};\
+	\
+	VectorIterator_##T VectorIterator_##T##_construct(Vector_##T vec, size_t pos)           \
+	{                               \
+        VectorIterator_##T new_vec = _vector_iterator_##T##_default;\
+		\
+		new_vec.vec = vec;      \
+		new_vec.pos = pos;             \
+                                 \
+		return new_vec;\
+	}                               \
+	\
+	VectorIterator_##T* VectorIterator_##T##_new(Vector_##T vec, size_t pos)           \
+	{                               \
+		VectorIterator_##T* new_itr = (VectorIterator_##T*)malloc(sizeof(*new_itr));   \
                                  \
 		new_itr->vec = vec;      \
                                  \
@@ -62,30 +82,30 @@
 		return new_itr; \
 	}                               \
 	\
-	void VectorIterator_##T##_delete(VectorIterator_##T this)\
+	void VectorIterator_##T##_delete(const VectorIterator_##T* this)\
 	{                               \
 		if (!this) return;             \
                                  \
-		free(this); \
+		free((VectorIterator_##T*)this); \
 	}\
                                  \
-	void VectorIterator_##T##_copy(VectorIterator_##T this, VectorIterator_##T other)  \
+	void VectorIterator_##T##_copy(VectorIterator_##T* this, const VectorIterator_##T* other)  \
 	{                               \
 		this->vec = other->vec; \
 		this->pos = other->pos; \
 	}                               \
                                  \
-	T VectorIterator_##T##_get(VectorIterator_##T this)            \
+	T VectorIterator_##T##_get(const VectorIterator_##T* this)            \
 	{                               \
 		return Vector_##T##_get_at(this->vec, this->pos); \
 	}                               \
                                  \
-	void VectorIterator_##T##_set(VectorIterator_##T this, T element)                    \
+	void VectorIterator_##T##_set(VectorIterator_##T* this, T element)                    \
 	{                               \
 		Vector_##T##_set_at(this->vec, this->pos, element); \
 	}                               \
                                  \
-	void VectorIterator_##T##_advance(VectorIterator_##T this, long n)                   \
+	void VectorIterator_##T##_advance(VectorIterator_##T* this, long n)                   \
 	{                               \
 		this->pos += n;                 \
                                  \
@@ -96,7 +116,7 @@
         }                \
 	}                               \
                                  \
-	size_t VectorIterator_##T##_distance(VectorIterator_##T first, VectorIterator_##T last)  \
+	size_t VectorIterator_##T##_distance(const VectorIterator_##T* first, const VectorIterator_##T* last)  \
 	{                               \
 		if (last->pos < first->pos) \
         {                      \
@@ -107,7 +127,7 @@
         return last->pos - first->pos; \
 	}                               \
                                  \
-	VectorIterator_##T VectorIterator_##T##_next(VectorIterator_##T this)                \
+	VectorIterator_##T VectorIterator_##T##_next(const VectorIterator_##T* this)                \
 	{                               \
 		if (this->pos >= this->vec->size) \
         {                      \
@@ -115,10 +135,10 @@
             exit(1); \
         }                        \
                                  \
-        return VectorIterator_##T##_new(this->vec, this->pos + 1); \
+        return VectorIterator_##T##_construct(this->vec, this->pos + 1); \
 	}                               \
                                  \
-	VectorIterator_##T VectorIterator_##T##_prev(VectorIterator_##T this)     \
+	VectorIterator_##T VectorIterator_##T##_prev(const VectorIterator_##T* this)     \
 	{                               \
 		if (this->pos <= 0) \
         {                      \
@@ -126,10 +146,11 @@
             exit(1); \
         }                        \
                                  \
-        return VectorIterator_##T##_new(this->vec, this->pos - 1); \
+        return VectorIterator_##T##_construct(this->vec, this->pos - 1); \
 	}                               \
 
 #define VectorIterator(T) VectorIterator_##T
 
+#define VectorIterator_construct(T, vec, pos) VectorIterator_##T##_construct(vec, pos)
 #define VectorIterator_new(T, vec, pos) VectorIterator_##T##_new(vec, pos)
 #define delete(this) this->delete(this)

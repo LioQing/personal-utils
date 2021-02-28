@@ -4,16 +4,16 @@
                            \
  	struct _Iterator_##Itr \
 	{                                   \
-		T (*get)(Itr this);            \
-		void (*set)(Itr this, T element);         \
+		T (*get)(const Itr* this);            \
+		void (*set)(Itr* this, T element);         \
 		\
-		void (*advance)(Itr this, long n); \
-		size_t (*distance)(Itr first, Itr last); \
-		Itr (*next)(Itr this);      \
-		Itr (*prev)(Itr this);      \
+		void (*advance)(Itr* this, long n); \
+		size_t (*distance)(const Itr* first, const Itr* last); \
+		Itr (*next)(const Itr* this);      \
+		Itr (*prev)(const Itr* this);      \
 	};                             \
                                 \
-	typedef struct _Iterator_##Itr* Iterator_##Itr; \
+	typedef struct _Iterator_##Itr Iterator_##Itr; \
 
 #define get(itr) itr->iterator->get(itr)
 #define set(itr, element) itr->iterator->set(itr, element)
