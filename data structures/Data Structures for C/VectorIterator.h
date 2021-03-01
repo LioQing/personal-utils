@@ -42,26 +42,6 @@
 
 #define VectorIterator_define(T) \
                                  \
-	struct _VectorIterator_##T;      \
-                                 \
-	typedef struct _VectorIterator_##T VectorIterator_##T; \
-                                 \
-    Iterator_define(VectorIterator_##T, T) \
-                                 \
-	VectorIterator_##T VectorIterator_##T##_construct(Vector_##T* vec, size_t pos);          \
-	VectorIterator_##T* VectorIterator_##T##_new(Vector_##T* vec, size_t pos);          \
-	void VectorIterator_##T##_delete(const VectorIterator_##T* this); \
-                                 \
-	void VectorIterator_##T##_copy(VectorIterator_##T* this, const VectorIterator_##T* other); \
-                                 \
-	T VectorIterator_##T##_get(const VectorIterator_##T* this);           \
-	void VectorIterator_##T##_set(VectorIterator_##T* this, T element); \
-                                 \
-	void VectorIterator_##T##_advance(VectorIterator_##T* this, long n);    \
-	size_t VectorIterator_##T##_distance(const VectorIterator_##T* first, const VectorIterator_##T* last); \
-	VectorIterator_##T VectorIterator_##T##_next(const VectorIterator_##T* this);       \
-	VectorIterator_##T VectorIterator_##T##_prev(const VectorIterator_##T* this);       \
-                                 \
 	struct _Iterator_VectorIterator_##T _vector_iterator_##T =                 \
 	{                               \
 		&VectorIterator_##T##_get,           \

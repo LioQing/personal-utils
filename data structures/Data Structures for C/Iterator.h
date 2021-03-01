@@ -15,11 +15,6 @@
                                 \
 	typedef struct _Iterator_##Itr Iterator_##Itr;          \
 
-#define Iterator_define(Itr, T) \
-                                \
-	struct _Iterator_##Itr; \
-	typedef struct _Iterator_##Itr Iterator_##Itr;          \
-
 #define get(this) (*this).iterator->get(this)
 #define set(this, element) (*this).iterator->set(this, element)
 

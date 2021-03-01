@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <math.h>
 
 #include "VectorIterator.h"
 
@@ -76,36 +75,6 @@
 
 #define Vector_define(T) \
  \
-    struct _Vector_##T;                     \
-                         \
- 	typedef struct _Vector_##T Vector_##T; \
-                         \
-    Vector_##T Vector_##T##_construct();    \
-    Vector_##T* Vector_##T##_new();          \
-    void Vector_##T##_delete(const Vector_##T* this); \
-                         \
-    void Vector_##T##_copy_array(Vector_##T* this, const T* other, size_t count); \
-    void Vector_##T##_copy(Vector_##T* this, const Vector_##T* other);        \
-                         \
-    void Vector_##T##_reserve(Vector_##T* this, size_t new_cap); \
-    void Vector_##T##_resize(Vector_##T* this, size_t count);    \
-                         \
-    size_t Vector_##T##_count(const Vector_##T* this);    \
-    int Vector_##T##_empty(const Vector_##T* this); \
-                         \
-    T Vector_##T##_get_at(const Vector_##T* this, size_t index);      \
-    void Vector_##T##_set_at(Vector_##T* this, size_t index, T element);      \
-                         \
-    void Vector_##T##_push_back(Vector_##T* this, T element);                 \
-    void Vector_##T##_pop_back(Vector_##T* this); \
-    		           \
-    void Vector_##T##_clear(Vector_##T* this);          \
-                         \
-    void Vector_##T##_insert(Vector_##T* this, size_t pos, T element);        \
-    void Vector_##T##_erase(Vector_##T* this, size_t pos);                    \
-                         \
-    void Vector_##T##_swap(Vector_##T* this, Vector_##T* other); \
-                         \
 	struct _Vector_##T vector_##T##_default =  \
 	{                       \
 		&Vector_##T##_delete,  \
@@ -189,7 +158,7 @@
                          \
     void Vector_##T##_copy_array(Vector_##T* this, const T* other, size_t count)     \
     {                       \
-        if (count > this->size) Vector_##T##_resize(this, count);           \
+        Vector_##T##_resize(this, count);           \
                          \
         memcpy(this->data, other, sizeof(T) * count); \
     }                       \
@@ -215,8 +184,6 @@
                          \
     void Vector_##T##_resize(Vector_##T* this, size_t count)        \
     {                       \
-        if (count <= this->capacity) this->size = count;              \
-                         \
         size_t new_cap = 1;   \
         while (new_cap < count) \
             new_cap *= 2; \
@@ -322,7 +289,7 @@
 	}                       \
                          \
     VectorIterator_define(T) \
-	
+
 #define Vector(T) Vector_##T
 
 #define Vector_construct(T) Vector_##T##_construct()
