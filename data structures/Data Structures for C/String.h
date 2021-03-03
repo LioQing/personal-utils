@@ -2,8 +2,8 @@
 
 #include <stdlib.h>
 
-struct _String; 
-	  
+struct _String;
+
 typedef struct _String String;
 
 struct _String
@@ -27,7 +27,7 @@ struct _String
 	void (*append_char)(String* this, char ch);
 	void (*append_c_str)(String* this, const char* c_str);
 	void (*append)(String* this, const String* other);
-	
+
 	void (*push_back)(String* this, char element);
 	void (*pop_back)(String* this);
 
@@ -37,7 +37,7 @@ struct _String
 	void (*erase)(String* this, size_t pos);
 
 	void (*swap)(String* this, String* other);
-	
+
 	const char* (*c_str)(String* this);
 
 	size_t size;

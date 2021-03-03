@@ -18,7 +18,7 @@
                                  \
 		Iterator_VectorIterator_##T* iterator;                \
 		\
-		Vector_##T* vec;\
+		Vector_##T* vec; \
         size_t pos;              \
 	};                               \
                                   \
@@ -27,6 +27,7 @@
 	void VectorIterator_##T##_delete(const VectorIterator_##T* this); \
                                  \
 	void VectorIterator_##T##_copy(VectorIterator_##T* this, const VectorIterator_##T* other); \
+	int VectorIterator_##T##_compare(const VectorIterator_##T* this, const VectorIterator_##T* other); \
                                  \
 	T VectorIterator_##T##_get(const VectorIterator_##T* this);           \
 	void VectorIterator_##T##_set(VectorIterator_##T* this, T element); \
@@ -45,7 +46,9 @@
 	struct _Iterator_VectorIterator_##T _vector_iterator_##T =                 \
 	{                               \
 		&VectorIterator_##T##_get,           \
-		&VectorIterator_##T##_set,           \
+		&VectorIterator_##T##_set,     \
+                                 \
+		&VectorIterator_##T##_compare, \
                                  \
 		&VectorIterator_##T##_advance,       \
 		&VectorIterator_##T##_distance,      \
@@ -83,7 +86,7 @@
 		new_itr->iterator = &_vector_iterator_##T;             \
                                  \
 		new_itr->delete = &VectorIterator_##T##_delete;                \
-		new_itr->copy = &VectorIterator_##T##_copy; \
+		new_itr->copy = &VectorIterator_##T##_copy;                               \
                                  \
 		return new_itr; \
 	}                               \
@@ -101,6 +104,11 @@
 		this->pos = other->pos; \
 	}                               \
                                  \
+	int VectorIterator_##T##_compare(const VectorIterator_##T* this, const VectorIterator_##T* other) \
+	{                               \
+		return (int)this->pos - (int)other->pos; \
+	} \
+                                 \
 	T VectorIterator_##T##_get(const VectorIterator_##T* this)            \
 	{                               \
 		return Vector_##T##_get_at(this->vec, this->pos); \
@@ -115,7 +123,7 @@
 	{                               \
 		this->pos += n;                 \
                                  \
-		if (this->pos < 0 || this->pos >= this->vec->size) \
+		if (this->pos < 0 || this->pos > this->vec->size) \
         {                      \
             fprintf(stderr, "pos out of range at line no. %d in file %s\n", __LINE__, __FILE__); \
             exit(1); \
@@ -160,3 +168,5 @@
 #define VectorIterator_construct(T, vec, pos) VectorIterator_##T##_construct(vec, pos)
 #define VectorIterator_new(T, vec, pos) VectorIterator_##T##_new(vec, pos)
 #define delete(this) (*this).delete(this)
+
+#define copy(this, other) (*this).copy(this, other)

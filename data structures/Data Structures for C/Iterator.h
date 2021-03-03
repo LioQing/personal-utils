@@ -5,7 +5,9 @@
  	struct _Iterator_##Itr \
 	{                                   \
 		T (*get)(const Itr* this);            \
-		void (*set)(Itr* this, T element);         \
+		void (*set)(Itr* this, T element); \
+                                 \
+		int (*compare)(const Itr* this, const Itr* other); \
 		\
 		void (*advance)(Itr* this, long n); \
 		size_t (*distance)(const Itr* first, const Itr* last); \
@@ -18,7 +20,17 @@
 #define get(this) (*this).iterator->get(this)
 #define set(this, element) (*this).iterator->set(this, element)
 
+#define compare(this, other) (*this).iterator->compare(this, other)
+
 #define advance(this, n) (*this).iterator->advance(this, n)
 #define distance(first, last) (*first).iterator->distance(first, last)
 #define next(this) (*this).iterator->next(this)
 #define prev(this) (*this).iterator->prev(this)
+
+
+#define foreach(T, Itr, element, this) \
+	Itr end_itr = end(this); \
+	for (Itr itr = begin(my_str); compare(&itr, &end_itr) < 0; advance(&itr, 1)) { \
+		T element = get(&itr);      \
+
+#define end_foreach() }
