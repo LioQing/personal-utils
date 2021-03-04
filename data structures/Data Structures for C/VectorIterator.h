@@ -24,7 +24,10 @@
                                   \
 	VectorIterator_##T VectorIterator_##T##_construct(Vector_##T* vec, size_t pos);          \
 	VectorIterator_##T* VectorIterator_##T##_new(Vector_##T* vec, size_t pos);          \
-	void VectorIterator_##T##_delete(const VectorIterator_##T* this); \
+	void VectorIterator_##T##_delete(const VectorIterator_##T* this);              \
+                                  \
+	VectorIterator_##T VectorIterator_##T##_begin(Vector_##T* vec);                \
+	VectorIterator_##T VectorIterator_##T##_end(Vector_##T* vec);                \
                                  \
 	void VectorIterator_##T##_copy(VectorIterator_##T* this, const VectorIterator_##T* other); \
 	int VectorIterator_##T##_compare(const VectorIterator_##T* this, const VectorIterator_##T* other); \
@@ -96,7 +99,17 @@
 		if (!this) return;             \
                                  \
 		free((VectorIterator_##T*)this); \
-	}\
+	}                               \
+                                 \
+	VectorIterator_##T VectorIterator_##T##_begin(Vector_##T* vec)             \
+	{                               \
+		return VectorIterator_##T##_construct(vec, 0); \
+	}                               \
+	\
+	VectorIterator_##T VectorIterator_##T##_end(Vector_##T* vec)                \
+	{                               \
+		return VectorIterator_##T##_construct(vec, vec->size); \
+	}                               \
                                  \
 	void VectorIterator_##T##_copy(VectorIterator_##T* this, const VectorIterator_##T* other)  \
 	{                               \
@@ -168,5 +181,8 @@
 #define VectorIterator_construct(T, vec, pos) VectorIterator_##T##_construct(vec, pos)
 #define VectorIterator_new(T, vec, pos) VectorIterator_##T##_new(vec, pos)
 #define delete(this) (*this).delete(this)
+
+#define VectorIterator_begin(T, vec) VectorIterator_##T##_begin(vec)
+#define VectorIterator_end(T, vec) VectorIterator_##T##_end(vec)
 
 #define copy(this, other) (*this).copy(this, other)

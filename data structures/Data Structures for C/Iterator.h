@@ -27,10 +27,14 @@
 #define next(this) (*this).iterator->next(this)
 #define prev(this) (*this).iterator->prev(this)
 
+#define begin(Itr, this) Itr##_begin(this)
+#define end(Itr, this) Itr##_end(this)
 
 #define foreach(T, Itr, element, this) \
-	Itr end_itr = end(this); \
-	for (Itr itr = begin(my_str); compare(&itr, &end_itr) < 0; advance(&itr, 1)) { \
-		T element = get(&itr);      \
+{ \
+	Itr end_itr = end(Itr, this); \
+	for (Itr itr = begin(Itr, this); compare(&itr, &end_itr) < 0; advance(&itr, 1)) \
+    { \
+        T element = get(&itr);               \
 
-#define end_foreach() }
+#define end_foreach() } }
