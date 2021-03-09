@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <stdlib.h>
 
 #ifdef _WIN32
 	#include <windows.h>
@@ -8,21 +7,22 @@
 #endif
 
 // clear
-void ClearScreen()
-{
 #ifdef _WIN32
-	system("cls");
+	#define ClearScreen() system("cls");
 #else
-	system("clear");
+	#define ClearScreen() system("clear");
 #endif
-}
 
 // sleep
-void Sleep(uint32_t ms)
-{
 #ifdef _WIN32
-	Sleep(ms);
+	#define Sleep(ms) Sleep(ms);
 #else
-	usleep(ms * 1000);
+	#define Sleep(ms) usleep(ms * 1000);
 #endif
-}
+
+// set cursor position
+#ifdef _WIN32
+    #define SetCursorPos(x, y) SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0, 0 })
+#else
+	#define SetCursorPos(x, y) printf("\033[%d;%dH", x + 1, y + 1)
+#endif
