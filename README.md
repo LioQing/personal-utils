@@ -34,7 +34,7 @@ File | Name | Description | Language Standard/Version | Dependcies | Namespace/C
 
 File | Name | Description | Language Standard/Version | Dependcies | Namespace/Class
 --- | --- | --- | --- | --- | ---
-[ANSIEscaper](tools/ANSIEscaper) | ANSI Escaper | A group of cross-platform ANSI escape code wrapper functions | C++14 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) (for windows)
+[ANSIEscaper](tools/ANSIEscaper) | ANSI Escaper | A group of cross-platform ANSI escape code wrapper functions | C++14 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) (for windows)
 [CSVReader](tools/CSVReader) | CSV Reader | CSV (Comma Separated Values) file reader and parser | C++11 | N/A | lio
 [LConsoleScreen](tools/LConsoleScreen) | Lio's Console Screen | Display Ascii characters as 2D screen in cmd (Windows only) | C++11 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) | lio
 [PortableSystemFunctions.h](tools/PortableSystemFunctions.h) | Portable System Functions | Cross-platform system functions | C++17 / C17 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) / [unistd.h](https://en.wikipedia.org/wiki/Unistd.h) | N/A
