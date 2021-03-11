@@ -57,6 +57,17 @@ namespace lio
 		WriteConsoleOutputA(m_wHnd, m_bufscrn, { m_size.X, m_size.Y }, { 0, 0 }, &win);
 	}
 
+	const std::string& LConsoleScreen::GetTitle() const
+	{
+		return m_title;
+	}
+
+	void LConsoleScreen::SetTitle(const std::string& title)
+	{
+		m_title = title;
+		SetConsoleTitleA(LPCSTR(title.c_str()));
+	}
+
 	void LConsoleScreen::SetFontSize(int width, int height)
 	{
 		m_cfi.dwFontSize.X = width;
@@ -64,7 +75,7 @@ namespace lio
 		SetCurrentConsoleFontEx(m_wHnd, false, &m_cfi);
 	}
 
-	COORD LConsoleScreen::GetFontSize()
+	COORD LConsoleScreen::GetFontSize() const
 	{
 		return m_cfi.dwFontSize;
 	}
@@ -74,7 +85,7 @@ namespace lio
 		m_size = { (short)width, (short)height };
 	}
 
-	COORD LConsoleScreen::GetResolution()
+	COORD LConsoleScreen::GetResolution() const
 	{
 		return m_size;
 	}
@@ -85,14 +96,14 @@ namespace lio
 		SetConsoleWindowInfo(m_wHnd, true, &m_winSize);
 	}
 
-	short LConsoleScreen::GetBackgroundColor()
+	short LConsoleScreen::GetBackgroundColor() const
 	{
-		return background_col;
+		return m_background_col;
 	}
 
 	void LConsoleScreen::SetBackgroundColor(short col)
 	{
-		background_col = col;
+		m_background_col = col;
 	}
 
 	void LConsoleScreen::Draw(int x, int y, unsigned char c, short col)
@@ -120,7 +131,7 @@ namespace lio
 
 	void LConsoleScreen::Clear()
 	{
-		FullFill(' ', background_col);
+		FullFill(' ', m_background_col);
 	}
 
 	void LConsoleScreen::DrawString(int x, int y, const std::string& c, short col)
@@ -144,7 +155,7 @@ namespace lio
 		}
 	}
 
-	void LConsoleScreen::Clip(int& x, int& y)
+	void LConsoleScreen::Clip(int& x, int& y) const
 	{
 		if (x < 0) x = 0;
 		if (x >= m_size.X) x = m_size.X - 1;
@@ -290,7 +301,7 @@ namespace lio
 			if (minx > t1x) minx = t1x; if (minx > t2x) minx = t2x;
 			if (maxx < t1x) maxx = t1x; if (maxx < t2x) maxx = t2x;
 			drawline(minx, maxx, y);    // Draw line from min to max points found on the y
-										// Now increase y
+			                            // Now increase y
 			if (!changed1) t1x += signx1;
 			t1x += t1xp;
 			if (!changed2) t2x += signx2;
