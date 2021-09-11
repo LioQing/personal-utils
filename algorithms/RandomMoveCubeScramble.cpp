@@ -30,7 +30,7 @@ auto scramble(int no_face, int no_turn, std::vector<int> (*GetAdj)(int))
         if (find(last_adj.begin(), last_adj.end(), face) == last_adj.end())
             forbid_face = last_face;
         else
-            forbid_face == -1;
+            forbid_face = -1;
 
         scramble[i].first = face;
         scramble[i].second = turn_dist(turn_engine);
