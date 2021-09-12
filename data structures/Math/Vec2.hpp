@@ -6,21 +6,19 @@
 namespace lio
 {
     template <typename T>
-    class Vec2
+    struct Vec2
     {
-    public:
-
         T x, y;
 
         Vec2(T x = 0.0, T y = 0.0) : x(x), y(y) {}
 
         template <typename U>
-        operator Vec2<U>() const
+        inline operator Vec2<U>() const
         {
             return Vec2<U>(x, y);
         }
         template <typename U>
-        Vec2<U> Cast() const
+        inline Vec2<U> Cast() const
         {
             return Vec2<U>(x, y);
         }
@@ -33,7 +31,7 @@ namespace lio
         }
 
         template <typename U = T, typename V>
-        static Vec2<U> Rotated(Vec2<U> v, V theta)
+        inline static Vec2<U> Rotated(Vec2<U> v, V theta)
         {
             return v.Rotated(theta);
         }
@@ -48,7 +46,7 @@ namespace lio
             return Vec2<T>(tx, ty);
         }
         template <typename U>
-        Vec2& Rotate(U theta)
+        inline Vec2& Rotate(U theta)
         {
             *this = Rotated(theta);
 
@@ -56,7 +54,7 @@ namespace lio
         }
 
         template <typename U = T>
-        static Vec2 Normalized(const Vec2<U>& v) 
+        inline static Vec2 Normalized(const Vec2<U>& v) 
         {
             return v.Normalized();
         }
@@ -73,20 +71,19 @@ namespace lio
         }
 
         template <typename U = T>
-        static Vec2 Ortho(const Vec2<U>& v)
+        inline static Vec2 Ortho(const Vec2<U>& v)
         {
             return v.Ortho();
         }
-        Vec2 Ortho() const
+        inline Vec2 Ortho() const
         {
             return Vec2(y, -x);
         }
 
         template <typename U = T, typename V = T>
-        static auto Distance(const Vec2<U>& v1, const Vec2<V>& v2)
+        inline static auto Distance(const Vec2<U>& v1, const Vec2<V>& v2)
         {
-            Vec2<decltype(std::declval<U&>() - std::declval<V&>())> d(v2.x - v1.x, v2.y - v1.y);
-            return d.Magnitude();
+            return v1.Distance(v2);
         }
         template <typename U = T>
         auto Distance(const Vec2<U>& v) const
@@ -96,7 +93,7 @@ namespace lio
         }
 
         template <typename U = T>
-        static U SqrMagnitude(const Vec2<U>& v)
+        inline static U SqrMagnitude(const Vec2<U>& v)
         {
             return v.SqrMagnitude();
         }
@@ -106,42 +103,42 @@ namespace lio
         }
 
         template <typename U = T>
-        static U Magnitude(const Vec2<U>& v)
+        inline static U Magnitude(const Vec2<U>& v)
         {
             return v.Magnitude();
         }
-        T Magnitude() const
+        inline T Magnitude() const
         {
             return std::hypot(x, y);
         }
 
         template <typename U = T>
-        static Vec2 Abs(const Vec2<U>& v)
+        inline static Vec2 Abs(const Vec2<U>& v)
         {
             return v.Abs();
         }
-        Vec2 Abs() const
+        inline Vec2 Abs() const
         {
             return Vec2(x < 0 ? x * -1 : x, y < 0 ? y * -1 : y);
         }
 
         template <typename U = T, typename V = T>
-        static auto Dot(const Vec2<U>& v1, const Vec2<V>& v2)
+        inline static auto Dot(const Vec2<U>& v1, const Vec2<V>& v2)
         {
             return v1.Dot(v2);
         } 
         template <typename U = T>
-        auto Dot(const Vec2<U>& v) const
+        inline auto Dot(const Vec2<U>& v) const
         {
             return x * v.x + y * v.y;
         }
         template <typename U = T, typename V = T>
-        static auto Cross(const Vec2<U>& v1, const Vec2<V>& v2)
+        inline static auto Cross(const Vec2<U>& v1, const Vec2<V>& v2)
         {
             return v1.Cross(v2);
         } 
         template <typename U = T>
-        auto Cross(const Vec2<U>& v) const
+        inline auto Cross(const Vec2<U>& v) const
         {
             return (x * v.x) - (y * v.y);
         }
@@ -150,12 +147,12 @@ namespace lio
         // >0 -> clockwise 
         // <0 -> counterclockwise 
         template <typename U = T, typename S = T, typename V = T>
-        static auto OrientationEx(const Vec2<U>& v1, const Vec2<S>& v2, const Vec2<V>& v3)
+        inline static auto OrientationEx(const Vec2<U>& v1, const Vec2<S>& v2, const Vec2<V>& v3)
         {
             return v1.OrientationEx(v2, v3);
         }
         template <typename U = T, typename S = T>
-        auto OrientationEx(const Vec2<U>& v2, const Vec2<S>& v3) const
+        inline auto OrientationEx(const Vec2<U>& v2, const Vec2<S>& v3) const
         {
             return (v2.y - y) * (v3.x - v2.x) - (v2.x - x) * (v3.y - v2.y);
         }
@@ -163,7 +160,7 @@ namespace lio
         // 1 --> clockwise 
         // -1 -> counterclockwise 
         template <typename U = T, typename S = T, typename V = T>
-        static int Orientation(const Vec2<U>& v1, const Vec2<S>& v2, const Vec2<V>& v3)
+        inline static int Orientation(const Vec2<U>& v1, const Vec2<S>& v2, const Vec2<V>& v3)
         {
             return v1.Orientation(v2, v3);
         }
@@ -176,132 +173,132 @@ namespace lio
             return (val > 0) ? 1 : -1;
         }
 
-        static constexpr Vec2 One() 	{ return Vec2(1.0, 1.0); }
-        static constexpr Vec2 Zero() 	{ return Vec2(0.0, 0.0); }
-        static constexpr Vec2 Up() 		{ return Vec2(0.0, 1.0); }
-        static constexpr Vec2 Down() 	{ return Vec2(0.0, -1.0); }
-        static constexpr Vec2 Left() 	{ return Vec2(-1.0, 0.0); }
-        static constexpr Vec2 Right() 	{ return Vec2(1.0, 0.0); }
+        inline static constexpr Vec2 One() 	{ return Vec2(1.0, 1.0); }
+        inline static constexpr Vec2 Zero() { return Vec2(0.0, 0.0); }
+        inline static constexpr Vec2 Up() 	{ return Vec2(0.0, 1.0); }
+        inline static constexpr Vec2 Down() { return Vec2(0.0, -1.0); }
+        inline static constexpr Vec2 Left() { return Vec2(-1.0, 0.0); }
+        inline static constexpr Vec2 Right(){ return Vec2(1.0, 0.0); }
     };
 
     template <typename T, typename U>
-    auto operator+(const Vec2<T>& v1, const Vec2<U>& v2)
+    inline auto operator+(const Vec2<T>& v1, const Vec2<U>& v2)
     {
         return Vec2<decltype(std::declval<T&>() + std::declval<U&>())>(v1.x + v2.x, v1.y + v2.y);
     }
     template <typename T, typename U>
-    auto operator-(const Vec2<T>& v1, const Vec2<U>& v2)
+    inline auto operator-(const Vec2<T>& v1, const Vec2<U>& v2)
     {
         return Vec2<decltype(std::declval<T&>() - std::declval<U&>())>(v1.x - v2.x, v1.y - v2.y);
     }
     template <typename T, typename U>
-    auto operator*(const Vec2<T>& v1, const Vec2<U>& v2)
+    inline auto operator*(const Vec2<T>& v1, const Vec2<U>& v2)
     {
         return Vec2<decltype(std::declval<T&>() * std::declval<U&>())>(v1.x * v2.x, v1.y * v2.y);
     }
     template <typename T, typename U>
-    auto operator/(const Vec2<T>& v1, const Vec2<U>& v2)
+    inline auto operator/(const Vec2<T>& v1, const Vec2<U>& v2)
     {
         return Vec2<decltype(std::declval<T&>() / std::declval<U&>())>(v1.x / v2.x, v1.y / v2.y);
     }
     template <typename T, typename U>
-    auto operator%(const Vec2<T>& v1, const Vec2<U>& v2)
+    inline auto operator%(const Vec2<T>& v1, const Vec2<U>& v2)
     {
         return Vec2<decltype(std::fmod(std::declval<T&>(), std::declval<U&>()))>(std::fmod(v1.x, v2.x), std::fmod(v1.y, v2.y));
     }
 
     template <typename T, typename U>
-    Vec2<T>& operator+=(Vec2<T>& v1, const Vec2<U>& v2)
+    inline Vec2<T>& operator+=(Vec2<T>& v1, const Vec2<U>& v2)
     {
         return v1 = v1 + v2;
     }
     template <typename T, typename U>
-    Vec2<T>& operator-=(Vec2<T>& v1, const Vec2<U>& v2)
+    inline Vec2<T>& operator-=(Vec2<T>& v1, const Vec2<U>& v2)
     {
         return v1 = v1 - v2;
     }
     template <typename T, typename U>
-    Vec2<T>& operator*=(Vec2<T>& v1, const Vec2<U>& v2)
+    inline Vec2<T>& operator*=(Vec2<T>& v1, const Vec2<U>& v2)
     {
         return v1 = v1 * v2;
     }
     template <typename T, typename U>
-    Vec2<T>& operator/=(Vec2<T>& v1, const Vec2<U>& v2)
+    inline Vec2<T>& operator/=(Vec2<T>& v1, const Vec2<U>& v2)
     {
         return v1 = v1 / v2;
     }
     template <typename T, typename U>
-    Vec2<T>& operator%=(Vec2<T>& v1, const Vec2<U>& v2)
+    inline Vec2<T>& operator%=(Vec2<T>& v1, const Vec2<U>& v2)
     {
         return v1 = v1 % v2;
     }
 
     template <typename T, typename U>
-    auto operator*(U s, const Vec2<T>& v)
+    inline auto operator*(U s, const Vec2<T>& v)
     {
         return Vec2<decltype(s * std::declval<T&>())>(v.x * s, v.y * s);
     }
     template <typename T, typename U>
-    auto operator/(U s, const Vec2<T>& v)
+    inline auto operator/(U s, const Vec2<T>& v)
     {
         return Vec2<decltype(s / std::declval<T&>())>(s / v.x, s / v.y);
     }
     template <typename T, typename U>
-    auto operator%(U s, const Vec2<T>& v)
+    inline auto operator%(U s, const Vec2<T>& v)
     {
         return Vec2<decltype(std::fmod(std::declval<T&>(), s))>(std::fmod(s, v.x), std::fmod(s, v.y));
     }
 
     template <typename T, typename U>
-    auto operator*(const Vec2<T>& v, U s)
+    inline auto operator*(const Vec2<T>& v, U s)
     {
         return Vec2<decltype(s * std::declval<T&>())>(v.x * s, v.y * s);
     }
     template <typename T, typename U>
-    auto operator/(const Vec2<T>& v, U s)
+    inline auto operator/(const Vec2<T>& v, U s)
     {
         return Vec2<decltype(s / std::declval<T&>())>(v.x / s, v.y / s);
     }
     template <typename T, typename U>
-    auto operator%(const Vec2<T>& v, U s)
+    inline auto operator%(const Vec2<T>& v, U s)
     {
         return Vec2<decltype(std::fmod(s, std::declval<T&>()))>(std::fmod(v.x, s), std::fmod(v.y, s));
     }
 
     template <typename T, typename U>
-    Vec2<T>& operator*=(Vec2<T>& v, U s)
+    inline Vec2<T>& operator*=(Vec2<T>& v, U s)
     {
         return v = v * s;
     }
     template <typename T, typename U>
-    Vec2<T>& operator/=(Vec2<T>& v, U s)
+    inline Vec2<T>& operator/=(Vec2<T>& v, U s)
     {
         return v = v / s;
     }
     template <typename T, typename U>
-    Vec2<T>& operator%=(Vec2<T>& v, U s)
+    inline Vec2<T>& operator%=(Vec2<T>& v, U s)
     {
         return v = v % s;
     }
 
     template <typename T>
-    Vec2<T> operator-(const Vec2<T>& v)
+    inline Vec2<T> operator-(const Vec2<T>& v)
     {
         return Vec2<T>(-v.x, -v.y);
     }
     template <typename T>
-    Vec2<T> operator+(const Vec2<T>& v)
+    inline Vec2<T> operator+(const Vec2<T>& v)
     {
         return Vec2<T>(v.x, v.y);
     }
 
     template <typename T, typename U>
-    bool operator==(const Vec2<T>& v1, const Vec2<U>& v2)
+    inline bool operator==(const Vec2<T>& v1, const Vec2<U>& v2)
     {
         return v1.x == v2.x && v1.y == v2.y;
     }
     template <typename T, typename U>
-    bool operator!=(const Vec2<T>& v1, const Vec2<U>& v2)
+    inline bool operator!=(const Vec2<T>& v1, const Vec2<U>& v2)
     {
         return !(v1.x == v2.x && v1.y == v2.y);
     }
@@ -309,7 +306,7 @@ namespace lio
     template <typename T>
     std::ostream& operator<<(std::ostream& os, const Vec2<T>& v)
     {
-        os << v.x << ", " << v.y;
+        os << "(" << v.x << ", " << v.y << ")";
         return os;
     }
 
