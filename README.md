@@ -26,7 +26,7 @@ File | Name | Description | Language Standard/Version | Dependcies | Namespace/C
 
 File | Name | Description | Language Standard/Version | Dependcies | Namespace/Class
 --- | --- | --- | --- | --- | ---
-[Matrix.hpp](data%20structures/Math/Matrix.hpp) | Matrix | A half-finished matrix class | C++14 | N/A | lio
+[Mat.hpp](data%20structures/Math/Mat.hpp) | Matrix | A half-finished matrix class | C++14 | N/A | lio
 [Vec2.hpp](data%20structures/Math/Vec2.hpp) | Vector2 | 2D Vector class with many graphical functions | C++14 | N/A | lio
 [LineSeg.hpp](data%20structures/Math/LineSeg.hpp) | Line Segment | 2D line segment class | C++14 | [Vec2.hpp](data%20structures/Math/Vec2.hpp) | lio
 [Data Structures for C](data%20structures/Data%20Structures%20for%20C) | Template Data Structures for C | Template structs for C with a lot of functions from C++ STL classes | C99 | N/A | N/A
