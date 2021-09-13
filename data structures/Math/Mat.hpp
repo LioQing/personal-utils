@@ -114,6 +114,66 @@ namespace lio
         inline Mat& Transpose()
         {
             *this = Transposed();
+            return *this;
+        }
+
+        // Row Operations
+
+        static inline Mat RowsSwapped(const Mat& m, size_t r1, size_t r2)
+        {
+            return m.RowsSwapped(r1, r2);
+        }
+        Mat RowsSwapped(size_t r1, size_t r2) const
+        {
+            Mat m_ret(*this);
+            return m_ret.SwapRows(r1, r2);
+        }
+        Mat& SwapRows(size_t r1, size_t r2)
+        {
+            matrix.at(r1).swap(matrix.at(r2));
+            return *this;
+        }
+
+        template <typename U>
+        static inline Mat RowMultiplied(const Mat& m, size_t row, U s)
+        {
+            return m.RowMultiplied(row, s);
+        }
+        template <typename U>
+        Mat RowMultiplied(size_t row, U s) const
+        {
+            Mat m_ret(*this);
+            return m_ret.MultiplyRow(row, s);
+        }
+        template <typename U>
+        Mat& MultiplyRow(size_t row, U s)
+        {
+            for (auto& j : matrix.at(row))
+            {
+                j *= s;
+            }
+
+            return *this;
+        }
+
+        template <typename U>
+        static inline Mat RowAdded(const Mat& m, size_t r_dest, size_t r_src, U s)
+        {
+            return m.RowAdded(r_dest, r_src, s);
+        }
+        template <typename U>
+        Mat RowAdded(size_t r_dest, size_t r_src, U s) const
+        {
+            Mat m_ret(*this);
+            return m_ret.AddRow(r_dest, r_src, s);
+        }
+        template <typename U>
+        Mat& AddRow(size_t r_dest, size_t r_src, U s)
+        {
+            for (size_t i = 0; i < col_count; ++i)
+            {
+                At(r_dest, i) += At(r_src, i) * s;
+            }
 
             return *this;
         }
