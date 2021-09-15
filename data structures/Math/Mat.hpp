@@ -194,16 +194,19 @@ namespace lio
         Mat GaussianEliminated() const
         {
             Mat m_ret(*this);
-
+            return m_ret.GaussianElimination();
+        }
+        Mat& GaussianElimination()
+        {
             for (size_t i = 0; i < std::min(row_count, col_count); ++i)
             {
-                if (m_ret(i, i) == 0)
+                if (At(i, i) == 0)
                 {
                     for (size_t j = 1; j < row_count - i; ++j)
                     {
-                        if (m_ret(i + j, i) != 0)
+                        if (At(i + j, i) != 0)
                         {
-                            m_ret.SwapRows(i, i + j);
+                            SwapRows(i, i + j);
                             break;
                         }
                     }
@@ -211,22 +214,17 @@ namespace lio
 
                 for (size_t j = 0; j < row_count; ++j)
                 {
-                    if (m_ret(i, i) == 0 || j == i)
+                    if (At(i, i) == 0 || j == i)
                     {
                         continue;
                     }
-                    m_ret.AddRow(j, i, -m_ret(j, i) / m_ret(i, i));
+                    AddRow(j, i, -At(j, i) / At(i, i));
                 }
 
-                if (m_ret(i, i) != 0)
-                    m_ret.MultiplyRow(i, 1 / m_ret(i, i));
+                if (At(i, i) != 0)
+                    MultiplyRow(i, 1 / At(i, i));
             }
 
-            return m_ret;
-        }
-        Mat& GaussianElimination()
-        {
-            *this = GaussianEliminated();
             return *this;
         }
     };
