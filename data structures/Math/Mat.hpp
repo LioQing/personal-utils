@@ -24,6 +24,15 @@ namespace lio
                 std::string("lio::Mat<") + typeid(U).name() + "> (row_count = " + 
                 std::to_string(row_count2) + ", col_count = " + std::to_string(col_count2) + ") do not have the same size.");
         }
+
+        template <typename T, typename U>
+        inline std::invalid_argument MatNotMatchRowCol(size_t row_count1, size_t col_count1, size_t row_count2, size_t col_count2)
+        {
+            throw std::invalid_argument(std::string("row_count of lio::Mat<") + typeid(T).name() + "> (row_count = " + 
+                std::to_string(row_count1) + ", col_count = " + std::to_string(col_count1) + ") is not equal to col_count of " + 
+                std::string("lio::Mat<") + typeid(U).name() + "> (row_count = " + 
+                std::to_string(row_count2) + ", col_count = " + std::to_string(col_count2) + ").");
+        }
     }
 
     template <typename T>
@@ -177,6 +186,49 @@ namespace lio
 
             return *this;
         }
+
+        static inline Mat GaussianEliminated(const Mat& m)
+        {
+            return m.GaussianEliminated();
+        }
+        Mat GaussianEliminated() const
+        {
+            Mat m_ret(*this);
+
+            for (size_t i = 0; i < std::min(row_count, col_count); ++i)
+            {
+                if (m_ret(i, i) == 0)
+                {
+                    for (size_t j = 1; j < row_count - i; ++j)
+                    {
+                        if (m_ret(i + j, i) != 0)
+                        {
+                            m_ret.SwapRows(i, i + j);
+                            break;
+                        }
+                    }
+                }
+
+                for (size_t j = 0; j < row_count; ++j)
+                {
+                    if (m_ret(i, i) == 0 || j == i)
+                    {
+                        continue;
+                    }
+                    m_ret.AddRow(j, i, -m_ret(j, i) / m_ret(i, i));
+                }
+
+                if (m_ret(i, i) != 0)
+                    m_ret.MultiplyRow(i, 1 / m_ret(i, i));
+            }
+
+            return m_ret;
+        }
+        Mat& GaussianElimination()
+        {
+            *this = GaussianEliminated();
+            return *this;
+        }
     };
 
     template <typename T, typename U>
@@ -211,6 +263,24 @@ namespace lio
 
         return m_ret;
     }
+    template <typename T, typename U>
+    auto operator*(const Mat<T>& m1, const Mat<U>& m2)
+    {
+        if (m1.row_count != m2.col_count)
+            throw MatNotMatchRowCol<T, U>(m1.row_count, m1.col_count, m2.row_count, m2.col_count);
+        
+        Mat<decltype(std::declval<T&>() - std::declval<U&>())> m_ret(m1.row_count, m2.col_count);
+
+        for (size_t i = 0; i < m_ret.row_count; ++i)
+        for (size_t j = 0; j < m_ret.col_count; ++j)
+        for (size_t k = 0; k < m1.col_count; ++k)
+        {
+            m_ret(i, j) += m1(i, k) * m2(k, j);
+        }
+
+        return m_ret;
+    }
+    // todo: m1 / m2
 
     template <typename T, typename U>
     inline Mat<T>& operator+=(Mat<T>& m1, const Mat<U>& m2)
@@ -222,6 +292,12 @@ namespace lio
     {
         return m1 = m1 - m2;
     }
+    template <typename T, typename U>
+    inline Mat<T>& operator*=(Mat<T>& m1, const Mat<U>& m2)
+    {
+        return m1 = m1 * m2;
+    }
+    // todo: m1 /= m2
 
     template <typename T, typename U>
     auto operator*(U s, const Mat<T>& m)
@@ -234,6 +310,7 @@ namespace lio
 
         return m_ret;
     }
+    // todo: s / m
 
     template <typename T, typename U>
     inline auto operator*(const Mat<T>& m, U s)
