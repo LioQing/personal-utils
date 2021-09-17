@@ -3,6 +3,7 @@
 #include <cmath>
 #include <vector>
 #include <string>
+#include <set>
 #include <stdexcept>
 
 namespace lio
@@ -78,6 +79,35 @@ namespace lio
             }
         }
 
+        // submatrix
+
+        Mat SubmatrixByRemoval(const std::set<size_t>& rows, const std::set<size_t>& cols) const
+        {
+            Mat m_ret(row_count - rows.size(), col_count - cols.size());
+
+            for (size_t i = 0, row_skipped = 0, col_skipped = 0; i < row_count; ++i, col_skipped = 0)
+            {
+                if (rows.find(i) != rows.end())
+                {
+                    ++row_skipped;
+                    continue;
+                }
+
+                for (size_t j = 0; j < col_count; ++j)
+                {
+                    if (cols.find(j) != cols.end())
+                    {
+                        ++col_skipped;
+                        continue;
+                    }
+
+                    m_ret(i - row_skipped, j - col_skipped) = At(i, j);
+                }
+            }
+
+            return m_ret;
+        }
+
         static Mat Identity(size_t size)
         {
             Mat m_ret(size, size);
@@ -89,7 +119,7 @@ namespace lio
 
             return m_ret;
         }
-        Mat Identity()
+        Mat Identity() const
         {
             if (row_count != col_count)
                 throw MatNotSq<T>(row_count, col_count);
@@ -196,7 +226,7 @@ namespace lio
             Mat m_ret(*this);
             return m_ret.GaussianElimination();
         }
-        Mat& GaussianElimination()
+        Mat& GaussianEliminate()
         {
             for (size_t i = 0; i < std::min(row_count, col_count); ++i)
             {
