@@ -81,7 +81,33 @@ namespace lio
 
         // submatrix
 
-        Mat SubmatrixByRemoval(const std::set<size_t>& rows, const std::set<size_t>& cols) const
+        Mat Remove(size_t row, size_t col) const
+        {
+            Mat m_ret(row_count - 1, col_count - 1);
+
+            for (size_t i = 0, row_skipped = 0, col_skipped = 0; i < row_count; ++i, col_skipped = 0)
+            {
+                if (i == row)
+                {
+                    ++row_skipped;
+                    continue;
+                }
+
+                for (size_t j = 0; j < col_count; ++j)
+                {
+                    if (j == col)
+                    {
+                        ++col_skipped;
+                        continue;
+                    }
+
+                    m_ret(i - row_skipped, j - col_skipped) = At(i, j);
+                }
+            }
+
+            return m_ret;
+        }
+        Mat Remove(const std::set<size_t>& rows, const std::set<size_t>& cols) const
         {
             Mat m_ret(row_count - rows.size(), col_count - cols.size());
 
