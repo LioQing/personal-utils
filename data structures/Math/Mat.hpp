@@ -79,9 +79,7 @@ namespace lio
             }
         }
 
-        // submatrix
-
-        Mat Remove(size_t row, size_t col) const
+        Mat Removed(size_t row, size_t col) const
         {
             Mat m_ret(row_count - 1, col_count - 1);
 
@@ -107,7 +105,7 @@ namespace lio
 
             return m_ret;
         }
-        Mat Remove(const std::set<size_t>& rows, const std::set<size_t>& cols) const
+        Mat Removed(const std::set<size_t>& rows, const std::set<size_t>& cols) const
         {
             Mat m_ret(row_count - rows.size(), col_count - cols.size());
 
@@ -243,6 +241,8 @@ namespace lio
             return *this;
         }
 
+        // end of row operations section
+
         static inline Mat GaussianEliminated(const Mat& m)
         {
             return m.GaussianEliminated();
@@ -282,6 +282,36 @@ namespace lio
             }
 
             return *this;
+        }
+
+        template <typename U = T>
+        static inline U Determinant(const Mat& m)
+        {
+            return m.Determinant();
+        }
+        template <typename U = T>
+        U Determinant() const
+        {
+            if (row_count != col_count)
+                throw MatNotSq<T>(row_count, col_count);
+            
+            U det = 0;
+
+            for (size_t j = 0; j < col_count; ++j)
+            {
+                U pos_diag = 1;
+                U neg_diag = 1;
+
+                for (size_t i = 0; i < row_count; ++i)
+                {
+                    pos_diag *= At(i, (j + i) % col_count);
+                    neg_diag *= At(row_count - i - 1, (j + i) % col_count);
+                }
+
+                det += pos_diag - neg_diag;
+            }
+
+            return det;
         }
     };
 
