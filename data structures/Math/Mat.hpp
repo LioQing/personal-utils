@@ -34,6 +34,13 @@ namespace lio
                 std::string("lio::Mat<") + typeid(U).name() + "> (row_count = " + 
                 std::to_string(row_count2) + ", col_count = " + std::to_string(col_count2) + ").");
         }
+
+        template <typename T>
+        inline std::invalid_argument MatNotInvertible(size_t row_count, size_t col_count)
+        {
+            throw std::invalid_argument(std::string("lio::Mat<") + typeid(T).name() + "> (row_count = " + 
+                std::to_string(row_count) + ", col_count = " + std::to_string(col_count) + ") is not invertible.");
+        }
     }
 
     template <typename T>
@@ -79,6 +86,11 @@ namespace lio
             }
         }
 
+        template <typename U>
+        static inline Mat Removed(const Mat& m, U row, U col)
+        {
+            return m.Removed(row, col);
+        }
         Mat Removed(size_t row, size_t col) const
         {
             Mat m_ret(row_count - 1, col_count - 1);
@@ -130,6 +142,61 @@ namespace lio
             }
 
             return m_ret;
+        }
+
+        template <typename U = T>
+        static inline Mat Replaced(const Mat& m_dest, const Mat<U>& m_src, size_t row = 0, size_t col = 0)
+        {
+            return m_dest.Replaced(m_src, row, col);
+        }
+        template <typename U = T>
+        Mat Replaced(const Mat<U>& m, size_t row = 0, size_t col = 0) const
+        {
+            Mat m_ret(*this);
+            return m_ret.Replace(row, col, m);
+        }
+        template <typename U = T>
+        Mat& Replace(const Mat<U>& m, size_t row = 0, size_t col = 0)
+        {
+            for (size_t i = 0; i < m.row_count; ++i)
+            for (size_t j = 0; j < m.col_count; ++j)
+            {
+                At(row + i, col + j) = m(i, j);
+            }
+
+            return *this;
+        }
+
+        static inline Mat Inverted(const Mat& m, bool check_invertible = true)
+        {
+            return m.Inverted(check_invertible);
+        }
+        Mat Inverted(bool check_invertible = true) const
+        {
+            if (row_count != col_count)
+                throw MatNotSq<T>(row_count, col_count);
+            
+            if (check_invertible && Determinant() == 0)
+                throw MatNotInvertible<T>(row_count, col_count);
+            
+            Mat m_ret(row_count, col_count * 2);
+            m_ret.Replace(*this);
+            m_ret.Replace(Identity(), 0, col_count);
+
+            m_ret.GaussianEliminate();
+
+            std::set<size_t> rm_col;
+            for (size_t i = 0; i < col_count; ++i)
+            {
+                rm_col.insert(i);
+            }
+
+            return m_ret.Removed({}, rm_col);
+        }
+        Mat& Invert(bool check_invertible = true)
+        {
+            *this = Inverted(check_invertible);
+            return *this;
         }
 
         static Mat Identity(size_t size)
