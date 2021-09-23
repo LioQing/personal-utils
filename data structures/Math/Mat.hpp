@@ -335,13 +335,13 @@ namespace lio
         template <typename U = T>
         Mat HadamardMultiplication(const Mat<U>& m) const
         {
-            if (row_count != m.row_count || col_count != m.row_count)
+            if (row_count != m.row_count || col_count != m.col_count)
                 throw MatNotSameSize<T, U>(row_count, col_count, m.row_count, m.col_count);
 
             Mat<decltype(std::declval<T&>() * std::declval<T&>())> m_ret(row_count, col_count);
 
             for (size_t i = 0; i < row_count; ++i)
-            for (size_t j = 0; j < row_count; ++j)
+            for (size_t j = 0; j < col_count; ++j)
             {
                 m_ret(i, j) = At(i, j) * m(i, j);
             }
@@ -357,15 +357,37 @@ namespace lio
         template <typename U = T>
         Mat HadamardDivision(const Mat<U>& m) const
         {
-            if (row_count != m.row_count || col_count != m.row_count)
+            if (row_count != m.row_count || col_count != m.col_count)
                 throw MatNotSameSize<T, U>(row_count, col_count, m.row_count, m.col_count);
 
             Mat<decltype(std::declval<T&>() / std::declval<T&>())> m_ret(row_count, col_count);
 
             for (size_t i = 0; i < row_count; ++i)
-            for (size_t j = 0; j < row_count; ++j)
+            for (size_t j = 0; j < col_count; ++j)
             {
                 m_ret(i, j) = At(i, j) / m(i, j);
+            }
+
+            return m_ret;
+        }
+
+        template <typename U = T, typename V = T>
+        Mat HadamardModulo(const Mat<U>& m1, const Mat<V>& m2)
+        {
+            return m1.HadamardModulo(m2);
+        }
+        template <typename U = T>
+        Mat HadamardModulo(const Mat<U>& m) const
+        {
+            if (row_count != m.row_count || col_count != m.col_count)
+                throw MatNotSameSize<T, U>(row_count, col_count, m.row_count, m.col_count);
+
+            Mat<decltype(std::fmod(std::declval<T&>(), std::declval<T&>()))> m_ret(row_count, col_count);
+
+            for (size_t i = 0; i < row_count; ++i)
+            for (size_t j = 0; j < col_count; ++j)
+            {
+                m_ret(i, j) = std::fmod(At(i, j), m(i, j));
             }
 
             return m_ret;
