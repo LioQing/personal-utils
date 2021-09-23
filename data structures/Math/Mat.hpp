@@ -5,6 +5,7 @@
 #include <string>
 #include <set>
 #include <stdexcept>
+#include <iomanip>
 
 namespace lio
 {
@@ -64,6 +65,35 @@ namespace lio
 
         size_t row_count, col_count;
 
+        Mat(const std::initializer_list<std::initializer_list<T>>& m)
+        {
+            *this = Mat(m.begin(), m.end());
+        }
+
+        template <typename Iter>
+        Mat(Iter begin, Iter end)
+            : row_count(0), col_count(0)
+        {
+            row_count = std::distance(begin, end);
+            for (auto it = begin; it != end; ++it)
+            {
+                if (it->size() > col_count)
+                    col_count = it->size();
+            }
+            
+            matrix = std::vector<std::vector<T>>(row_count, std::vector<T>(col_count));
+
+            size_t i = 0;
+            for (auto it_i = begin; it_i != end; ++i, ++it_i)
+            {
+                size_t j = 0;
+                for (auto it_j = std::begin(*it_i); it_j != std::end(*it_i); ++j, ++it_j)
+                {
+                    At(i, j) = *it_j;
+                }
+            }
+        }
+
         Mat(size_t row_count = 0, size_t col_count = 0) 
             : row_count(row_count), col_count(col_count), matrix(row_count, std::vector<T>(col_count))
         {
@@ -72,6 +102,34 @@ namespace lio
         Mat(size_t row_count, size_t col_count, T val) 
             : row_count(row_count), col_count(col_count), matrix(row_count, std::vector<T>(col_count, val))
         {
+        }
+
+        size_t RowCount() const
+        {
+            return row_count;
+        }
+        size_t ColCount() const
+        {
+            return col_count;
+        }
+
+        template <typename U>
+        inline operator Mat<U>() const
+        {
+            return Cast<U>();
+        }
+        template <typename U>
+        Mat<U> Cast() const
+        {
+            Mat<U> m_ret(row_count, col_count);
+
+            for (size_t i = 0; i < row_count; ++i)
+            for (size_t j = 0; j < col_count; ++j)
+            {
+                m_ret(i, j) = At(i, j);
+            }
+
+            return m_ret;
         }
 
         inline T& operator()(size_t row, size_t col)
@@ -555,17 +613,31 @@ namespace lio
     template <typename T>
     std::ostream& operator<<(std::ostream& os, const Mat<T>& m)
     {
+        std::ios_base::fmtflags f(std::cout.flags());
+        std::vector<int> col_size(m.col_count, 0);
+
+        for (size_t j = 0; j < m.col_count; ++j)
         for (size_t i = 0; i < m.row_count; ++i)
         {
-            os << (i == 0 ? "((" : " (");
+            std::stringstream ss;
+            ss << m(i, j);
+            if (ss.str().size() > col_size[j])
+                col_size[j] = ss.str().size();
+        }
+
+        for (size_t i = 0; i < m.row_count; ++i)
+        {
+            os << (i == 0 ? "(" : " ");
             for (size_t j = 0; j < m.col_count; ++j)
             {
-                os << m(i, j);
+                os << std::setw(col_size[j]) << m(i, j);
                 if (j != m.col_count - 1)
-                    os << ", ";
+                    os << " ";
             }
-            os << (i == m.row_count - 1 ? "))" : "),\n");
+            os << (i == m.row_count - 1 ? ")" : "\n");
         }
+
+        os.flags(f);
 
         return os;
     }
