@@ -29,17 +29,31 @@ namespace lio
         template <typename T, typename U>
         inline std::invalid_argument MatNotMatchRowCol(size_t row_count1, size_t col_count1, size_t row_count2, size_t col_count2)
         {
-            throw std::invalid_argument(std::string("row_count of lio::Mat<") + typeid(T).name() + "> (row_count = " + 
-                std::to_string(row_count1) + ", col_count = " + std::to_string(col_count1) + ") is not equal to col_count of " + 
+            throw std::invalid_argument(std::string("col_count of lio::Mat<") + typeid(T).name() + "> (row_count = " + 
+                std::to_string(row_count1) + ", col_count = " + std::to_string(col_count1) + ") is not equal to row_count of " + 
                 std::string("lio::Mat<") + typeid(U).name() + "> (row_count = " + 
                 std::to_string(row_count2) + ", col_count = " + std::to_string(col_count2) + ").");
         }
 
         template <typename T>
-        inline std::invalid_argument MatNotInvertible(size_t row_count, size_t col_count)
+        inline std::invalid_argument MatInvertZeroDeterminant(size_t row_count, size_t col_count)
         {
             throw std::invalid_argument(std::string("lio::Mat<") + typeid(T).name() + "> (row_count = " + 
-                std::to_string(row_count) + ", col_count = " + std::to_string(col_count) + ") is not invertible.");
+                std::to_string(row_count) + ", col_count = " + std::to_string(col_count) + ") is not invertible (zero determinant).");
+        }
+
+        template <typename T>
+        inline std::invalid_argument MatLeftInvertSize(size_t row_count, size_t col_count)
+        {
+            throw std::invalid_argument(std::string("lio::Mat<") + typeid(T).name() + "> (row_count = " + 
+                std::to_string(row_count) + ", col_count = " + std::to_string(col_count) + ") does not have a left inverse (row_count < col_count).");
+        }
+
+        template <typename T>
+        inline std::invalid_argument MatRightInvertSize(size_t row_count, size_t col_count)
+        {
+            throw std::invalid_argument(std::string("lio::Mat<") + typeid(T).name() + "> (row_count = " + 
+                std::to_string(row_count) + ", col_count = " + std::to_string(col_count) + ") does not have a right inverse (row_count > col_count).");
         }
     }
 
@@ -167,17 +181,17 @@ namespace lio
             return *this;
         }
 
-        static inline Mat Inverted(const Mat& m, bool check_invertible = true)
+        static inline Mat Inverse(const Mat& m)
         {
-            return m.Inverted(check_invertible);
+            return m.Inverse();
         }
-        Mat Inverted(bool check_invertible = true) const
+        Mat Inverse(bool determinant_check = false) const
         {
             if (row_count != col_count)
                 throw MatNotSq<T>(row_count, col_count);
             
-            if (check_invertible && Determinant() == 0)
-                throw MatNotInvertible<T>(row_count, col_count);
+            if (determinant_check && Determinant() == 0)
+                throw MatInvertZeroDeterminant<T>(row_count, col_count);
             
             Mat m_ret(row_count, col_count * 2);
             m_ret.Replace(*this);
@@ -193,9 +207,43 @@ namespace lio
 
             return m_ret.Removed({}, rm_col);
         }
-        Mat& Invert(bool check_invertible = true)
+        Mat& Invert()
         {
-            *this = Inverted(check_invertible);
+            *this = Inverse();
+            return *this;
+        }
+
+        static inline Mat LeftInverse(const Mat& m)
+        {
+            return m.LeftInverse();
+        }
+        Mat LeftInverse() const
+        {
+            if (row_count < col_count)
+                throw MatLeftInvertSize<T>(row_count, col_count);
+            
+            return Inverse(Transposed() * *this) * Transposed();
+        }
+        Mat& LeftInvert()
+        {
+            *this = LeftInverse();
+            return *this;
+        }
+
+        static inline Mat RightInverse(const Mat& m)
+        {
+            return m.RightInverse();
+        }
+        Mat RightInverse() const
+        {
+            if (row_count > col_count)
+                throw MatRightInvertSize<T>(row_count, col_count);
+
+            return Transposed() * Inverse(*this * Transposed());
+        }
+        Mat& RightInvert()
+        {
+            *this = RightInverse();
             return *this;
         }
 
@@ -417,7 +465,7 @@ namespace lio
     template <typename T, typename U>
     auto operator*(const Mat<T>& m1, const Mat<U>& m2)
     {
-        if (m1.row_count != m2.col_count)
+        if (m1.col_count != m2.row_count)
             throw MatNotMatchRowCol<T, U>(m1.row_count, m1.col_count, m2.row_count, m2.col_count);
         
         Mat<decltype(std::declval<T&>() - std::declval<U&>())> m_ret(m1.row_count, m2.col_count);
@@ -431,7 +479,6 @@ namespace lio
 
         return m_ret;
     }
-    // todo: m1 / m2
 
     template <typename T, typename U>
     inline Mat<T>& operator+=(Mat<T>& m1, const Mat<U>& m2)
@@ -448,7 +495,6 @@ namespace lio
     {
         return m1 = m1 * m2;
     }
-    // todo: m1 /= m2
 
     template <typename T, typename U>
     auto operator*(U s, const Mat<T>& m)
@@ -461,7 +507,6 @@ namespace lio
 
         return m_ret;
     }
-    // todo: s / m
 
     template <typename T, typename U>
     inline auto operator*(const Mat<T>& m, U s)
