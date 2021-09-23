@@ -305,32 +305,6 @@ namespace lio
             return *this;
         }
 
-        static Mat Identity(size_t size)
-        {
-            Mat m_ret(size, size);
-
-            for (size_t i = 0; i < size; ++i)
-            {
-                m_ret(i, i) = 1;
-            }
-
-            return m_ret;
-        }
-        Mat Identity() const
-        {
-            if (row_count != col_count)
-                throw MatNotSq<T>(row_count, col_count);
-
-            Mat m_ret(row_count, col_count);
-
-            for (size_t i = 0; i < row_count; ++i)
-            {
-                m_ret(i, i) = 1;
-            }
-
-            return m_ret;
-        }
-
         inline static Mat Transposed(const Mat& m)
         {
             return m.Transposed();
@@ -351,6 +325,50 @@ namespace lio
         {
             *this = Transposed();
             return *this;
+        }
+
+        template <typename U = T, typename V = T>
+        Mat HadamardMultiplication(const Mat<U>& m1, const Mat<V>& m2)
+        {
+            return m1.HadamardMultiplication(m2);
+        }
+        template <typename U = T>
+        Mat HadamardMultiplication(const Mat<U>& m) const
+        {
+            if (row_count != m.row_count || col_count != m.row_count)
+                throw MatNotSameSize<T, U>(row_count, col_count, m.row_count, m.col_count);
+
+            Mat<decltype(std::declval<T&>() * std::declval<T&>())> m_ret(row_count, col_count);
+
+            for (size_t i = 0; i < row_count; ++i)
+            for (size_t j = 0; j < row_count; ++j)
+            {
+                m_ret(i, j) = At(i, j) * m(i, j);
+            }
+
+            return m_ret;
+        }
+
+        template <typename U = T, typename V = T>
+        Mat HadamardDivision(const Mat<U>& m1, const Mat<V>& m2)
+        {
+            return m1.HadamardDivision(m2);
+        }
+        template <typename U = T>
+        Mat HadamardDivision(const Mat<U>& m) const
+        {
+            if (row_count != m.row_count || col_count != m.row_count)
+                throw MatNotSameSize<T, U>(row_count, col_count, m.row_count, m.col_count);
+
+            Mat<decltype(std::declval<T&>() / std::declval<T&>())> m_ret(row_count, col_count);
+
+            for (size_t i = 0; i < row_count; ++i)
+            for (size_t j = 0; j < row_count; ++j)
+            {
+                m_ret(i, j) = At(i, j) / m(i, j);
+            }
+
+            return m_ret;
         }
 
         // Row Operations
@@ -485,6 +503,32 @@ namespace lio
             }
 
             return det;
+        }
+
+        static Mat Identity(size_t size)
+        {
+            Mat m_ret(size, size);
+
+            for (size_t i = 0; i < size; ++i)
+            {
+                m_ret(i, i) = 1;
+            }
+
+            return m_ret;
+        }
+        Mat Identity() const
+        {
+            if (row_count != col_count)
+                throw MatNotSq<T>(row_count, col_count);
+
+            Mat m_ret(row_count, col_count);
+
+            for (size_t i = 0; i < row_count; ++i)
+            {
+                m_ret(i, i) = 1;
+            }
+
+            return m_ret;
         }
     };
 
