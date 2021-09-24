@@ -158,8 +158,8 @@ namespace lio
             }
         }
 
-        template <typename U>
-        static inline Mat Removed(const Mat& m, U row, U col)
+        template <typename S>
+        static inline Mat Removed(const Mat& m, S row, S col)
         {
             return m.Removed(row, col);
         }
@@ -216,8 +216,8 @@ namespace lio
             return m_ret;
         }
 
-        template <typename U = T>
-        static inline Mat Replaced(const Mat& m_dest, const Mat<U>& m_src, size_t row = 0, size_t col = 0)
+        template <typename S = T>
+        static inline Mat Replaced(const Mat& m_dest, const Mat<S>& m_src, size_t row = 0, size_t col = 0)
         {
             return m_dest.Replaced(m_src, row, col);
         }
@@ -327,13 +327,13 @@ namespace lio
             return *this;
         }
 
-        template <typename U = T, typename V = T>
-        Mat HadamardMultiplication(const Mat<U>& m1, const Mat<V>& m2)
+        template <typename U = T>
+        static inline auto HadamardMultiplication(const Mat& m1, const Mat<U>& m2)
         {
             return m1.HadamardMultiplication(m2);
         }
         template <typename U = T>
-        Mat HadamardMultiplication(const Mat<U>& m) const
+        auto HadamardMultiplication(const Mat<U>& m) const
         {
             if (row_count != m.row_count || col_count != m.col_count)
                 throw MatNotSameSize<T, U>(row_count, col_count, m.row_count, m.col_count);
@@ -349,13 +349,13 @@ namespace lio
             return m_ret;
         }
 
-        template <typename U = T, typename V = T>
-        Mat HadamardDivision(const Mat<U>& m1, const Mat<V>& m2)
+        template <typename U = T>
+        static inline auto HadamardDivision(const Mat& m1, const Mat<U>& m2)
         {
             return m1.HadamardDivision(m2);
         }
         template <typename U = T>
-        Mat HadamardDivision(const Mat<U>& m) const
+        auto HadamardDivision(const Mat<U>& m) const
         {
             if (row_count != m.row_count || col_count != m.col_count)
                 throw MatNotSameSize<T, U>(row_count, col_count, m.row_count, m.col_count);
@@ -371,13 +371,13 @@ namespace lio
             return m_ret;
         }
 
-        template <typename U = T, typename V = T>
-        Mat HadamardModulo(const Mat<U>& m1, const Mat<V>& m2)
+        template <typename U = T>
+        static inline auto HadamardModulo(const Mat& m1, const Mat<U>& m2)
         {
             return m1.HadamardModulo(m2);
         }
         template <typename U = T>
-        Mat HadamardModulo(const Mat<U>& m) const
+        auto HadamardModulo(const Mat<U>& m) const
         {
             if (row_count != m.row_count || col_count != m.col_count)
                 throw MatNotSameSize<T, U>(row_count, col_count, m.row_count, m.col_count);
@@ -497,8 +497,7 @@ namespace lio
             return *this;
         }
 
-        template <typename U = T>
-        static inline U Determinant(const Mat& m)
+        static inline auto Determinant(const Mat& m)
         {
             return m.Determinant();
         }
