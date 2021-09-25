@@ -135,7 +135,7 @@ namespace lio
         template <typename U = T>
         inline auto Cross(const Vec2<U>& v) const
         {
-            return (x * v.x) - (y * v.y);
+            return (x * v.y) - (y * v.x);
         }
 
         template <typename U = T>
