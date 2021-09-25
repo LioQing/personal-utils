@@ -172,23 +172,24 @@ namespace lio
         }
 
         // 0 --> collinear
-        // >0 -> clockwise 
-        // <0 -> counterclockwise 
+        // >0 -> v3 to rotate clockwise to become collinear
+        // <0 -> v3 to rotate anticlockwise to become collinear
         template <typename U = T, typename S = T>
-        inline static auto OrientationEx(const Vec2& v1, const Vec2<U>& v2, const Vec2<S>& v3)
+        static inline auto OrientationEx(const Vec2& v1, const Vec2<U>& v2, const Vec2<S>& v3)
         {
             return v1.OrientationEx(v2, v3);
         }
         template <typename U = T, typename S = T>
         inline auto OrientationEx(const Vec2<U>& v2, const Vec2<S>& v3) const
         {
-            return (v2.y - y) * (v3.x - v2.x) - (v2.x - x) * (v3.y - v2.y);
+            return v3.Cross(v2 - *this);
         }
+
         // 0 --> collinear
-        // 1 --> clockwise 
-        // -1 -> counterclockwise 
+        // 1 --> v3 to rotate clockwise to become collinear
+        // -1 -> v3 to rotate anticlockwise to become collinear 
         template <typename U = T, typename S = T>
-        inline static int Orientation(const Vec2& v1, const Vec2<U>& v2, const Vec2<S>& v3)
+        static inline int Orientation(const Vec2& v1, const Vec2<U>& v2, const Vec2<S>& v3)
         {
             return v1.Orientation(v2, v3);
         }
