@@ -29,6 +29,7 @@ File | Description | Language Standard/Version | Dependcies | Namespace/Class
 [Mat.hpp](data%20structures/Math/Mat.hpp) | A Matrix class with many math operations | C++14 | N/A | lio
 [Vec2.hpp](data%20structures/Math/Vec2.hpp) | 2D Vector class with many graphical functions | C++14 | N/A | lio
 [Vec3.hpp](data%20structures/Math/Vec3.hpp) | Same as Vec2 except 3D | C++14 | N/A | lio
+[Vec.hpp](data%20structures/Math/Vec.hpp) | Template functions for Vec2 and Vec3 | C++14 | N/A | lio::Vec
 [LineSeg.hpp](data%20structures/Math/LineSeg.hpp) | 2D line segment class | C++14 | [Vec2.hpp](data%20structures/Math/Vec2.hpp) | lio
 [Data Structures for C](data%20structures/Data%20Structures%20for%20C) | Template structs for C with a lot of functions from C++ STL classes | C99 | N/A | N/A
 

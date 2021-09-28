@@ -165,6 +165,12 @@ namespace lio
         {
             return v3.Cross(v2 - *this).SqrMagnitude() == 0;
         }
+
+        inline static constexpr Vec3 One() 	{ return Vec3(1.0, 1.0, 1.0); }
+        inline static constexpr Vec3 Zero() { return Vec3(0.0, 0.0, 0.0); }
+        inline static constexpr Vec3 i() 	{ return Vec3(1.0, 0.0, 0.0); }
+        inline static constexpr Vec3 j() 	{ return Vec3(0.0, 1.0, 0.0); }
+        inline static constexpr Vec3 k() 	{ return Vec3(0.0, 0.0, 1.0); }
     };
 
     template <typename T, typename U>

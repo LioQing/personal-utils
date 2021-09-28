@@ -202,12 +202,14 @@ namespace lio
             return (val > 0) ? 1 : -1;
         }
 
-        inline static constexpr Vec2 One() 	{ return Vec2(1.0, 1.0); }
+        inline static constexpr Vec2 One()  { return Vec2(1.0, 1.0); }
         inline static constexpr Vec2 Zero() { return Vec2(0.0, 0.0); }
-        inline static constexpr Vec2 Up() 	{ return Vec2(0.0, 1.0); }
+        inline static constexpr Vec2 Up()   { return Vec2(0.0, 1.0); }
         inline static constexpr Vec2 Down() { return Vec2(0.0, -1.0); }
         inline static constexpr Vec2 Left() { return Vec2(-1.0, 0.0); }
         inline static constexpr Vec2 Right(){ return Vec2(1.0, 0.0); }
+        inline static constexpr Vec2 i()    { return Vec2(1.0, 0.0); }
+        inline static constexpr Vec2 j()    { return Vec2(0.0, 1.0); }
     };
 
     template <typename T, typename U>
