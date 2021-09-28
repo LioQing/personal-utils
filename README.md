@@ -11,21 +11,22 @@ The column 'Language Standard/Version' just means the standard/version the code 
 ### Algorithms
 
 File | Description | Language Standard/Version | Dependcies | Namespace/Class
---- | --- | --- | --- | --- | ---
-[AStarPathfinder.hpp](algorithms/AStarPathfinder.hpp) | An A* path finder class can be used on a 2D std::vector | C++14 | [Vec2.hpp](data%20structures/Graphics/Vec2.hpp) | lio
+--- | --- | --- | --- | ---
+[AStarPathfinder.hpp](algorithms/AStarPathfinder.hpp) | An A* path finder class can be used on a 2D std::vector | C++14 | 
+[Vec2.hpp](data%20structures/Graphics/Vec2.hpp) | lio
 [RandomMoveCubeScramble.cpp](algorithms/RandomMoveCubeScramble.cpp) | Random Move Cube Scramble Algorithm | Generate a Rubik's Cube scramble with a given number of sides | C++14 | N/A | N/A
 
 ### Code Architectures
 
 File | Description | Language Standard/Version | Dependcies | Namespace/Class
---- | --- | --- | --- | --- | ---
+--- | --- | --- | --- | ---
 [lecs.hpp](code%20architectures/lecs.hpp) | Single header ECS library, managers for components, entities, and systems, with an event system, also managed by an event Manager | C++14 | N/A | lecs
 [lev.hpp](code%20architectures/lev.hpp) | Single header simple event system library | C++20 | N/A | lev
 [LIC](code%20architectures/LIC) | Single header data oriented and data driven library, centralized and managed Entity(ID)-Component relataionship (Can be used for ECS) | C++20 | N/A | lic
 ### Data Structures
 
 File | Description | Language Standard/Version | Dependcies | Namespace/Class
---- | --- | --- | --- | --- | ---
+--- | --- | --- | --- | ---
 [Mat.hpp](data%20structures/Math/Mat.hpp) | A Matrix class with many math operations | C++14 | N/A | lio
 [Vec2.hpp](data%20structures/Math/Vec2.hpp) | 2D Vector class with many graphical functions | C++14 | N/A | lio
 [Vec3.hpp](data%20structures/Math/Vec3.hpp) | Same as Vec2 except 3D | C++14 | N/A | lio
@@ -36,7 +37,7 @@ File | Description | Language Standard/Version | Dependcies | Namespace/Class
 ### Tools
 
 File | Description | Language Standard/Version | Dependcies | Namespace/Class
---- | --- | --- | --- | --- | ---
+--- | --- | --- | --- | ---
 [ANSIEscaper](tools/ANSIEscaper) | A group of cross-platform ANSI escape code wrapper functions | C++14 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) (for windows)
 [CSVReader](tools/CSVReader) | CSV (Comma Separated Values) file reader and parser | C++11 | N/A | lio
 [LConsoleScreen](tools/LConsoleScreen) | Display Ascii characters as 2D screen in cmd (Windows only) | C++11 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) | lio
