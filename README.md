@@ -13,7 +13,6 @@ The column 'Language Standard/Version' just means the standard/version the code 
 File | Description | Language Standard/Version | Dependcies | Namespace/Class
 --- | --- | --- | --- | ---
 [AStarPathfinder.hpp](algorithms/AStarPathfinder.hpp) | An A* path finder class can be used on a 2D std::vector | C++14 | 
-[Vec2.hpp](data%20structures/Graphics/Vec2.hpp) | lio
 [RandomMoveCubeScramble.cpp](algorithms/RandomMoveCubeScramble.cpp) | Random Move Cube Scramble Algorithm | Generate a Rubik's Cube scramble with a given number of sides | C++14 | N/A | N/A
 
 ### Code Architectures
