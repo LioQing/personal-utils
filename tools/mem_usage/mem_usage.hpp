@@ -15,5 +15,5 @@ namespace lio
 	extern size_t memory_used;
 	extern size_t memory_peak;
 
-	void PrintMemUsage(uint8_t args = USAGE);
+	void print_mem_isage(uint8_t args = USAGE);
 }

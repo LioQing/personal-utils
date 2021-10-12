@@ -12,7 +12,7 @@ namespace lio
 	size_t memory_used = 0;
 	size_t memory_peak = 0;
 
-	void PrintMemUsage(uint8_t args)
+	void print_mem_usage(uint8_t args)
 	{
 		std::cout << "memory - ";
 		if (args & USAGE)
