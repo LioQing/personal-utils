@@ -2,120 +2,105 @@
 
 namespace lic
 {
-	Entity Manager::AddEntity()
-	{
-		EntityID id;
+    Entity Manager::AddEntity()
+    {
+        EntityID id;
 
-		if (m_empty_entity.empty())
-		{
-			id = m_next_entity_id++;
-			m_top_id = id;
-			m_checklist.emplace_back(false);
-		}
-		else
-		{
-			id = m_empty_entity.back();
-			m_empty_entity.pop_back();
-		}
+        if (m_empty_entity.empty())
+        {
+            id = m_next_entity_id++;
+            m_top_id = id;
+            m_checklist.emplace_back(false);
+        }
+        else
+        {
+            id = m_empty_entity.back();
+            m_empty_entity.pop_back();
+        }
+        return Entity(this, id);
+    }
 
-#ifdef LIC_DEBUG
-		std::cout << "Entity " << id << " created." << std::endl;
-#endif
-		return Entity(this, id);
-	}
+    void Manager::DestroyEntity(EntityID entity)
+    {
+        // remove components
+        for (ComponentID cid = 0u; cid < MAX_COMPONENT; ++cid)
+        {
+            if (HasComponent(entity, cid))
+                RemoveComponent(entity, cid);
+        }
 
-	void Manager::DestroyEntity(EntityID entity)
-	{
-		// remove components
-		for (ComponentID cid = 0u; cid < MAX_COMPONENT; ++cid)
-		{
-			if (HasComponent(entity, cid))
-				RemoveComponent(entity, cid);
-		}
+        // reset checklist
+        m_checklist.at(entity).reset();
 
-		// reset checklist
-		m_checklist.at(entity).reset();
+        // destroy entity
+        m_empty_entity.push_back(entity);
+    }
 
-		// destroy entity
-		m_empty_entity.push_back(entity);
+    Entity Manager::GetEntity(EntityID entity)
+    {
+        return Entity(this, entity);
+    }
 
-#ifdef LIC_DEBUG
-		std::cout << "Entity " << entity << " destroyed." << std::endl;
-#endif
-	}
+    void Manager::RemoveComponent(EntityID entity, ComponentID cid)
+    {
+        if (!HasComponent(entity, cid))
+        {
+            return;
+        }
 
-	Entity Manager::GetEntity(EntityID entity)
-	{
-		return Entity(this, entity);
-	}
+        for (auto &cptr : m_components.at(cid))
+        {
+            if (cptr != nullptr && cptr->entity == entity)
+            {
+                m_empty_component.at(cid).push_back(&cptr - &m_components.at(cid)[0]);
+                m_checklist.at(cptr->entity).set(cid, false);
+                cptr.reset();
+                break;
+            }
+        }
+    }
 
-	void Manager::RemoveComponent(EntityID entity, ComponentID cid)
-	{
-		if (!HasComponent(entity, cid))
-		{
-#ifdef LIC_DEBUG
-			std::cout << "No Component " << cid << " found in Entity " << entity << "." << std::endl;
-#endif
-			return;
-		}
+    bool Manager::HasComponent(EntityID entity, ComponentID cid) const
+    {
+        return m_checklist.at(entity).test(cid);
+    }
 
-		for (auto& cptr : m_components.at(cid))
-		{
-			if (cptr != nullptr && cptr->entity == entity)
-			{
-				m_empty_component.at(cid).push_back(&cptr - &m_components.at(cid)[0]);
-				m_checklist.at(cptr->entity).set(cid, false);
-				cptr.reset();
-				break;
-			}
-		}
+    Entity Component::GetEntity()
+    {
+        return manager->GetEntity(entity);
+    }
+    Entity Component::GetEntity() const
+    {
+        return manager->GetEntity(entity);
+    }
 
-#ifdef LIC_DEBUG
-		std::cout << "Component " << cid << " removed from Entity " << entity << "." << std::endl;
-#endif
-	}
+    EntityID Component::GetEntityID() const
+    {
+        return entity;
+    }
 
-	bool Manager::HasComponent(EntityID entity, ComponentID cid) const
-	{
-		return m_checklist.at(entity).test(cid);
-	}
+    Entity::operator EntityID() const
+    {
+        return id;
+    }
 
-	Entity Component::GetEntity()
-	{
-		return manager->GetEntity(entity);
-	}
-	Entity Component::GetEntity() const
-	{
-		return manager->GetEntity(entity);
-	}
+    EntityID Entity::GetID() const
+    {
+        return id;
+    }
 
-	EntityID Component::GetEntityID() const
-	{
-		return entity;
-	}
+    void Entity::Destroy()
+    {
+        manager->DestroyEntity(id);
+    }
 
-	Entity::operator EntityID() const
-	{
-		return id;
-	}
+    void Entity::RemoveComponent(ComponentID cid)
+    {
+        manager->RemoveComponent(id, cid);
+    }
 
-	EntityID Entity::GetID() const
-	{
-		return id;
-	}
-
-	void Entity::Destroy()
-	{
-		manager->DestroyEntity(id);
-	}
-
-	void Entity::RemoveComponent(ComponentID cid)
-	{
-		manager->RemoveComponent(id, cid);
-	}
-
-	bool Entity::HasComponent(ComponentID cid) const
-	{
-		return manager->HasComponent(id, cid);
-	}
+    bool Entity::HasComponent(ComponentID cid) const
+    {
+        return manager->HasComponent(id, cid);
+    }
 }
