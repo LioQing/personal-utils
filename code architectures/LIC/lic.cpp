@@ -7,6 +7,16 @@ std::vector<lic::EntityID> lic::destroyed_entities;
 std::atomic<lic::ComponentID> lic::next_component_id;
 std::atomic<lic::EntityID> lic::next_entity_id;
 
+void lic::Entity::RemoveComponent(ComponentID cid) const
+{
+    return lic::RemoveComponent(this->id, cid);
+}
+
+bool lic::Entity::HasComponent(ComponentID cid) const
+{
+    return this->component_field.test(cid);
+}
+
 lic::EntityID lic::AddEntity()
 {
     if (destroyed_entities.empty())
@@ -31,7 +41,7 @@ void lic::DestroyEntity(EntityID eid)
         if (HasComponent(eid, cid))
             RemoveComponent(eid, cid);
     }
-    
+
     entities.at(eid).component_field.reset();
     destroyed_entities.push_back(eid);
 }
@@ -57,5 +67,30 @@ void lic::RemoveComponent(EntityID eid, ComponentID cid)
 
 bool lic::HasComponent(EntityID eid, ComponentID cid)
 {
-    return entities.at(eid).component_field.test(cid);
+    return entities.at(eid).HasComponent(cid);
+}
+
+const lic::Entity& lic::EntityContainer::Iterator::operator*() const
+{
+    return entities.at(VecIterator::operator*());
+}
+
+lic::EntityContainer::Iterator lic::EntityContainer::begin() const
+{
+    return Iterator(std::vector<EntityID>::cbegin());
+}
+
+lic::EntityContainer::Iterator lic::EntityContainer::end() const
+{
+    return Iterator(std::vector<EntityID>::cend());
+}
+
+lic::EntityContainer::Iterator lic::EntityContainer::cbegin() const
+{
+    return Iterator(std::vector<EntityID>::cbegin());
+}
+
+lic::EntityContainer::Iterator lic::EntityContainer::cend() const
+{
+    return Iterator(std::vector<EntityID>::cend());
 }
