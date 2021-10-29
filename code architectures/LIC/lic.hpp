@@ -5,12 +5,12 @@
 #include <array>
 #include <atomic>
 #include <bitset>
+#include <functional>
 #include <memory>
 #include <ranges>
 #include <tuple>
 #include <unordered_map>
 #include <vector>
-#include <functional>
 
 class lic
 {
@@ -42,23 +42,63 @@ public:
     // Entity class
     struct Entity
     {
+        // ID of the entity
         EntityID id;
+
+        // Bitfield indicating whether the entity contains a component
         std::bitset<LIC_MAX_COMPONENT> component_field;
+
+        // Hashmap containing component's ID and index in the component vector
         std::unordered_map<ComponentID, size_t> component_indices;
 
+        /**
+         * @brief Remove a component from this entity
+         * 
+         * @param cid ID of the component to be removed
+         */
         void RemoveComponent(ComponentID cid) const;
 
+        /**
+         * @brief Remove a component from this entity
+         * 
+         * @tparam TComp type of component to be removed
+         */
         template <typename TComp>
         void RemoveComponent() const;
 
+        /**
+         * @brief Check if this entity has a component
+         * 
+         * @param cid ID of the component to be checked
+         * @return Boolean indicating the result
+         */
         bool HasComponent(ComponentID cid) const;
 
+        /**
+         * @brief Check if this entity has a component
+         * 
+         * @tparam TComp type of the component to be checked
+         * @return Boolean indicating the result
+         */
         template <typename TComp>
         bool HasComponent() const;
 
+        /**
+         * @brief Add a component to this entity
+         * 
+         * @tparam TComp type of the component to be added
+         * @param args arguments to be passed to the component for initialization
+         * @return Reference to the component added (with wrapper class)
+         */
         template <typename TComp, typename... TArgs>
         Component<TComp>& AddComponent(TArgs&&... args) const;
 
+        /**
+         * @brief Get a component from this entity
+         * 
+         * @tparam TComp type of the component to be returned
+         * @return Reference to the component returned (with wrapper class)
+         */
         template <typename TComp>
         Component<TComp>& GetComponent() const;
 
@@ -87,8 +127,8 @@ private:
     /**
      * @brief Get the vector of component type TComp
      * 
-     * @tparam TComp the component type of the vector to be retrieved
-     * @return std::vector<Component<TComp>>& the vector containing all instance of component type TComp
+     * @tparam TComp type of the component of the vector to be retrieved
+     * @return Reference to the vector containing all instances of component type TComp
      */
     template <typename TComp>
     static std::vector<Component<TComp>>& GetComponentVec()
@@ -100,6 +140,13 @@ public:
     // Prevent instantiation of class
     lic(const lic&) = delete;
 
+    /**
+     * @brief Get the ID of a component type
+     * If this is the first time this function is called with the type, a new ID will be generated
+     * 
+     * @tparam TComp type of the component which the ID will be returned
+     * @return ID of the component type TComp
+     */
     template <typename TComp>
     static ComponentID GetComponentID()
     {
@@ -111,34 +158,104 @@ public:
         return new_id;
     }
 
+    /**
+     * @brief Get the ID of a component type
+     * If this is the first time this function is called with the type, a new ID will be generated
+     * 
+     * @param comp component which the ID will be returned (with wrapper class)
+     * @return ID of the component comp
+     */
+    template <typename TComp>
+    static ComponentID GetComponentID(const Component<TComp>& comp)
+    {
+        return GetComponentID<TComp>();
+    }
+
+    /**
+     * @brief Get the ID of a component type
+     * If this is the first time this function is called with the type, a new ID will be generated
+     * 
+     * @param comp component which the ID will be returned
+     * @return ID of the component comp
+     */
     template <typename TComp>
     static ComponentID GetComponentID(const TComp& comp)
     {
         return GetComponentID<TComp>();
     }
 
+    /**
+     * @brief Add a new entity
+     * 
+     * @return ID of the entity added
+     */
     static EntityID AddEntity();
 
+    /**
+     * @brief Destroy a entity (including its components)
+     * 
+     * @param eid ID of the entity to be destroyed
+     */
     static void DestroyEntity(EntityID eid);
 
+    /**
+     * @brief Get a entity
+     * 
+     * @param eid ID of the entity to be returned
+     * @return Reference to the entity
+     */
     static Entity& GetEntity(EntityID eid);
 
+    /**
+     * @brief Remove a component from an entity
+     * 
+     * @param eid ID of the entity where the component will be removed
+     * @param cid ID of the component to be removed
+     */
     static void RemoveComponent(EntityID eid, ComponentID cid);
 
+    /**
+     * @brief Remove a component from an entity
+     * 
+     * @tparam TComp type of component to be removed
+     * @param eid ID of the entity where the component will be removed
+     */
     template <typename TComp>
     static void RemoveComponent(EntityID eid)
     {
         RemoveComponent(eid, GetComponentID<TComp>());
     }
 
+    /**
+     * @brief Check if an entity has a component
+     * 
+     * @param eid ID of the entity where the component will be checked
+     * @param cid ID of the component to be checked
+     * @return Boolean indicating the result
+     */
     static bool HasComponent(EntityID eid, ComponentID cid);
 
+    /**
+     * @brief Check if an entity has a component
+     * 
+     * @tparam TComp type of the component to be checked
+     * @param eid ID of the entity where the component will be checked
+     * @return Boolean indicating the result
+     */
     template <typename TComp>
     static bool HasComponent(EntityID eid)
     {
         return entities.at(eid).HasComponent(GetComponentID<TComp>());
     }
 
+    /**
+     * @brief Add a component to an entity
+     * 
+     * @tparam TComp type of the component to be added
+     * @param eid ID of the entity where the component will be added
+     * @param args arguments to be passed to the component for initialization
+     * @return Reference to the component added (with wrapper class)
+     */
     template <typename TComp, typename... TArgs>
     static Component<TComp>& AddComponent(EntityID eid, TArgs&&... args)
     {
@@ -161,9 +278,10 @@ public:
         }
         else
         {
-            i = destroyed_components.at(cid).back();
+            auto available_slots = destroyed_components.at(cid);
+            i = available_slots.back();
             component_vec.at(i) = Component<TComp>(TComp(std::forward<TArgs>(args)...), entities.at(eid));
-            destroyed_components.at(cid).pop_back();
+            available_slots.pop_back();
         }
 
         // Store component index and field in entity
@@ -172,12 +290,23 @@ public:
         return component_vec.at(i);
     }
 
+    /**
+     * @brief Get a component from an entity
+     * 
+     * @tparam TComp type of the component to be returned
+     * @param eid ID of the entity where the component will be return
+     * @return Reference to the component returned (with wrapper class)
+     */
     template <typename TComp>
     static Component<TComp>& GetComponent(EntityID eid)
     {
         return entities.at(eid).GetComponent<TComp>();
     }
 
+    /**
+     * @brief A container class for storing and iterating through selected entities
+     * 
+     */
     struct EntityContainer : public std::vector<EntityID>
     {
     private:
@@ -197,6 +326,11 @@ public:
         Iterator cend() const;
     };
 
+    /**
+     * @brief A container class for storing selected entities and iterating through their components
+     * 
+     * @tparam TComps types of selected entities' components
+     */
     template <typename... TComps>
     struct ComponentContainer : public std::vector<EntityID>
     {
@@ -225,30 +359,47 @@ public:
         ConstIterator end() const { return ConstIterator(std::vector<EntityID>::cend()); }
     };
 
+    /**
+     * @brief A class for selecting entities by their components
+     * 
+     * @tparam TComps types of selected entities' components
+     */
     template <typename... TComps>
     struct Range
     {
         std::vector<EntityID> entities;
 
+        /**
+         * @brief Further select entities with certain components
+         * 
+         * @tparam TSelectComps types of the components to be selected
+         * @return Range of entities with selected components
+         */
         template <typename... TSelectComps>
         Range<TComps..., TSelectComps...> Select() const
         {
-            Range<TComps..., TSelectComps...> range(entities);
+            auto selected_entities = entities;
             auto cids = { GetComponentID<TSelectComps>()... };
-            std::erase_if(range.entities,
-                          [&](EntityID eid) -> bool
-                          {
-                              return std::any_of(begin(cids), end(cids),
-                                                 [&](ComponentID cid) -> bool
-                                                 { return !HasComponent(eid, cid); });
-                          });
+            std::erase_if(selected_entities,
+                [&](EntityID eid)
+                {
+                    return std::any_of(begin(cids), end(cids),
+                        [&](ComponentID cid)
+                        { return !HasComponent(eid, cid); });
+                });
 
-            return range;
+            return Range<TComps..., TSelectComps...>(selected_entities);
         }
 
+        /**
+         * @brief Apply a function to selected entities' components, to which only entities with components that fufill the condition in the function are further selected
+         * 
+         * @param functor a function that takes all selected components as parameter and returns a boolean value indicating whether the entity will be further selected
+         * @return Range of entities with selected components
+         */
         template <typename TFunctor>
         requires std::predicate<TFunctor, TComps...>
-        Range<TComps...>& Where(TFunctor functor)
+        Range<TComps...> &Where(TFunctor functor)
         {
             std::erase_if(entities,
                 [&](EntityID eid) -> bool
@@ -258,32 +409,52 @@ public:
             return *this;
         }
 
-        EntityContainer Entities()
+        /**
+         * @brief Gets a container that allows iterating through every selected entities
+         * 
+         * @return an EntityContainer object that contains all selected entities
+         */
+        EntityContainer Entities() const
         {
             return EntityContainer(entities);
         }
 
-        const EntityContainer Entities() const
-        {
-            return EntityContainer(entities);
-        }
-
+        /**
+         * @brief Gets a container that allows iterating through every selected entities' components bundled in a tuple
+         * 
+         * @return an ComponentContainer object that contains all selected entities
+         */
         ComponentContainer<TComps...> Components()
         {
             return ComponentContainer<TComps...>(entities);
         }
 
+        /**
+         * @brief Gets a container that allows iterating through every selected entities' components bundled in a tuple
+         * 
+         * @return an ComponentContainer object that contains all selected entities
+         */
         const ComponentContainer<TComps...> Components() const
         {
             return ComponentContainer<TComps...>(entities);
         }
 
+        /**
+         * @brief Gets a container that allows iterating through every selected entities' components of types TOnlyComps bundled in a tuple
+         * 
+         * @return an ComponentContainer object that contains all selected entities
+         */
         template <typename... TOnlyComps>
         ComponentContainer<TOnlyComps...> OnlyComponents()
         {
             return ComponentContainer<TOnlyComps...>(entities);
         }
 
+        /**
+         * @brief Gets a container that allows iterating through every selected entities' components of types TOnlyComps bundled in a tuple
+         * 
+         * @return an ComponentContainer object that contains all selected entities
+         */
         template <typename... TOnlyComps>
         const ComponentContainer<TOnlyComps...> OnlyComponents() const
         {
@@ -291,6 +462,12 @@ public:
         }
     };
 
+    /**
+     * @brief Select entities with certain components
+     * 
+     * @tparam TSelectComps types of the components to be selected
+     * @return Range of entities with selected components
+     */
     template <typename... TComps>
     static Range<TComps...> Select()
     {
@@ -300,8 +477,8 @@ public:
         for (auto& entity : entities)
         {
             if (std::all_of(begin(cids), end(cids),
-                            [&](ComponentID cid)
-                            { return HasComponent(entity, cid); }))
+                    [&](ComponentID cid)
+                    { return HasComponent(entity, cid); }))
             {
                 range.entities.push_back(entity);
             }
