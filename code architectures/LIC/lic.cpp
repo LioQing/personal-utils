@@ -46,7 +46,7 @@ void lic::DestroyEntity(EntityID eid)
     destroyed_entities.push_back(eid);
 }
 
-lic::Entity& lic::GetEntity(EntityID eid)
+const lic::Entity& lic::GetEntity(EntityID eid)
 {
     return entities.at(eid);
 }

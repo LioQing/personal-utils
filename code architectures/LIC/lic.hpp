@@ -7,7 +7,6 @@
 #include <bitset>
 #include <functional>
 #include <memory>
-#include <ranges>
 #include <tuple>
 #include <unordered_map>
 #include <vector>
@@ -204,7 +203,7 @@ public:
      * @param eid ID of the entity to be returned
      * @return Reference to the entity
      */
-    static Entity& GetEntity(EntityID eid);
+    static const Entity& GetEntity(EntityID eid);
 
     /**
      * @brief Remove a component from an entity
@@ -266,7 +265,7 @@ public:
         {
             return GetComponent<TComp>(eid);
         }
-
+        
         auto& component_vec = GetComponentVec<TComp>();
         size_t i = 0;
 
@@ -274,13 +273,13 @@ public:
         if (destroyed_components.at(cid).empty())
         {
             i = component_vec.size();
-            component_vec.emplace_back(TComp(std::forward<TArgs>(args)...), entities.at(eid));
+            component_vec.emplace_back(TComp(std::forward<TArgs>(args)...), eid);
         }
         else
         {
             auto available_slots = destroyed_components.at(cid);
             i = available_slots.back();
-            component_vec.at(i) = Component<TComp>(TComp(std::forward<TArgs>(args)...), entities.at(eid));
+            component_vec.at(i) = Component<TComp>(TComp(std::forward<TArgs>(args)...), eid);
             available_slots.pop_back();
         }
 
@@ -329,9 +328,10 @@ public:
     /**
      * @brief A container class for storing selected entities and iterating through their components
      * 
+     * @tparam IncludeEntities boolean indicating whether entities will be returned with the components
      * @tparam TComps types of selected entities' components
      */
-    template <typename... TComps>
+    template <bool IncludeEntities, typename... TComps>
     struct ComponentContainer : public std::vector<EntityID>
     {
         template <typename TBackingIter>
@@ -342,10 +342,20 @@ public:
 
             auto operator*()
             {
-                if constexpr (std::is_same<TBackingIter, std::vector<EntityID>::const_iterator>::value)
-                    return std::tie<const Component<TComps>...>(GetComponent<TComps>(TBackingIter::operator*())...);
+                if constexpr (IncludeEntities == true)
+                {
+                    if constexpr (std::is_same<TBackingIter, std::vector<EntityID>::const_iterator>::value)
+                        return std::tie<const Entity, const Component<TComps>...>(GetEntity(TBackingIter::operator*()), GetComponent<TComps>(TBackingIter::operator*())...);
+                    else
+                        return std::tie<const Entity, Component<TComps>...>(GetEntity(TBackingIter::operator*()), GetComponent<TComps>(TBackingIter::operator*())...);
+                }
                 else
-                    return std::tie<Component<TComps>...>(GetComponent<TComps>(TBackingIter::operator*())...);
+                {
+                    if constexpr (std::is_same<TBackingIter, std::vector<EntityID>::const_iterator>::value)
+                        return std::tie<const Component<TComps>...>(GetComponent<TComps>(TBackingIter::operator*())...);
+                    else
+                        return std::tie<Component<TComps>...>(GetComponent<TComps>(TBackingIter::operator*())...);
+                }
             }
         };
 
@@ -394,17 +404,17 @@ public:
         /**
          * @brief Apply a function to selected entities' components, to which only entities with components that fufill the condition in the function are further selected
          * 
-         * @param functor a function that takes all selected components as parameter and returns a boolean value indicating whether the entity will be further selected
+         * @param predicate a function that takes all selected components as parameter and returns a boolean value indicating whether the entity will be further selected
          * @return Range of entities with selected components
          */
-        template <typename TFunctor>
-        requires std::predicate<TFunctor, TComps...>
-        Range<TComps...> &Where(TFunctor functor)
+        template <typename TPred>
+        requires std::predicate<TPred, TComps...>
+        Range<TComps...> &Where(TPred predicate)
         {
             std::erase_if(entities,
                 [&](EntityID eid) -> bool
                 {
-                    return !functor(GetEntity(eid).GetComponent<TComps>()...);
+                    return !predicate(GetEntity(eid).GetComponent<TComps>()...);
                 });
             return *this;
         }
@@ -424,9 +434,9 @@ public:
          * 
          * @return an ComponentContainer object that contains all selected entities
          */
-        ComponentContainer<TComps...> Components()
+        ComponentContainer<false, TComps...> Components()
         {
-            return ComponentContainer<TComps...>(entities);
+            return ComponentContainer<false, TComps...>(entities);
         }
 
         /**
@@ -434,9 +444,9 @@ public:
          * 
          * @return an ComponentContainer object that contains all selected entities
          */
-        const ComponentContainer<TComps...> Components() const
+        const ComponentContainer<false, TComps...> Components() const
         {
-            return ComponentContainer<TComps...>(entities);
+            return ComponentContainer<false, TComps...>(entities);
         }
 
         /**
@@ -445,9 +455,9 @@ public:
          * @return an ComponentContainer object that contains all selected entities
          */
         template <typename... TOnlyComps>
-        ComponentContainer<TOnlyComps...> OnlyComponents()
+        ComponentContainer<false, TOnlyComps...> OnlyComponents()
         {
-            return ComponentContainer<TOnlyComps...>(entities);
+            return ComponentContainer<false, TOnlyComps...>(entities);
         }
 
         /**
@@ -456,9 +466,51 @@ public:
          * @return an ComponentContainer object that contains all selected entities
          */
         template <typename... TOnlyComps>
-        const ComponentContainer<TOnlyComps...> OnlyComponents() const
+        const ComponentContainer<false, TOnlyComps...> OnlyComponents() const
         {
-            return ComponentContainer<TOnlyComps...>(entities);
+            return ComponentContainer<false, TOnlyComps...>(entities);
+        }
+
+        /**
+         * @brief Gets a container that allows iterating through every selected entities and their components bundled in a tuple
+         * 
+         * @return an ComponentContainer object that contains all selected entities
+         */
+        ComponentContainer<true, TComps...> EntitiesAndComponents()
+        {
+            return ComponentContainer<true, TComps...>(entities);
+        }
+
+        /**
+         * @brief Gets a container that allows iterating through every selected entities and their components bundled in a tuple
+         * 
+         * @return an ComponentContainer object that contains all selected entities
+         */
+        const ComponentContainer<true, TComps...> EntitiesAndComponents() const
+        {
+            return ComponentContainer<true, TComps...>(entities);
+        }
+
+        /**
+         * @brief Gets a container that allows iterating through every selected entities and their components of types TOnlyComps bundled in a tuple
+         * 
+         * @return an ComponentContainer object that contains all selected entities
+         */
+        template <typename... TOnlyComps>
+        ComponentContainer<true, TOnlyComps...> EntitiesAndOnlyComponents()
+        {
+            return ComponentContainer<true, TOnlyComps...>(entities);
+        }
+
+        /**
+         * @brief Gets a container that allows iterating through every selected entities and their components of types TOnlyComps bundled in a tuple
+         * 
+         * @return an ComponentContainer object that contains all selected entities
+         */
+        template <typename... TOnlyComps>
+        const ComponentContainer<true, TOnlyComps...> EntitiesAndOnlyComponents() const
+        {
+            return ComponentContainer<true, TOnlyComps...>(entities);
         }
     };
 
