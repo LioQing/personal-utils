@@ -248,7 +248,7 @@ public:
     }
 
     /**
-     * @brief Add a component to an entity
+     * @brief Add a component to an entity, re-construct the old component if the entity already has the component type
      * 
      * @tparam TComp type of the component to be added
      * @param eid ID of the entity where the component will be added
@@ -259,15 +259,15 @@ public:
     static Component<TComp>& AddComponent(EntityID eid, TArgs&&... args)
     {
         ComponentID cid = GetComponentID<TComp>();
-
-        // Return component if entity already has the component
-        if (HasComponent(eid, cid))
-        {
-            return GetComponent<TComp>(eid);
-        }
-        
         auto& component_vec = GetComponentVec<TComp>();
         size_t i = 0;
+
+        // Re-construct component if entity already has the component
+        if (HasComponent(eid, cid))
+        {
+            component_vec.at(entities.at(eid).component_indices.at(cid)) = Component<TComp>(TComp(std::forward<TArgs>(args)...), eid);
+            return GetComponent<TComp>(eid);
+        }
 
         // Add component to component_vec
         if (destroyed_components.at(cid).empty())
