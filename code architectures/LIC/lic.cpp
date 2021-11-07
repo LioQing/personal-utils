@@ -4,8 +4,8 @@ std::array<std::any, lic::LIC_MAX_COMPONENT> lic::components;
 std::array<std::vector<std::size_t>, lic::LIC_MAX_COMPONENT> lic::destroyed_components;
 std::vector<lic::Entity> lic::entities;
 std::vector<lic::EntityID> lic::destroyed_entities;
-std::atomic<lic::ComponentID> lic::next_component_id;
-std::atomic<lic::EntityID> lic::next_entity_id;
+lic::ComponentID lic::next_component_id;
+lic::EntityID lic::next_entity_id;
 
 void lic::Entity::RemoveComponent(ComponentID cid) const
 {

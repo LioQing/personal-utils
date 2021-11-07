@@ -54,6 +54,14 @@
         "bit": "cpp",
         "clocale": "cpp",
         "ctime": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "any": "cpp",
+        "iomanip": "cpp",
+        "ranges": "cpp",
+        "set": "cpp",
+        "span": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp",
+        "xtree": "cpp"
     }
 }

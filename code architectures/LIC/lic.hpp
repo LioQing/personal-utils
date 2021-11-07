@@ -14,6 +14,7 @@
 class lic
 {
 public:
+
     /**
      * Max number of components
      * Modify this value in header file lic.hpp as needed
@@ -105,7 +106,8 @@ public:
     };
 
 private:
-    // Vector of BaseComponentVec (vector of component)
+
+    // Vector of vectors of components (std::vector<Component<TComp>>)
     static std::array<std::any, LIC_MAX_COMPONENT> components;
 
     // Vector of destroyed components
@@ -118,10 +120,10 @@ private:
     static std::vector<EntityID> destroyed_entities;
 
     // Next component ID to be generated
-    static std::atomic<ComponentID> next_component_id;
+    static ComponentID next_component_id;
 
     // Next entity ID to be generated
-    static std::atomic<EntityID> next_entity_id;
+    static EntityID next_entity_id;
 
     /**
      * @brief Get the vector of component type TComp
@@ -136,6 +138,7 @@ private:
     }
 
 public:
+
     // Prevent instantiation of class
     lic(const lic&) = delete;
 
@@ -147,6 +150,9 @@ public:
      * @return ID of the component type TComp
      */
     template <typename TComp>
+    requires (!requires (TComp x) {
+        { Component{x} } -> std::same_as<TComp>;
+    })
     static ComponentID GetComponentID()
     {
         static ComponentID new_id = [&]()
@@ -158,10 +164,10 @@ public:
     }
 
     /**
-     * @brief Get the ID of a component type
+     * @brief Get the ID of a component type by extracting it from a Componen<T> class
      * If this is the first time this function is called with the type, a new ID will be generated
      * 
-     * @param comp component which the ID will be returned (with wrapper class)
+     * @param comp component which the ID will be returned
      * @return ID of the component comp
      */
     template <typename TComp>
