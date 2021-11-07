@@ -17,20 +17,20 @@ bool lic::Entity::HasComponent(ComponentID cid) const
     return this->component_field.test(cid);
 }
 
-lic::EntityID lic::AddEntity()
+lic::Entity& lic::AddEntity()
 {
     if (destroyed_entities.empty())
     {
         EntityID eid = next_entity_id++;
         entities.emplace_back(eid, false);
-        return eid;
+        return entities.back();
     }
     else
     {
         EntityID eid = destroyed_entities.back();
         entities.at(eid) = Entity(eid, false);
         destroyed_entities.pop_back();
-        return eid;
+        return entities.at(eid);
     }
 }
 

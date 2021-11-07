@@ -192,9 +192,9 @@ public:
     /**
      * @brief Add a new entity
      * 
-     * @return ID of the entity added
+     * @return reference to the entity added
      */
-    static EntityID AddEntity();
+    static Entity& AddEntity();
 
     /**
      * @brief Destroy a entity (including its components)
@@ -549,7 +549,7 @@ public:
 template <typename TComp>
 void lic::Entity::RemoveComponent() const
 {
-    RemoveComponent(this->id, GetComponentID<TComp>());
+    lic::RemoveComponent(this->id, GetComponentID<TComp>());
 }
 
 template <typename TComp>
@@ -561,7 +561,7 @@ bool lic::Entity::HasComponent() const
 template <typename TComp, typename... TArgs>
 lic::Component<TComp>& lic::Entity::AddComponent(TArgs&&... args) const
 {
-    AddComponent<TComp>(this->id, std::forward<TArgs>(args)...);
+    return lic::AddComponent<TComp>(this->id, std::forward<TArgs>(args)...);
 }
 
 template <typename TComp>
