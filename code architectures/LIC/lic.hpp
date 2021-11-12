@@ -102,6 +102,26 @@ public:
         template <typename TComp>
         Component<TComp>& GetComponent() const;
 
+        /**
+         * @brief Get the component if this entity has the component, else return a default constructed component
+         * 
+         * @tparam TComp type of the component to be returned
+         * @return The component (without wrapper class)
+         */
+        template <typename TComp>
+        requires std::default_initializable<TComp>
+        TComp GetIfHasComponentElseDefault() const;
+
+        /**
+         * @brief Get the component if this entity has the component, else return a new constructed component with specific arguments
+         * 
+         * @tparam TComp type of the component to be returned
+         * @param args arguments to be passed to the new component for construction if this entiy does not have the component
+         * @return The component (without wrapper class)
+         */
+        template <typename TComp, typename... TArgs>
+        TComp GetIfHasComponentElse(TArgs&&... args) const;
+
         operator EntityID() const { return id; }
     };
 
@@ -568,4 +588,25 @@ template <typename TComp>
 lic::Component<TComp>& lic::Entity::GetComponent() const
 {
     return GetComponentVec<TComp>().at(component_indices.at(GetComponentID<TComp>()));
+}
+
+template <typename TComp>
+requires std::default_initializable<TComp>
+TComp lic::Entity::GetIfHasComponentElseDefault() const
+{
+    if (HasComponent<TComp>())
+    {
+        return GetComponent<TComp>();
+    }
+    return TComp();
+}
+
+template <typename TComp, typename... TArgs>
+TComp lic::Entity::GetIfHasComponentElse(TArgs&&... args) const
+{
+    if (HasComponent<TComp>())
+    {
+        return GetComponent<TComp>();
+    }
+    return TComp(args...);
 }
