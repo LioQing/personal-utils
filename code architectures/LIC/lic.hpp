@@ -10,6 +10,8 @@
 #include <tuple>
 #include <unordered_map>
 #include <vector>
+#include <stdexcept>
+#include <string>
 
 class lic
 {
@@ -37,6 +39,11 @@ public:
     struct Component : public TComp
     {
         EntityID entity_id;
+
+        const Entity& GetEntity() const
+        {
+            return lic::GetEntity(entity_id);
+        }
     };
 
     // Entity class
@@ -587,6 +594,11 @@ lic::Component<TComp>& lic::Entity::AddComponent(TArgs&&... args) const
 template <typename TComp>
 lic::Component<TComp>& lic::Entity::GetComponent() const
 {
+    if (!HasComponent(GetComponentID<TComp>()))
+    {
+        throw std::out_of_range(std::string("Component ") + typeid(TComp).name() + " not found in Entity " + std::to_string(id));
+    }
+
     return GetComponentVec<TComp>().at(component_indices.at(GetComponentID<TComp>()));
 }
 
