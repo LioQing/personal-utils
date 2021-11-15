@@ -101,6 +101,15 @@ public:
         Component<TComp>& AddComponent(TArgs&&... args) const;
 
         /**
+         * @brief Add a component to this entity, re-construct the old component if the entity already has the component type
+         * 
+         * @param c the component to be added
+         * @return Reference to the component added (with wrapper class) 
+         */
+        template <typename TComp>
+        Component<TComp>& AddComponent(const TComp& c) const;
+
+        /**
          * @brief Get a component from this entity
          * 
          * @tparam TComp type of the component to be returned
@@ -320,6 +329,19 @@ public:
         entities.at(eid).component_indices.emplace(cid, i);
         entities.at(eid).component_field.set(cid);
         return component_vec.at(i);
+    }
+
+    /**
+     * @brief Add a component to an entity, re-construct the old component if the entity already has the component type
+     * 
+     * @param eid ID of the entity where the component will be added
+     * @param c the component to be added
+     * @return Reference to the component added (with wrapper class) 
+     */
+    template <typename TComp>
+    static Component<TComp>& AddComponent(EntityID eid, const TComp& c)
+    {
+        return AddComponent<TComp>(eid, std::move(c));
     }
 
     /**
@@ -592,6 +614,12 @@ lic::Component<TComp>& lic::Entity::AddComponent(TArgs&&... args) const
 }
 
 template <typename TComp>
+lic::Component<TComp>& lic::Entity::AddComponent(const TComp& c) const
+{
+    return lic::AddComponent<TComp>(this->id, std::move(c));
+}
+
+template <typename TComp>
 lic::Component<TComp>& lic::Entity::GetComponent() const
 {
     if (!HasComponent(GetComponentID<TComp>()))
@@ -620,5 +648,5 @@ TComp lic::Entity::GetIfHasComponentElse(TArgs&&... args) const
     {
         return GetComponent<TComp>();
     }
-    return TComp(args...);
+    return TComp(std::forward<TArgs>(args)...);
 }
