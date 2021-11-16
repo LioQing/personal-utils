@@ -464,14 +464,15 @@ public:
          */
         template <typename TPred>
         requires std::predicate<TPred, TComps...>
-        Range<TComps...> &Where(TPred predicate)
+        Range<TComps...> Where(TPred predicate) const
         {
-            std::erase_if(entities,
+            auto temp_entities = entities;
+            std::erase_if(temp_entities,
                 [&](EntityID eid) -> bool
                 {
                     return !predicate(GetEntity(eid).GetComponent<TComps>()...);
                 });
-            return *this;
+            return Range<TComps...>(temp_entities);
         }
 
         /**
