@@ -124,8 +124,7 @@ public:
          * @tparam TComp type of the component to be returned
          * @return The component (without wrapper class)
          */
-        template <typename TComp>
-        requires std::default_initializable<TComp>
+        template <std::default_initializable TComp>
         TComp GetIfHasComponentElseDefault() const;
 
         /**
@@ -389,8 +388,7 @@ public:
     template <bool IncludeEntities, typename... TComps>
     struct ComponentContainer : public std::vector<EntityID>
     {
-        template <typename TBackingIter>
-        requires std::contiguous_iterator<TBackingIter>
+        template <std::contiguous_iterator TBackingIter>
         struct BaseIterator : public TBackingIter
         {
             BaseIterator(const TBackingIter& iter) : TBackingIter(iter) {}
@@ -462,8 +460,7 @@ public:
          * @param predicate a function that takes all selected components as parameter and returns a boolean value indicating whether the entity will be further selected
          * @return Range of entities with selected components
          */
-        template <typename TPred>
-        requires std::predicate<TPred, TComps...>
+        template <std::predicate<TComps...> TPred>
         Range<TComps...> Where(TPred predicate) const
         {
             auto temp_entities = entities;
@@ -631,8 +628,7 @@ lic::Component<TComp>& lic::Entity::GetComponent() const
     return GetComponentVec<TComp>().at(component_indices.at(GetComponentID<TComp>()));
 }
 
-template <typename TComp>
-requires std::default_initializable<TComp>
+template <std::default_initializable TComp>
 TComp lic::Entity::GetIfHasComponentElseDefault() const
 {
     if (HasComponent<TComp>())
