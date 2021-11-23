@@ -46,7 +46,7 @@ public:
         }
     };
 
-    // Entity class
+    // Entity class (implicit convertable to EntityID)
     struct Entity
     {
         // ID of the entity
@@ -229,7 +229,7 @@ public:
      * 
      * @return reference to the entity added
      */
-    static Entity& AddEntity();
+    static const Entity& AddEntity();
 
     /**
      * @brief Destroy a entity (including its components)
@@ -602,7 +602,7 @@ void lic::Entity::RemoveComponent() const
 template <typename TComp>
 bool lic::Entity::HasComponent() const
 {
-    return HasComponent(GetComponentID<TComp>());
+    return lic::HasComponent(this->id, GetComponentID<TComp>());
 }
 
 template <typename TComp, typename... TArgs>
@@ -620,7 +620,7 @@ lic::Component<TComp>& lic::Entity::AddComponent(const TComp& c) const
 template <typename TComp>
 lic::Component<TComp>& lic::Entity::GetComponent() const
 {
-    if (!HasComponent(GetComponentID<TComp>()))
+    if (!HasComponent<TComp>())
     {
         throw std::out_of_range(std::string("Component ") + typeid(TComp).name() + " not found in Entity " + std::to_string(id));
     }

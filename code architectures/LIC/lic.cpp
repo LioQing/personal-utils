@@ -14,10 +14,10 @@ void lic::Entity::RemoveComponent(ComponentID cid) const
 
 bool lic::Entity::HasComponent(ComponentID cid) const
 {
-    return this->component_field.test(cid);
+    return lic::HasComponent(this->id, cid);
 }
 
-lic::Entity& lic::AddEntity()
+const lic::Entity& lic::AddEntity()
 {
     if (destroyed_entities.empty())
     {
@@ -67,7 +67,7 @@ void lic::RemoveComponent(EntityID eid, ComponentID cid)
 
 bool lic::HasComponent(EntityID eid, ComponentID cid)
 {
-    return entities.at(eid).HasComponent(cid);
+    return entities.at(eid).component_field.test(cid);
 }
 
 const lic::Entity& lic::EntityContainer::Iterator::operator*() const
