@@ -40,7 +40,7 @@ public:
     {
         EntityID entity_id;
 
-        const Entity& GetEntity() const
+        Entity GetEntity() const
         {
             return lic::GetEntity(entity_id);
         }
@@ -51,12 +51,6 @@ public:
     {
         // ID of the entity
         EntityID id;
-
-        // Bitfield indicating whether the entity contains a component
-        std::bitset<LIC_MAX_COMPONENT> component_field;
-
-        // Hashmap containing component's ID and index in the component vector
-        std::unordered_map<ComponentID, size_t> component_indices;
 
         /**
          * @brief Remove a component from this entity
@@ -142,14 +136,29 @@ public:
 
 private:
 
+    // Information of Entites for internal use only
+    struct EntityInfo
+    {
+        // ID of the entity
+        EntityID id;
+
+        // Bitfield indicating whether the entity contains a component
+        std::bitset<LIC_MAX_COMPONENT> component_field;
+
+        // Hashmap containing component's ID and index in the component vector
+        std::unordered_map<ComponentID, size_t> component_indices;
+
+        operator EntityID() const { return id; }
+    };
+
     // Vector of vectors of components (std::vector<Component<TComp>>)
     static std::array<std::any, LIC_MAX_COMPONENT> components;
 
     // Vector of destroyed components
     static std::array<std::vector<std::size_t>, LIC_MAX_COMPONENT> destroyed_components;
 
-    // Vector of entities
-    static std::vector<Entity> entities;
+    // Vector of entities infos
+    static std::vector<EntityInfo> entities;
 
     // Vector of destroyed entity IDs
     static std::vector<EntityID> destroyed_entities;
@@ -227,9 +236,9 @@ public:
     /**
      * @brief Add a new entity
      * 
-     * @return reference to the entity added
+     * @return The entity added
      */
-    static const Entity& AddEntity();
+    static Entity AddEntity();
 
     /**
      * @brief Destroy a entity (including its components)
@@ -242,9 +251,9 @@ public:
      * @brief Get a entity
      * 
      * @param eid ID of the entity to be returned
-     * @return Reference to the entity
+     * @return The entity
      */
-    static const Entity& GetEntity(EntityID eid);
+    static Entity GetEntity(EntityID eid);
 
     /**
      * @brief Remove a component from an entity
@@ -285,7 +294,7 @@ public:
     template <typename TComp>
     static bool HasComponent(EntityID eid)
     {
-        return entities.at(eid).HasComponent(GetComponentID<TComp>());
+        return HasComponent(eid, GetComponentID<TComp>());
     }
 
     /**
@@ -353,7 +362,12 @@ public:
     template <typename TComp>
     static Component<TComp>& GetComponent(EntityID eid)
     {
-        return entities.at(eid).GetComponent<TComp>();
+        if (!HasComponent<TComp>(eid))
+        {
+            throw std::out_of_range(std::string("Component ") + typeid(TComp).name() + " not found in Entity " + std::to_string(eid));
+        }
+
+        return GetComponentVec<TComp>().at(entities.at(eid).component_indices.at(GetComponentID<TComp>()));
     }
 
     /**
@@ -370,7 +384,7 @@ public:
         {
             Iterator(const VecIterator& iter) : VecIterator(iter) {}
 
-            const Entity& operator*() const;
+            Entity operator*() const;
         };
 
         Iterator begin() const;
@@ -398,9 +412,9 @@ public:
                 if constexpr (IncludeEntities == true)
                 {
                     if constexpr (std::is_same<TBackingIter, std::vector<EntityID>::const_iterator>::value)
-                        return std::tie<const Entity, const Component<TComps>...>(GetEntity(TBackingIter::operator*()), GetComponent<TComps>(TBackingIter::operator*())...);
+                        return std::tuple<Entity, const Component<TComps>&...>(GetEntity(TBackingIter::operator*()), GetComponent<TComps>(TBackingIter::operator*())...);
                     else
-                        return std::tie<const Entity, Component<TComps>...>(GetEntity(TBackingIter::operator*()), GetComponent<TComps>(TBackingIter::operator*())...);
+                        return std::tuple<Entity, Component<TComps>&...>(GetEntity(TBackingIter::operator*()), GetComponent<TComps>(TBackingIter::operator*())...);
                 }
                 else
                 {
@@ -620,12 +634,7 @@ lic::Component<TComp>& lic::Entity::AddComponent(const TComp& c) const
 template <typename TComp>
 lic::Component<TComp>& lic::Entity::GetComponent() const
 {
-    if (!HasComponent<TComp>())
-    {
-        throw std::out_of_range(std::string("Component ") + typeid(TComp).name() + " not found in Entity " + std::to_string(id));
-    }
-
-    return GetComponentVec<TComp>().at(component_indices.at(GetComponentID<TComp>()));
+    return lic::GetComponent<TComp>(this->id);
 }
 
 template <std::default_initializable TComp>
