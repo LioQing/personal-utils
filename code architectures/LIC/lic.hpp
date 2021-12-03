@@ -327,7 +327,7 @@ public:
         }
         else
         {
-            auto available_slots = destroyed_components.at(cid);
+            auto& available_slots = destroyed_components.at(cid);
             i = available_slots.back();
             component_vec.at(i) = Component<TComp>(TComp(std::forward<TArgs>(args)...), eid);
             available_slots.pop_back();
@@ -377,9 +377,11 @@ public:
     struct EntityContainer : public std::vector<EntityID>
     {
     private:
+    
         using VecIterator = std::vector<EntityID>::const_iterator;
 
     public:
+
         struct Iterator : public VecIterator
         {
             Iterator(const VecIterator& iter) : VecIterator(iter) {}
