@@ -36,6 +36,9 @@ lic::Entity lic::AddEntity()
 
 void lic::DestroyEntity(EntityID eid)
 {
+    if (!HasEntity(eid))
+        return;
+
     for (ComponentID cid = 0u; cid < LIC_MAX_COMPONENT; ++cid)
     {
         if (HasComponent(eid, cid))
@@ -44,6 +47,11 @@ void lic::DestroyEntity(EntityID eid)
 
     entities.at(eid).component_field.reset();
     destroyed_entities.push_back(eid);
+}
+
+bool lic::HasEntity(EntityID eid)
+{
+    return eid < next_entity_id && std::find(destroyed_entities.begin(), destroyed_entities.end(), eid) == destroyed_entities.end();
 }
 
 lic::Entity lic::GetEntity(EntityID eid)
