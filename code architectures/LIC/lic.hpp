@@ -40,10 +40,25 @@ public:
     {
         EntityID entity_id;
 
+        /**
+         * @brief Get the entity of this component
+         * 
+         * @return the entity of this component
+         */
         Entity GetEntity() const
         {
             return lic::GetEntity(entity_id);
         }
+
+        /**
+         * @brief Set a callback function to be called when the component is being removed from or destroyed with entity
+         * 
+         * @param callback The function to be called when the compeonent is being removed
+         */
+        void OnRemoval(const std::function<void()>& callback) const
+        {
+            lic::OnComponentRemoval<TComp>(entity_id, callback);
+        };
     };
 
     // Entity class (implicit convertable to EntityID)
@@ -131,6 +146,23 @@ public:
         template <typename TComp, typename... TArgs>
         TComp GetIfHasComponentElse(TArgs&&... args) const;
 
+        /**
+         * @brief Set a callback function to be called when the component is being removed from or destroyed with entity
+         * 
+         * @param cid ID of the component
+         * @param callback The function to be called when the compeonent is being removed
+         */
+        void OnComponentRemoval(ComponentID cid, const std::function<void()>& callback) const;
+
+        /**
+         * @brief Set a callback function to be called when the component is being removed from or destroyed with entity
+         * 
+         * @tparam TComp type of the component
+         * @param callback The function to be called when the compeonent is being removed
+         */
+        template <typename TComp>
+        void OnComponentRemoval(const std::function<void()>& callback) const;
+
         operator EntityID() const { return id; }
     };
 
@@ -156,6 +188,9 @@ private:
 
     // Vector of destroyed components
     static std::array<std::vector<std::size_t>, LIC_MAX_COMPONENT> destroyed_components;
+
+    // Vector of on component destroy callback functions
+    static std::array<std::vector<std::vector<std::function<void()>>>, LIC_MAX_COMPONENT> on_component_removals;
 
     // Vector of entities infos
     static std::vector<EntityInfo> entities;
@@ -202,6 +237,8 @@ public:
         static ComponentID new_id = [&]()
         {
             components.at(next_component_id) = std::make_any<std::vector<Component<TComp>>>();
+            destroyed_components.at(next_component_id) = std::vector<std::size_t>();
+            on_component_removals.at(next_component_id) = std::vector<std::vector<std::function<void()>>>();
             return next_component_id++;
         }();
         return new_id;
@@ -332,6 +369,7 @@ public:
         {
             i = component_vec.size();
             component_vec.emplace_back(TComp(std::forward<TArgs>(args)...), eid);
+            on_component_removals.at(cid).emplace_back(std::vector<std::function<void()>>());
         }
         else
         {
@@ -376,6 +414,28 @@ public:
         }
 
         return GetComponentVec<TComp>().at(entities.at(eid).component_indices.at(GetComponentID<TComp>()));
+    }
+
+    /**
+     * @brief Set a callback function to be called when the component is being removed from or destroyed with entity
+     * 
+     * @param eid ID of the entity where the component belongs
+     * @param cid ID of the component
+     * @param callback The function to be called when the compeonent is being removed
+     */
+    static void OnComponentRemoval(EntityID eid, ComponentID cid, const std::function<void()>& callback);
+
+    /**
+     * @brief Set a callback function to be called when the component is being removed from or destroyed with entity
+     * 
+     * @tparam TComp type of the component
+     * @param eid ID of the entity where the component belongs
+     * @param callback The function to be called when the compeonent is being removed
+     */
+    template <typename TComp>
+    static void OnComponentRemoval(EntityID eid, const std::function<void()>& callback)
+    {
+        OnComponentRemoval(eid, GetComponentID<TComp>(), callback);
     }
 
     /**
@@ -666,4 +726,10 @@ TComp lic::Entity::GetIfHasComponentElse(TArgs&&... args) const
         return GetComponent<TComp>();
     }
     return TComp(std::forward<TArgs>(args)...);
+}
+
+template <typename TComp>
+void lic::Entity::OnComponentRemoval(const std::function<void()>& callback) const
+{
+    lic::OnComponentRemoval(id, GetComponentID<TComp>(), callback);
 }
