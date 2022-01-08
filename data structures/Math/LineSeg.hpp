@@ -28,13 +28,13 @@ namespace lio
 			return LineSeg<U>(p1, p2);
 		}
 
-		LineSeg& Set(const Vec2<T>& p1, const Vec2<T>& p2 = Vec2<T>::Zero())
+		LineSeg& Set(const Vec2<T>& p1, const Vec2<T>& p2 = Vec2<T>::Zero()) &
 		{
 			this->p1 = p1;
 			this->p2 = p2;
 			return *this;
 		}
-		LineSeg& Set(T x1, T y1, T x2, T y2)
+		LineSeg& Set(T x1, T y1, T x2, T y2) &
 		{
 			p1.x = x1;
 			p1.y = y1;
@@ -52,7 +52,7 @@ namespace lio
 			return LineSeg(p1, p2);
 		}
 		template <typename U, typename S = T>
-		LineSeg& Rotate(U theta, const Vec2<S>& pt = Vec2<S>::Zero())
+		LineSeg& Rotate(U theta, const Vec2<S>& pt = Vec2<S>::Zero()) &
 		{
 			return *this = this->Rotated(theta, pt);
 		}

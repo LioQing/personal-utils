@@ -23,7 +23,7 @@ namespace lio
             return Vec3<U>(x, y, z);
         }
 
-        Vec3& Set(T x, T y, T z)
+        Vec3& Set(T x, T y, T z) &
         {
             this->x = x;
             this->y = y;
@@ -40,7 +40,7 @@ namespace lio
             if (Magnitude() == 0) return *this;
             return Vec3(*this / Magnitude());
         }
-        Vec3& Normalize()
+        Vec3& Normalize() &
         {
             if (Magnitude() == 0) return *this;
             *this *= (1.0 / Magnitude());

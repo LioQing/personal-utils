@@ -228,7 +228,7 @@ namespace lio
             return m_ret.Replace(row, col, m);
         }
         template <typename U = T>
-        Mat& Replace(const Mat<U>& m, size_t row = 0, size_t col = 0)
+        Mat& Replace(const Mat<U>& m, size_t row = 0, size_t col = 0) &
         {
             for (size_t i = 0; i < m.row_count; ++i)
             for (size_t j = 0; j < m.col_count; ++j)
@@ -265,7 +265,7 @@ namespace lio
 
             return m_ret.Removed({}, rm_col);
         }
-        Mat& Invert()
+        Mat& Invert() &
         {
             *this = Inverse();
             return *this;
@@ -282,7 +282,7 @@ namespace lio
             
             return Inverse(Transposed() * *this) * Transposed();
         }
-        Mat& LeftInvert()
+        Mat& LeftInvert() &
         {
             *this = LeftInverse();
             return *this;
@@ -299,7 +299,7 @@ namespace lio
 
             return Transposed() * Inverse(*this * Transposed());
         }
-        Mat& RightInvert()
+        Mat& RightInvert() &
         {
             *this = RightInverse();
             return *this;
@@ -321,7 +321,7 @@ namespace lio
 
             return m_ret;
         }
-        inline Mat& Transpose()
+        inline Mat& Transpose() &
         {
             *this = Transposed();
             return *this;
@@ -404,7 +404,7 @@ namespace lio
             Mat m_ret(*this);
             return m_ret.SwapRows(r1, r2);
         }
-        Mat& SwapRows(size_t r1, size_t r2)
+        Mat& SwapRows(size_t r1, size_t r2) &
         {
             matrix.at(r1).swap(matrix.at(r2));
             return *this;
@@ -422,7 +422,7 @@ namespace lio
             return m_ret.MultiplyRow(row, s);
         }
         template <typename U>
-        Mat& MultiplyRow(size_t row, U s)
+        Mat& MultiplyRow(size_t row, U s) &
         {
             for (auto& j : matrix.at(row))
             {
@@ -444,7 +444,7 @@ namespace lio
             return m_ret.AddRow(r_dest, r_src, s);
         }
         template <typename U>
-        Mat& AddRow(size_t r_dest, size_t r_src, U s)
+        Mat& AddRow(size_t r_dest, size_t r_src, U s) &
         {
             for (size_t i = 0; i < col_count; ++i)
             {
@@ -465,7 +465,7 @@ namespace lio
             Mat m_ret(*this);
             return m_ret.GaussianElimination();
         }
-        Mat& GaussianEliminate()
+        Mat& GaussianEliminate() &
         {
             for (size_t i = 0; i < std::min(row_count, col_count); ++i)
             {
