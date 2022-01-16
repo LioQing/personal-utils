@@ -10,21 +10,22 @@ The column 'Language Standard/Version' just means the standard/version the code 
 
 ### Algorithms
 
-File | Description | Language Standard/Version | Dependcies | Namespace/Class
+File | Description | Language Standard/Version | Dependencies | Namespace/Class
 --- | --- | --- | --- | ---
 [AStarPathfinder.hpp](algorithms/AStarPathfinder.hpp) | An A* path finder class can be used on a 2D std::vector | C++14 | N/A | lio
 [RandomMoveCubeScramble.cpp](algorithms/RandomMoveCubeScramble.cpp) | Generate a Rubik's Cube scramble with a given number of sides | C++14 | N/A | N/A
 
 ### Code Architectures
 
-File | Description | Language Standard/Version | Dependcies | Namespace/Class
+File | Description | Language Standard/Version | Dependencies | Namespace/Class
 --- | --- | --- | --- | ---
 [lecs.hpp](code%20architectures/lecs.hpp) | Single header ECS library, managers for components, entities, and systems, with an event system, also managed by an event Manager | C++14 | N/A | lecs
 [lev.hpp](code%20architectures/lev.hpp) | Single header simple event system library | C++20 | N/A | lev
 [LIC](code%20architectures/LIC) | Single header data oriented and data driven library, centralized and managed Entity(ID)-Component relataionship (Can be used for ECS) | C++20 | N/A | lic
+[Pipe.hpp](code%20architectures/Pipe.hpp) | Single header pipe function, with overloaded operators so it feels like functional programming in nature | C++20 | N/A | lio 
 ### Data Structures
 
-File | Description | Language Standard/Version | Dependcies | Namespace/Class
+File | Description | Language Standard/Version | Dependencies | Namespace/Class
 --- | --- | --- | --- | ---
 [Mat.hpp](data%20structures/Math/Mat.hpp) | A Matrix class with many math operations | C++14 | N/A | lio
 [Vec2.hpp](data%20structures/Math/Vec2.hpp) | 2D Vector class with many graphical functions | C++14 | N/A | lio
@@ -36,9 +37,9 @@ File | Description | Language Standard/Version | Dependcies | Namespace/Class
 
 ### Tools
 
-File | Description | Language Standard/Version | Dependcies | Namespace/Class
+File | Description | Language Standard/Version | Dependencies | Namespace/Class
 --- | --- | --- | --- | ---
-[ANSIEscaper](tools/ANSIEscaper) | A group of cross-platform ANSI escape code wrapper functions | C++14 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) (for windows)
+[ANSIEscaper](tools/ANSIEscaper) | A group of cross-platform ANSI escape code wrapper functions | C++14 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) (for windows)|
 [CSVReader](tools/CSVReader) | CSV (Comma Separated Values) file reader and parser | C++11 | N/A | lio
 [LConsoleScreen](tools/LConsoleScreen) | Display Ascii characters as 2D screen in cmd (Windows only) | C++11 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) | lio
 [PortableSystemFunctions.h](tools/PortableSystemFunctions.h) | Cross-platform system functions | C++17 / C17 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) / [unistd.h](https://en.wikipedia.org/wiki/Unistd.h) | N/A
