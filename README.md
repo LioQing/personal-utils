@@ -1,6 +1,6 @@
 # PersonalUtils
 
-All my personal utilities, majority of the code is written myself, feel free to use.  
+All my personal utilities, majority of the code is written myself, feel free to use.   
 The column 'Language Standard/Version' just means the standard/version the code was developed and tested in.
 
 [Algorithms](algorithms)
