@@ -21,7 +21,7 @@ File | Description | Language Standard/Version | Dependencies | Namespace/Class
 --- | --- | --- | --- | ---
 [lecs.hpp](code%20architectures/lecs.hpp) | Single header ECS library, managers for components, entities, and systems, with an event system, also managed by an event Manager | C++14 | N/A | lecs
 [lev.hpp](code%20architectures/lev.hpp) | Single header simple event system library | C++20 | N/A | lev
-[LIC](code%20architectures/LIC) | Single header data oriented and data driven library, centralized and managed Entity(ID)-Component relataionship (Can be used for ECS) | C++20 | N/A | lic
+[LIC](code%20architectures/LIC) | Single header data oriented and data driven library, centralized and managed Entity(ID)-Component relationship | C++20 | N/A | lic
 [Pipe.hpp](code%20architectures/Pipe.hpp) | Single header pipe function, with overloaded operators so it feels like functional programming in nature | C++20 | N/A | lio 
 ### Data Structures
 
