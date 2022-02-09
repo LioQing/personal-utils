@@ -8,8 +8,12 @@ namespace lio
     template <typename T>
     struct Vec3
     {
-        T x, y, z;
+        T x = 0.0;
+        T y = 0.0;
+        T z = 0.0;
 
+        Vec3() = default;
+        Vec3(const Vec3&) = default;
         Vec3(T x = 0.0, T y = 0.0, T z = 0.0) : x(x), y(y), z(z) {}
 
         template <typename U>

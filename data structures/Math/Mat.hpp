@@ -65,6 +65,9 @@ namespace lio
 
         size_t row_count, col_count;
 
+        Mat() = default;
+        Mat(const Mat&) = default;
+
         Mat(const std::initializer_list<std::initializer_list<T>>& m)
         {
             *this = Mat(m.begin(), m.end());

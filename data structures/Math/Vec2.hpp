@@ -8,8 +8,11 @@ namespace lio
     template <typename T>
     struct Vec2
     {
-        T x, y;
+        T x = 0.0;
+        T y = 0.0;
 
+        Vec2() = default;
+        Vec2(const Vec2&) = default;
         Vec2(T x = 0.0, T y = 0.0) : x(x), y(y) {}
 
         template <typename U>
