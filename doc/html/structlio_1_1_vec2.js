@@ -1,0 +1,27 @@
+var structlio_1_1_vec2 =
+[
+    [ "Vec2", "structlio_1_1_vec2.html#a7e1c21ab2977f26107c512984efb2e25", null ],
+    [ "Vec2", "structlio_1_1_vec2.html#a13fd5fc9f4d14c0b7c5de0dbd83f5d9a", null ],
+    [ "Vec2", "structlio_1_1_vec2.html#aed01708519eca63e602a6fce9174fa91", null ],
+    [ "Abs", "structlio_1_1_vec2.html#abfafbc089104d3c977db06a946275d87", null ],
+    [ "Cast", "structlio_1_1_vec2.html#af4163eb1d38c2e46475ff69a0fc3e4cc", null ],
+    [ "Cross", "structlio_1_1_vec2.html#a336e92173e75977dcb31c6d5d4ad3596", null ],
+    [ "Distance", "structlio_1_1_vec2.html#a48e1f5d3223624ca59b967b2cf19e6c1", null ],
+    [ "Dot", "structlio_1_1_vec2.html#aa490d75b27e1161498d70a96e8047571", null ],
+    [ "HadamardDivision", "structlio_1_1_vec2.html#acfc5427bf93d4d1066542839d3ccc864", null ],
+    [ "HadamardModulo", "structlio_1_1_vec2.html#a257e162e1a37eaaec1294a2ee587636c", null ],
+    [ "HadamardMultiplication", "structlio_1_1_vec2.html#a750a83def83a16be3ab131c2212a0db3", null ],
+    [ "Magnitude", "structlio_1_1_vec2.html#ab881f7357c92c3bb8f40c3517f41c4b5", null ],
+    [ "Normalize", "structlio_1_1_vec2.html#ac34d9ddb446e813014d7554d8efa4ab8", null ],
+    [ "Normalized", "structlio_1_1_vec2.html#a4bb205df9f16b2fb790ec5644ada468e", null ],
+    [ "operator Vec2< U >", "structlio_1_1_vec2.html#ae59e149f80cfd172255975b30bf02165", null ],
+    [ "Orientation", "structlio_1_1_vec2.html#a81ad9906765db404433695a4fe9dc623", null ],
+    [ "OrientationEx", "structlio_1_1_vec2.html#ad2554bcbdea7e17063b5cb8951e571c3", null ],
+    [ "Ortho", "structlio_1_1_vec2.html#ae4914c00692ae548d7d5afc0f585664d", null ],
+    [ "Rotate", "structlio_1_1_vec2.html#aab6f89eb0f0e0cf249adf6677e82619f", null ],
+    [ "Rotated", "structlio_1_1_vec2.html#ac240a252fbb7b7609fa19f81be1a9be2", null ],
+    [ "Set", "structlio_1_1_vec2.html#a701d73bbb7c2f9b5ab5a5c0f03de5116", null ],
+    [ "SqrMagnitude", "structlio_1_1_vec2.html#a596c9bcd909ab6b6c98d1c532a531f42", null ],
+    [ "x", "structlio_1_1_vec2.html#a410d928560515db37924cbcbfea132e2", null ],
+    [ "y", "structlio_1_1_vec2.html#a1872d77d04f4f8a9538769e3a4130c9d", null ]
+];

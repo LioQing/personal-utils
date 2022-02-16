@@ -23,6 +23,11 @@ void lic::Entity::OnComponentRemoval(ComponentID cid, const std::function<void()
     lic::OnComponentRemoval(id, cid, callback);
 }
 
+void lic::Entity::RaiseComponentRemoval(ComponentID cid) const
+{
+    lic::RaiseComponentRemoval(id, cid);
+}
+
 lic::Entity lic::AddEntity()
 {
     if (destroyed_entities.empty())
@@ -72,15 +77,9 @@ void lic::RemoveComponent(EntityID eid, ComponentID cid)
         return;
     }
 
-    auto cind = entities.at(eid).component_indices.at(cid);
-    
-    for (auto callback : on_component_removals.at(cid).at(cind))
-    {
-        callback();
-    }
-    on_component_removals.at(cid).at(cind).clear();
+    RaiseComponentRemoval(eid, cid);
 
-    destroyed_components.at(cid).push_back(cind);
+    destroyed_components.at(cid).push_back(entities.at(eid).component_indices.at(cid));
     entities.at(eid).component_field.set(cid, false);
 }
 
@@ -98,6 +97,17 @@ void lic::OnComponentRemoval(EntityID eid, ComponentID cid, const std::function<
 
     auto cind = entities.at(eid).component_indices.at(cid);
     on_component_removals.at(cid).at(cind).push_back(callback);
+}
+
+void lic::RaiseComponentRemoval(EntityID eid, ComponentID cid)
+{
+    auto cind = entities.at(eid).component_indices.at(cid);
+
+    for (auto callback : on_component_removals.at(cid).at(cind))
+    {
+        callback();
+    }
+    on_component_removals.at(cid).at(cind).clear();
 }
 
 lic::Entity lic::EntityContainer::Iterator::operator*() const

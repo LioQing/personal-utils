@@ -1,0 +1,26 @@
+var _l_console_screen_8c =
+[
+    [ "drawline", "_l_console_screen_8c.html#af93350332bbea69cc6127da85da5ce12", null ],
+    [ "lcs_Clear", "_l_console_screen_8c.html#a8f71212eb7de70f8affeb2d0b0aa2ec6", null ],
+    [ "lcs_Clip", "_l_console_screen_8c.html#a3a3366d6ff807f7fa11b66afe6287110", null ],
+    [ "lcs_Destroy", "_l_console_screen_8c.html#a53d139bb9cf94afcc1bd49e9065c1f4f", null ],
+    [ "lcs_Display", "_l_console_screen_8c.html#ae881a50a0a931d7b642bf168ce41495c", null ],
+    [ "lcs_Draw", "_l_console_screen_8c.html#afa0806fd6547721f7d63313664f3f096", null ],
+    [ "lcs_DrawCircle", "_l_console_screen_8c.html#aa7d1e04b306541837f5c79df7b03bab0", null ],
+    [ "lcs_DrawLine", "_l_console_screen_8c.html#a5e671f5804e42eee27f3da00a241fd45", null ],
+    [ "lcs_DrawString", "_l_console_screen_8c.html#a663390c1b908ae66100873cd2f056601", null ],
+    [ "lcs_DrawStringAlpha", "_l_console_screen_8c.html#a46ae08f5141d2a7860e71df7cc1b6e51", null ],
+    [ "lcs_DrawTriangle", "_l_console_screen_8c.html#a2ba4441fa17a0495bc7494e6ddf150b0", null ],
+    [ "lcs_Fill", "_l_console_screen_8c.html#a556e95796eb406d910eb80e9e55b2c0b", null ],
+    [ "lcs_FillCircle", "_l_console_screen_8c.html#af84c94e9546f79fde31edc767d729c35", null ],
+    [ "lcs_FillTriangle", "_l_console_screen_8c.html#a89e0975bf9bc0c1c2e6d043dc09d05e2", null ],
+    [ "lcs_FullFill", "_l_console_screen_8c.html#a1463cf4c951096375a2ca3c454ad67a9", null ],
+    [ "lcs_Init", "_l_console_screen_8c.html#a2f6edb06a43b473d7beff0ad09210576", null ],
+    [ "lcs_RefreshWindowSize", "_l_console_screen_8c.html#ab30ed292e74e76fa9b9c702836239719", null ],
+    [ "lcs_SetBackgroundColor", "_l_console_screen_8c.html#aa454573f736073ee55dd2ff963c3b143", null ],
+    [ "lcs_SetFontSize", "_l_console_screen_8c.html#adad1e31e7c2cc39659e3e0db7a8ea3a1", null ],
+    [ "lcs_SetResolution", "_l_console_screen_8c.html#aa5e0e27a5cedf1778ea62a39b25e1579", null ],
+    [ "lcs_SetTitle", "_l_console_screen_8c.html#ade0c7069df638c5a3bf8ac8868a2baaa", null ],
+    [ "SWAP", "_l_console_screen_8c.html#a4741fad34f04782670bfd0076c297dc3", null ],
+    [ "tcs_Init", "_l_console_screen_8c.html#ac93303ef1600ee8a46f3f2c137491c8d", null ]
+];
