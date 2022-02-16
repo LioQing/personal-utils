@@ -12,12 +12,21 @@
 
 namespace lio
 {
+    /**
+     * @brief The thread pool class
+     * 
+     * @tparam ThreadCount The number of thread to create
+     */
     template <std::size_t ThreadCount>
     requires (ThreadCount > 0)
     class ThreadPool
     {
     public:
 
+        /**
+         * @brief Construct a new ThreadPool
+         * 
+         */
         ThreadPool() : working_count(ThreadCount)
         {
             for (std::thread& worker : workers)
@@ -26,6 +35,10 @@ namespace lio
             }
         }
 
+        /**
+         * @brief Destroy the ThreadPool
+         * 
+         */
         ~ThreadPool()
         {
             WaitForAll();
@@ -37,6 +50,10 @@ namespace lio
             }
         }
 
+        /**
+         * @brief Block and wait for all the tasks are done
+         * 
+         */
         void WaitForAll()
         {
             if (working_count == 0)
@@ -46,6 +63,11 @@ namespace lio
             task_finished_cv.wait(task_finished_lock);
         }
 
+        /**
+         * @brief Add a new task to the thread pool
+         * 
+         * @param task A function
+         */
         template <typename Task>
         requires requires (Task task)
         { { task() } -> std::same_as<void>; }
@@ -61,6 +83,13 @@ namespace lio
             task_assignment_cv.notify_one();
         }
 
+        /**
+         * @brief Add a new task to the thread pool
+         * 
+         * @param task A function which args... will be passed in as argument
+         * @param args The arguments of the task
+         * @return requires 
+         */
         template <typename Task, typename... Args>
         requires requires (Task task, Args&&... args)
         { { task(std::forward<Args>(args)...) } -> std::same_as<void>; }
@@ -69,16 +98,31 @@ namespace lio
             AddTask([task, args...](){ task(std::forward<Args>(args)...); });
         }
 
+        /**
+         * @brief Get the number of threads
+         * 
+         * @return std::size_t The number of threads
+         */
         static constexpr std::size_t GetThreadCount()
         {
             return ThreadCount;
         }
 
+        /**
+         * @brief Get the number of working threads
+         * 
+         * @return std::size_t The number of working threads
+         */
         std::size_t GetWorkingThreadCount() const
         {
             return working_count;
         }
 
+        /**
+         * @brief Get the number of waiting tasks
+         * 
+         * @return std::size_t The number of waiting tasks
+         */
         std::size_t GetWaitingTaskCount() const
         {
             std::unique_lock<std::mutex> tasks_lock(tasks_mutex);
