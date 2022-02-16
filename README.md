@@ -3,11 +3,11 @@
 All my personal utilities, majority of the code is written myself, feel free to use.
 The column 'Language Standard/Version' just means the standard/version the code was developed and tested in.
 
-Documentation: [Not quite useful documentation](doc/html/index.html)
+Documentation: [Not quite useful documentation](https://lioqing.github.io/PersonalUtils/)
 
-[Algorithms](algorithms)
-[Code Architectures](code%20architectures)
-[Data Structures](data%20structures)
+[Algorithms](algorithms)  
+[Code Architectures](code%20architectures)  
+[Data Structures](data%20structures)  
 [Tools](tools)  
 
 ### Algorithms
