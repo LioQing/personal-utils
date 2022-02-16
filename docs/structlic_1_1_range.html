@@ -95,7 +95,7 @@ $(document).ready(function(){initNavTree('structlic_1_1_range.html',''); initRes
 <p>A class for selecting entities by their components.  
  <a href="structlic_1_1_range.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="header_01only_2lic_8hpp_source.html">lic.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="lic_8hpp_source.html">lic.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -138,50 +138,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad474f71ac7d8042fd671624da5acc821"><td class="memTemplItemLeft" align="right" valign="top">const <a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; true, TOnlyComps... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#ad474f71ac7d8042fd671624da5acc821">EntitiesAndOnlyComponents</a> () const</td></tr>
 <tr class="memdesc:ad474f71ac7d8042fd671624da5acc821"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities and their components of types TOnlyComps bundled in a tuple.  <a href="structlic_1_1_range.html#ad474f71ac7d8042fd671624da5acc821">More...</a><br /></td></tr>
 <tr class="separator:ad474f71ac7d8042fd671624da5acc821"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e3b245c0553abe24b9ce3722ebff443"><td class="memTemplParams" colspan="2">template&lt;typename... TSelectComps&gt; </td></tr>
-<tr class="memitem:a4e3b245c0553abe24b9ce3722ebff443"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structlic_1_1_range.html">Range</a>&lt; TComps..., TSelectComps... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#a4e3b245c0553abe24b9ce3722ebff443">Select</a> () const</td></tr>
-<tr class="memdesc:a4e3b245c0553abe24b9ce3722ebff443"><td class="mdescLeft">&#160;</td><td class="mdescRight">Further select entities with certain components.  <a href="structlic_1_1_range.html#a4e3b245c0553abe24b9ce3722ebff443">More...</a><br /></td></tr>
-<tr class="separator:a4e3b245c0553abe24b9ce3722ebff443"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7286e6ba51b1b598fab07c5ce059dbc"><td class="memTemplParams" colspan="2">template&lt;std::predicate&lt; <a class="el" href="structlic_1_1_entity.html">Entity</a>, TComps... &gt; TPred&gt; </td></tr>
-<tr class="memitem:ad7286e6ba51b1b598fab07c5ce059dbc"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structlic_1_1_range.html">Range</a>&lt; TComps... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#ad7286e6ba51b1b598fab07c5ce059dbc">Where</a> (TPred predicate) const</td></tr>
-<tr class="memdesc:ad7286e6ba51b1b598fab07c5ce059dbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply a function to selected entities' components, to which only entities with components that fufill the condition in the function are further selected.  <a href="structlic_1_1_range.html#ad7286e6ba51b1b598fab07c5ce059dbc">More...</a><br /></td></tr>
-<tr class="separator:ad7286e6ba51b1b598fab07c5ce059dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad44ddcf4a4c2fb73d5839c3b36fcb396"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlic_1_1_entity_container.html">EntityContainer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#ad44ddcf4a4c2fb73d5839c3b36fcb396">Entities</a> () const</td></tr>
-<tr class="memdesc:ad44ddcf4a4c2fb73d5839c3b36fcb396"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities.  <a href="structlic_1_1_range.html#ad44ddcf4a4c2fb73d5839c3b36fcb396">More...</a><br /></td></tr>
-<tr class="separator:ad44ddcf4a4c2fb73d5839c3b36fcb396"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4417d0d5ea7293ff1003e70d4ecd7ffe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; false, TComps... &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#a4417d0d5ea7293ff1003e70d4ecd7ffe">Components</a> ()</td></tr>
-<tr class="memdesc:a4417d0d5ea7293ff1003e70d4ecd7ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities' components bundled in a tuple.  <a href="structlic_1_1_range.html#a4417d0d5ea7293ff1003e70d4ecd7ffe">More...</a><br /></td></tr>
-<tr class="separator:a4417d0d5ea7293ff1003e70d4ecd7ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30a5d6dc51ee842bb69f4029b815aab6"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; false, TComps... &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#a30a5d6dc51ee842bb69f4029b815aab6">Components</a> () const</td></tr>
-<tr class="memdesc:a30a5d6dc51ee842bb69f4029b815aab6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities' components bundled in a tuple.  <a href="structlic_1_1_range.html#a30a5d6dc51ee842bb69f4029b815aab6">More...</a><br /></td></tr>
-<tr class="separator:a30a5d6dc51ee842bb69f4029b815aab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac17ecc3a6b2cdd4eafbb3689c75789dd"><td class="memTemplParams" colspan="2">template&lt;typename... TOnlyComps&gt; </td></tr>
-<tr class="memitem:ac17ecc3a6b2cdd4eafbb3689c75789dd"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; false, TOnlyComps... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#ac17ecc3a6b2cdd4eafbb3689c75789dd">OnlyComponents</a> ()</td></tr>
-<tr class="memdesc:ac17ecc3a6b2cdd4eafbb3689c75789dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities' components of types TOnlyComps bundled in a tuple.  <a href="structlic_1_1_range.html#ac17ecc3a6b2cdd4eafbb3689c75789dd">More...</a><br /></td></tr>
-<tr class="separator:ac17ecc3a6b2cdd4eafbb3689c75789dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39b30166b9de5078a9a26e5b176bcf73"><td class="memTemplParams" colspan="2">template&lt;typename... TOnlyComps&gt; </td></tr>
-<tr class="memitem:a39b30166b9de5078a9a26e5b176bcf73"><td class="memTemplItemLeft" align="right" valign="top">const <a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; false, TOnlyComps... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#a39b30166b9de5078a9a26e5b176bcf73">OnlyComponents</a> () const</td></tr>
-<tr class="memdesc:a39b30166b9de5078a9a26e5b176bcf73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities' components of types TOnlyComps bundled in a tuple.  <a href="structlic_1_1_range.html#a39b30166b9de5078a9a26e5b176bcf73">More...</a><br /></td></tr>
-<tr class="separator:a39b30166b9de5078a9a26e5b176bcf73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae41f40dd93a41be966d4d61079d71067"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; true, TComps... &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#ae41f40dd93a41be966d4d61079d71067">EntitiesAndComponents</a> ()</td></tr>
-<tr class="memdesc:ae41f40dd93a41be966d4d61079d71067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities and their components bundled in a tuple.  <a href="structlic_1_1_range.html#ae41f40dd93a41be966d4d61079d71067">More...</a><br /></td></tr>
-<tr class="separator:ae41f40dd93a41be966d4d61079d71067"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39084ebe66ece9c0f4333b9f0ab47257"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; true, TComps... &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#a39084ebe66ece9c0f4333b9f0ab47257">EntitiesAndComponents</a> () const</td></tr>
-<tr class="memdesc:a39084ebe66ece9c0f4333b9f0ab47257"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities and their components bundled in a tuple.  <a href="structlic_1_1_range.html#a39084ebe66ece9c0f4333b9f0ab47257">More...</a><br /></td></tr>
-<tr class="separator:a39084ebe66ece9c0f4333b9f0ab47257"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef5a1ecd4aebdf130eb4dcc04fe01add"><td class="memTemplParams" colspan="2">template&lt;typename... TOnlyComps&gt; </td></tr>
-<tr class="memitem:aef5a1ecd4aebdf130eb4dcc04fe01add"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; true, TOnlyComps... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#aef5a1ecd4aebdf130eb4dcc04fe01add">EntitiesAndOnlyComponents</a> ()</td></tr>
-<tr class="memdesc:aef5a1ecd4aebdf130eb4dcc04fe01add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities and their components of types TOnlyComps bundled in a tuple.  <a href="structlic_1_1_range.html#aef5a1ecd4aebdf130eb4dcc04fe01add">More...</a><br /></td></tr>
-<tr class="separator:aef5a1ecd4aebdf130eb4dcc04fe01add"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad474f71ac7d8042fd671624da5acc821"><td class="memTemplParams" colspan="2">template&lt;typename... TOnlyComps&gt; </td></tr>
-<tr class="memitem:ad474f71ac7d8042fd671624da5acc821"><td class="memTemplItemLeft" align="right" valign="top">const <a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; true, TOnlyComps... &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#ad474f71ac7d8042fd671624da5acc821">EntitiesAndOnlyComponents</a> () const</td></tr>
-<tr class="memdesc:ad474f71ac7d8042fd671624da5acc821"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a container that allows iterating through every selected entities and their components of types TOnlyComps bundled in a tuple.  <a href="structlic_1_1_range.html#ad474f71ac7d8042fd671624da5acc821">More...</a><br /></td></tr>
-<tr class="separator:ad474f71ac7d8042fd671624da5acc821"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a96318474e4330df54e098120d8c07b13"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classlic.html#a2f27720849dc6c97190fa676b139133d">EntityID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#a96318474e4330df54e098120d8c07b13">entities</a></td></tr>
-<tr class="separator:a96318474e4330df54e098120d8c07b13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb90882e01b2a68320a9cc77d6ffa245"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="classlic.html#a2f27720849dc6c97190fa676b139133d">EntityID</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlic_1_1_range.html#acb90882e01b2a68320a9cc77d6ffa245">entities</a></td></tr>
+<tr class="separator:acb90882e01b2a68320a9cc77d6ffa245"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename... TComps&gt;<br />
@@ -194,37 +155,7 @@ struct lic::Range&lt; TComps &gt;</div><p >A class for selecting entities by the
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a4417d0d5ea7293ff1003e70d4ecd7ffe" name="a4417d0d5ea7293ff1003e70d4ecd7ffe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4417d0d5ea7293ff1003e70d4ecd7ffe">&#9670;&nbsp;</a></span>Components() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; false, TComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::Components </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a container that allows iterating through every selected entities' components bundled in a tuple. </p>
-<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="structlic_1_1_component_container.html" title="A container class for storing selected entities and iterating through their components.">ComponentContainer</a> object that contains all selected entities </dd></dl>
-
-</div>
-</div>
-<a id="a4417d0d5ea7293ff1003e70d4ecd7ffe" name="a4417d0d5ea7293ff1003e70d4ecd7ffe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4417d0d5ea7293ff1003e70d4ecd7ffe">&#9670;&nbsp;</a></span>Components() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4417d0d5ea7293ff1003e70d4ecd7ffe">&#9670;&nbsp;</a></span>Components() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -254,37 +185,7 @@ template&lt;typename... TComps&gt; </div>
 </div>
 </div>
 <a id="a30a5d6dc51ee842bb69f4029b815aab6" name="a30a5d6dc51ee842bb69f4029b815aab6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30a5d6dc51ee842bb69f4029b815aab6">&#9670;&nbsp;</a></span>Components() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; false, TComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::Components </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a container that allows iterating through every selected entities' components bundled in a tuple. </p>
-<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="structlic_1_1_component_container.html" title="A container class for storing selected entities and iterating through their components.">ComponentContainer</a> object that contains all selected entities </dd></dl>
-
-</div>
-</div>
-<a id="a30a5d6dc51ee842bb69f4029b815aab6" name="a30a5d6dc51ee842bb69f4029b815aab6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30a5d6dc51ee842bb69f4029b815aab6">&#9670;&nbsp;</a></span>Components() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a30a5d6dc51ee842bb69f4029b815aab6">&#9670;&nbsp;</a></span>Components() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -314,37 +215,7 @@ template&lt;typename... TComps&gt; </div>
 </div>
 </div>
 <a id="ad44ddcf4a4c2fb73d5839c3b36fcb396" name="ad44ddcf4a4c2fb73d5839c3b36fcb396"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad44ddcf4a4c2fb73d5839c3b36fcb396">&#9670;&nbsp;</a></span>Entities() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structlic_1_1_entity_container.html">EntityContainer</a> <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::Entities </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a container that allows iterating through every selected entities. </p>
-<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="structlic_1_1_entity_container.html" title="A container class for storing and iterating through selected entities.">EntityContainer</a> object that contains all selected entities </dd></dl>
-
-</div>
-</div>
-<a id="ad44ddcf4a4c2fb73d5839c3b36fcb396" name="ad44ddcf4a4c2fb73d5839c3b36fcb396"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad44ddcf4a4c2fb73d5839c3b36fcb396">&#9670;&nbsp;</a></span>Entities() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad44ddcf4a4c2fb73d5839c3b36fcb396">&#9670;&nbsp;</a></span>Entities()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -374,37 +245,7 @@ template&lt;typename... TComps&gt; </div>
 </div>
 </div>
 <a id="ae41f40dd93a41be966d4d61079d71067" name="ae41f40dd93a41be966d4d61079d71067"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae41f40dd93a41be966d4d61079d71067">&#9670;&nbsp;</a></span>EntitiesAndComponents() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; true, TComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::EntitiesAndComponents </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a container that allows iterating through every selected entities and their components bundled in a tuple. </p>
-<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="structlic_1_1_component_container.html" title="A container class for storing selected entities and iterating through their components.">ComponentContainer</a> object that contains all selected entities </dd></dl>
-
-</div>
-</div>
-<a id="ae41f40dd93a41be966d4d61079d71067" name="ae41f40dd93a41be966d4d61079d71067"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae41f40dd93a41be966d4d61079d71067">&#9670;&nbsp;</a></span>EntitiesAndComponents() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae41f40dd93a41be966d4d61079d71067">&#9670;&nbsp;</a></span>EntitiesAndComponents() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -434,37 +275,7 @@ template&lt;typename... TComps&gt; </div>
 </div>
 </div>
 <a id="a39084ebe66ece9c0f4333b9f0ab47257" name="a39084ebe66ece9c0f4333b9f0ab47257"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39084ebe66ece9c0f4333b9f0ab47257">&#9670;&nbsp;</a></span>EntitiesAndComponents() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; true, TComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::EntitiesAndComponents </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a container that allows iterating through every selected entities and their components bundled in a tuple. </p>
-<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="structlic_1_1_component_container.html" title="A container class for storing selected entities and iterating through their components.">ComponentContainer</a> object that contains all selected entities </dd></dl>
-
-</div>
-</div>
-<a id="a39084ebe66ece9c0f4333b9f0ab47257" name="a39084ebe66ece9c0f4333b9f0ab47257"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39084ebe66ece9c0f4333b9f0ab47257">&#9670;&nbsp;</a></span>EntitiesAndComponents() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a39084ebe66ece9c0f4333b9f0ab47257">&#9670;&nbsp;</a></span>EntitiesAndComponents() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -494,39 +305,7 @@ template&lt;typename... TComps&gt; </div>
 </div>
 </div>
 <a id="aef5a1ecd4aebdf130eb4dcc04fe01add" name="aef5a1ecd4aebdf130eb4dcc04fe01add"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef5a1ecd4aebdf130eb4dcc04fe01add">&#9670;&nbsp;</a></span>EntitiesAndOnlyComponents() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<div class="memtemplate">
-template&lt;typename... TOnlyComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; true, TOnlyComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::EntitiesAndOnlyComponents </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a container that allows iterating through every selected entities and their components of types TOnlyComps bundled in a tuple. </p>
-<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="structlic_1_1_component_container.html" title="A container class for storing selected entities and iterating through their components.">ComponentContainer</a> object that contains all selected entities </dd></dl>
-
-</div>
-</div>
-<a id="aef5a1ecd4aebdf130eb4dcc04fe01add" name="aef5a1ecd4aebdf130eb4dcc04fe01add"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef5a1ecd4aebdf130eb4dcc04fe01add">&#9670;&nbsp;</a></span>EntitiesAndOnlyComponents() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aef5a1ecd4aebdf130eb4dcc04fe01add">&#9670;&nbsp;</a></span>EntitiesAndOnlyComponents() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -558,39 +337,7 @@ template&lt;typename... TOnlyComps&gt; </div>
 </div>
 </div>
 <a id="ad474f71ac7d8042fd671624da5acc821" name="ad474f71ac7d8042fd671624da5acc821"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad474f71ac7d8042fd671624da5acc821">&#9670;&nbsp;</a></span>EntitiesAndOnlyComponents() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<div class="memtemplate">
-template&lt;typename... TOnlyComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; true, TOnlyComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::EntitiesAndOnlyComponents </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a container that allows iterating through every selected entities and their components of types TOnlyComps bundled in a tuple. </p>
-<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="structlic_1_1_component_container.html" title="A container class for storing selected entities and iterating through their components.">ComponentContainer</a> object that contains all selected entities </dd></dl>
-
-</div>
-</div>
-<a id="ad474f71ac7d8042fd671624da5acc821" name="ad474f71ac7d8042fd671624da5acc821"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad474f71ac7d8042fd671624da5acc821">&#9670;&nbsp;</a></span>EntitiesAndOnlyComponents() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad474f71ac7d8042fd671624da5acc821">&#9670;&nbsp;</a></span>EntitiesAndOnlyComponents() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -622,39 +369,7 @@ template&lt;typename... TOnlyComps&gt; </div>
 </div>
 </div>
 <a id="ac17ecc3a6b2cdd4eafbb3689c75789dd" name="ac17ecc3a6b2cdd4eafbb3689c75789dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac17ecc3a6b2cdd4eafbb3689c75789dd">&#9670;&nbsp;</a></span>OnlyComponents() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<div class="memtemplate">
-template&lt;typename... TOnlyComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; false, TOnlyComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::OnlyComponents </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a container that allows iterating through every selected entities' components of types TOnlyComps bundled in a tuple. </p>
-<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="structlic_1_1_component_container.html" title="A container class for storing selected entities and iterating through their components.">ComponentContainer</a> object that contains all selected entities </dd></dl>
-
-</div>
-</div>
-<a id="ac17ecc3a6b2cdd4eafbb3689c75789dd" name="ac17ecc3a6b2cdd4eafbb3689c75789dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac17ecc3a6b2cdd4eafbb3689c75789dd">&#9670;&nbsp;</a></span>OnlyComponents() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac17ecc3a6b2cdd4eafbb3689c75789dd">&#9670;&nbsp;</a></span>OnlyComponents() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -686,39 +401,7 @@ template&lt;typename... TOnlyComps&gt; </div>
 </div>
 </div>
 <a id="a39b30166b9de5078a9a26e5b176bcf73" name="a39b30166b9de5078a9a26e5b176bcf73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39b30166b9de5078a9a26e5b176bcf73">&#9670;&nbsp;</a></span>OnlyComponents() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<div class="memtemplate">
-template&lt;typename... TOnlyComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structlic_1_1_component_container.html">ComponentContainer</a>&lt; false, TOnlyComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::OnlyComponents </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a container that allows iterating through every selected entities' components of types TOnlyComps bundled in a tuple. </p>
-<dl class="section return"><dt>Returns</dt><dd>an <a class="el" href="structlic_1_1_component_container.html" title="A container class for storing selected entities and iterating through their components.">ComponentContainer</a> object that contains all selected entities </dd></dl>
-
-</div>
-</div>
-<a id="a39b30166b9de5078a9a26e5b176bcf73" name="a39b30166b9de5078a9a26e5b176bcf73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39b30166b9de5078a9a26e5b176bcf73">&#9670;&nbsp;</a></span>OnlyComponents() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a39b30166b9de5078a9a26e5b176bcf73">&#9670;&nbsp;</a></span>OnlyComponents() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -750,45 +433,7 @@ template&lt;typename... TOnlyComps&gt; </div>
 </div>
 </div>
 <a id="a4e3b245c0553abe24b9ce3722ebff443" name="a4e3b245c0553abe24b9ce3722ebff443"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e3b245c0553abe24b9ce3722ebff443">&#9670;&nbsp;</a></span>Select() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<div class="memtemplate">
-template&lt;typename... TSelectComps&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structlic_1_1_range.html">Range</a>&lt; TComps..., TSelectComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::Select </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Further select entities with certain components. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">TSelectComps</td><td>types of the components to be selected </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structlic_1_1_range.html" title="A class for selecting entities by their components.">Range</a> of entities with selected components </dd></dl>
-
-</div>
-</div>
-<a id="a4e3b245c0553abe24b9ce3722ebff443" name="a4e3b245c0553abe24b9ce3722ebff443"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e3b245c0553abe24b9ce3722ebff443">&#9670;&nbsp;</a></span>Select() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e3b245c0553abe24b9ce3722ebff443">&#9670;&nbsp;</a></span>Select()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -826,46 +471,7 @@ template&lt;typename... TSelectComps&gt; </div>
 </div>
 </div>
 <a id="ad7286e6ba51b1b598fab07c5ce059dbc" name="ad7286e6ba51b1b598fab07c5ce059dbc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7286e6ba51b1b598fab07c5ce059dbc">&#9670;&nbsp;</a></span>Where() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... TComps&gt; </div>
-<div class="memtemplate">
-template&lt;std::predicate&lt; <a class="el" href="structlic_1_1_entity.html">Entity</a>, TComps... &gt; TPred&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structlic_1_1_range.html">Range</a>&lt; TComps... &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::Where </td>
-          <td>(</td>
-          <td class="paramtype">TPred&#160;</td>
-          <td class="paramname"><em>predicate</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Apply a function to selected entities' components, to which only entities with components that fufill the condition in the function are further selected. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">predicate</td><td>a function that takes all selected entity and components as parameter and returns a boolean value indicating whether the entity will be further selected </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structlic_1_1_range.html" title="A class for selecting entities by their components.">Range</a> of entities with selected components </dd></dl>
-
-</div>
-</div>
-<a id="ad7286e6ba51b1b598fab07c5ce059dbc" name="ad7286e6ba51b1b598fab07c5ce059dbc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7286e6ba51b1b598fab07c5ce059dbc">&#9670;&nbsp;</a></span>Where() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7286e6ba51b1b598fab07c5ce059dbc">&#9670;&nbsp;</a></span>Where()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -904,8 +510,8 @@ template&lt;std::predicate&lt; <a class="el" href="structlic_1_1_entity.html">En
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a96318474e4330df54e098120d8c07b13" name="a96318474e4330df54e098120d8c07b13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96318474e4330df54e098120d8c07b13">&#9670;&nbsp;</a></span>entities</h2>
+<a id="acb90882e01b2a68320a9cc77d6ffa245" name="acb90882e01b2a68320a9cc77d6ffa245"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb90882e01b2a68320a9cc77d6ffa245">&#9670;&nbsp;</a></span>entities</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -913,16 +519,15 @@ template&lt;std::predicate&lt; <a class="el" href="structlic_1_1_entity.html">En
 template&lt;typename... TComps&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt; <a class="el" href="classlic.html#a2f27720849dc6c97190fa676b139133d">EntityID</a> &gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::entities</td>
+          <td class="memname">std::vector&lt;<a class="el" href="classlic.html#a2f27720849dc6c97190fa676b139133d">EntityID</a>&gt; <a class="el" href="structlic_1_1_range.html">lic::Range</a>&lt; TComps &gt;::entities</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<hr/>The documentation for this struct was generated from the following files:<ul>
-<li>C:/SuperEGG/Codes/Others/PersonalUtils/code architectures/LIC/header only/<a class="el" href="header_01only_2lic_8hpp_source.html">lic.hpp</a></li>
-<li>C:/SuperEGG/Codes/Others/PersonalUtils/code architectures/LIC/src and header/<a class="el" href="src_01and_01header_2lic_8hpp_source.html">lic.hpp</a></li>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>C:/SuperEGG/Codes/Others/PersonalUtils/code architectures/LIC/<a class="el" href="lic_8hpp_source.html">lic.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

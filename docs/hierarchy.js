@@ -30,24 +30,19 @@ var hierarchy =
     [ "lecs::System", "classlecs_1_1_system.html", null ],
     [ "lecs::SystemManager", "classlecs_1_1_system_manager.html", null ],
     [ "TComp", null, [
-      [ "lic::Component< TComp >", "structlic_1_1_component.html", null ],
       [ "lic::Component< TComp >", "structlic_1_1_component.html", null ]
     ] ],
     [ "lio::ThreadPool< ThreadCount >", "classlio_1_1_thread_pool.html", null ],
     [ "lio::Vec2< T >", "structlio_1_1_vec2.html", null ],
     [ "lio::Vec3< T >", "structlio_1_1_vec3.html", null ],
     [ "VecIterator", null, [
-      [ "lic::EntityContainer::Iterator", "structlic_1_1_entity_container_1_1_iterator.html", null ],
       [ "lic::EntityContainer::Iterator", "structlic_1_1_entity_container_1_1_iterator.html", null ]
     ] ],
     [ "std::vector", null, [
       [ "lic::ComponentContainer< IncludeEntities, TComps >", "structlic_1_1_component_container.html", null ],
-      [ "lic::ComponentContainer< IncludeEntities, TComps >", "structlic_1_1_component_container.html", null ],
-      [ "lic::EntityContainer", "structlic_1_1_entity_container.html", null ],
       [ "lic::EntityContainer", "structlic_1_1_entity_container.html", null ]
     ] ],
     [ "lic::ComponentContainer< IncludeEntities, TComps >::TBackingIter", null, [
-      [ "lic::ComponentContainer< IncludeEntities, TComps >::BaseIterator< TBackingIter >", "structlic_1_1_component_container_1_1_base_iterator.html", null ],
       [ "lic::ComponentContainer< IncludeEntities, TComps >::BaseIterator< TBackingIter >", "structlic_1_1_component_container_1_1_base_iterator.html", null ]
     ] ]
 ];

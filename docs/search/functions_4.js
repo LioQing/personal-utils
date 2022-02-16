@@ -1,7 +1,7 @@
 var searchData=
 [
   ['destroy_0',['Destroy',['../classlecs_1_1_entity.html#a23560f56363fa29caa7d3ed018972109',1,'lecs::Entity']]],
-  ['destroyentity_1',['DestroyEntity',['../classlic.html#a88d89fb35413af2e366899b90f1f182e',1,'lic::DestroyEntity(EntityID eid)'],['../classlic.html#a3505959b58f775db0cfbc1e466badad4',1,'lic::DestroyEntity(EntityID eid)']]],
+  ['destroyentity_1',['DestroyEntity',['../classlic.html#a88d89fb35413af2e366899b90f1f182e',1,'lic']]],
   ['determinant_2',['Determinant',['../structlio_1_1_mat.html#aafe3647fc75f58453cc815d2d8d72c2b',1,'lio::Mat::Determinant(const Mat &amp;m)'],['../structlio_1_1_mat.html#ab74030a2c47609c0206c1a73af215aa4',1,'lio::Mat::Determinant() const']]],
   ['display_3',['Display',['../classlio_1_1_l_console_screen.html#a7fadf707f4d490874883343b496f2fa4',1,'lio::LConsoleScreen']]],
   ['distance_4',['Distance',['../structlio_1_1_vec2.html#a3a969c845520a36f54a708fdcc6e7f61',1,'lio::Vec2::Distance(const Vec2 &amp;v1, const Vec2&lt; U &gt; &amp;v2)'],['../structlio_1_1_vec2.html#a48e1f5d3223624ca59b967b2cf19e6c1',1,'lio::Vec2::Distance(const Vec2&lt; U &gt; &amp;v) const'],['../structlio_1_1_vec3.html#a0ba6e60ac0d135878750d925359f0761',1,'lio::Vec3::Distance(const Vec3 &amp;v1, const Vec3&lt; U &gt; &amp;v2)'],['../structlio_1_1_vec3.html#a6e62413c03a0ea6f1d40bb30666705b8',1,'lio::Vec3::Distance(const Vec3&lt; U &gt; &amp;v) const'],['../namespacelio_1_1_vec.html#ab5dc5fefcecc1445e732989f5d974022',1,'lio::Vec::Distance()']]],
