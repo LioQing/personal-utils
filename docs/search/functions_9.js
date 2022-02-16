@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['identity_0',['Identity',['../structlio_1_1_mat.html#a79959c5bb7ee8284b3e51d0991c36ed4',1,'lio::Mat::Identity(size_t size)'],['../structlio_1_1_mat.html#a1814c00907b2268e8e67b5b2afd79f46',1,'lio::Mat::Identity() const']]],
+  ['identity_0',['Identity',['../structlio_1_1_mat.html#a1814c00907b2268e8e67b5b2afd79f46',1,'lio::Mat::Identity() const'],['../structlio_1_1_mat.html#a79959c5bb7ee8284b3e51d0991c36ed4',1,'lio::Mat::Identity(size_t size)']]],
   ['immediatedestroy_1',['ImmediateDestroy',['../classlecs_1_1_entity_manager.html#ae6515fd875608a7564a3982f2af04be6',1,'lecs::EntityManager']]],
   ['init_2',['Init',['../classlecs_1_1_system.html#abc6c416dc442248c6cc94cad3e5a0dd9',1,'lecs::System::Init()'],['../classlio_1_1_l_console_screen.html#ad401b854e33b5b872ebf4f8bef78071c',1,'lio::LConsoleScreen::Init()'],['../classlio_1_1_t_console_screen.html#a3510b73cd924589a997f232f07c84a22',1,'lio::TConsoleScreen::Init()'],['../namespacelio_1_1_a_n_s_i_escaper.html#abea3bcfbb7d07c79eab23269784a0f26',1,'lio::ANSIEscaper::Init()']]],
   ['intersect_3',['Intersect',['../classlio_1_1_line_seg.html#a1be0a72ad04161f04b85e9e91bbcd802',1,'lio::LineSeg']]],

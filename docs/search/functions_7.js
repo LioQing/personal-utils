@@ -18,7 +18,7 @@ var searchData=
   ['getgroup_15',['GetGroup',['../classlecs_1_1_entity_manager.html#aad4b20583ae398f80c51b852acef57ad',1,'lecs::EntityManager']]],
   ['getifhascomponentelse_16',['GetIfHasComponentElse',['../structlic_1_1_entity.html#a300875d7a625edd82f4777423dce81eb',1,'lic::Entity']]],
   ['getifhascomponentelsedefault_17',['GetIfHasComponentElseDefault',['../structlic_1_1_entity.html#adf2a67e3ade006dd6675d8720548e709',1,'lic::Entity::GetIfHasComponentElseDefault() const'],['../structlic_1_1_entity.html#adf2a67e3ade006dd6675d8720548e709',1,'lic::Entity::GetIfHasComponentElseDefault() const']]],
-  ['getlog_18',['GetLog',['../classlecs_1_1_logger.html#a54c1bb4d241b4132fb3dce32a91ccaf8',1,'lecs::Logger::GetLog()'],['../classlecs_1_1_logger.html#ab3d16e9bc1520cfd88f94f92e2dbbd8b',1,'lecs::Logger::GetLog(LogTag tag)']]],
+  ['getlog_18',['GetLog',['../classlecs_1_1_logger.html#ab3d16e9bc1520cfd88f94f92e2dbbd8b',1,'lecs::Logger::GetLog(LogTag tag)'],['../classlecs_1_1_logger.html#a54c1bb4d241b4132fb3dce32a91ccaf8',1,'lecs::Logger::GetLog()']]],
   ['getlogs_19',['GetLogs',['../classlecs_1_1_logger.html#aad93f67f37e7c2e4990e41a1ffd6eab6',1,'lecs::Logger']]],
   ['getparent_20',['GetParent',['../classlio_1_1_a_star_pathfinder_1_1_node.html#a66cb565f661ad9df5fdff3bd45adddfe',1,'lio::AStarPathfinder::Node']]],
   ['getpos_21',['GetPos',['../classlio_1_1_a_star_pathfinder_1_1_node.html#ad5082c288d5142c7784dded13a6b72d1',1,'lio::AStarPathfinder::Node']]],

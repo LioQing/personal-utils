@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"namespacelio.html#a3a9ec8eeaa7e070401af3b9f76d5dfb9":[1,0,4,104],
 "namespacelio.html#a3add2f36d17c379ed589394eaf12804e":[1,0,4,21],
 "namespacelio.html#a3b26ba27d821f6d66ba0c4d49776c8e6":[1,0,4,119],
 "namespacelio.html#a3c3418499df6e5e852ca67ea162244d5":[1,0,4,100],
@@ -248,6 +249,5 @@ var NAVTREEINDEX5 =
 "struct___string.html#aef7c2a0dfef215f4991e9e22ba912da5":[2,0,5,17],
 "struct___string.html#af379b20614d14a631a6c41c164a18886":[2,0,5,7],
 "struct___string.html#af92c9dfe8757300e55e46fcefc1e6274":[2,0,5,1],
-"struct___string_iterator.html":[2,0,6],
-"struct___string_iterator.html#a03caf59f9d274875b8fb5d9ec697596a":[2,0,6,0]
+"struct___string_iterator.html":[2,0,6]
 };
