@@ -49,3 +49,4 @@ File | Description | Language Standard/Version | Dependencies | Namespace/Class
 [PortableSystemFunctions.h](tools/PortableSystemFunctions.h) | Cross-platform system functions | C++17 / C17 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) / [unistd.h](https://en.wikipedia.org/wiki/Unistd.h) | N/A
 [mem_usage](tools/mem_usage) | To track and print out heap memory informations in console | C++14 | N/A | lio
 [ImGui-SFML.NET](tools/ImGui-SFML.NET) | Use Dear ImGui</span>.NET with SFML</span>.NET | C# 9.0, .NET 5.0 | [SFML.NET 2.5.0](https://www.sfml-dev.org/download/sfml.net/), [ImGui.NET 1.78.0](https://github.com/mellinoe/ImGui.NET) | ImGuiNET.ImGuiSFML
+[CustomFloat](tools/CustomFloat.cs) | Floating point number class that allows custom specification. | C# 9.0 | N/A | lio 
