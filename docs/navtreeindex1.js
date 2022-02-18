@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a4ee813c2b78593978b2bc62082f857b1":[3,0,4,3,3,2,16],
 "_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a50e47498118c75cce2da096af38236a6":[3,0,4,3,3,2,10],
 "_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a548cff5bbae82f6a426411f361f4339a":[3,0,4,3,3,2,23],
 "_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a579ea70d6098ded42015a508683cda50":[3,0,4,3,3,2,0],
@@ -107,11 +108,11 @@ var NAVTREEINDEX1 =
 "_pipe_8hpp.html":[3,0,1,3],
 "_pipe_8hpp.html#ab7666465d74904472b27cc328d27ea9d":[3,0,1,3,1],
 "_pipe_8hpp_source.html":[3,0,1,3],
-"_portable_system_functions_8h.html":[3,0,4,5],
-"_portable_system_functions_8h.html#a5f516c6db008e2e8899c9ff2b1ac64d3":[3,0,4,5,2],
-"_portable_system_functions_8h.html#ad92abec4cc1c191f91259b4a2f214640":[3,0,4,5,1],
-"_portable_system_functions_8h.html#af4bb3f724206b7b7ab547e2a02132a25":[3,0,4,5,0],
-"_portable_system_functions_8h_source.html":[3,0,4,5],
+"_portable_system_functions_8h.html":[3,0,4,6],
+"_portable_system_functions_8h.html#a5f516c6db008e2e8899c9ff2b1ac64d3":[3,0,4,6,2],
+"_portable_system_functions_8h.html#ad92abec4cc1c191f91259b4a2f214640":[3,0,4,6,1],
+"_portable_system_functions_8h.html#af4bb3f724206b7b7ab547e2a02132a25":[3,0,4,6,0],
+"_portable_system_functions_8h_source.html":[3,0,4,6],
 "_random_move_cube_scramble_8cpp.html":[3,0,0,1],
 "_random_move_cube_scramble_8cpp.html#a185ac50f5a707b0460efcd72a15d82dd":[3,0,0,1,1],
 "_random_move_cube_scramble_8cpp.html#a4331fbdf8fe5e706f7081487c9bf74ed":[3,0,0,1,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "_string_iterator_8h.html#a5e6409f174bed5ad2c096427f48a4dcf":[3,0,2,0,5,13],
 "_string_iterator_8h.html#a7042fe8d1c411d107e168ca5abbd236c":[3,0,2,0,5,2],
 "_string_iterator_8h.html#a74961d38f288e727c248bcdf67ff2ec0":[3,0,2,0,5,15],
-"_string_iterator_8h.html#a82090f649922f56c9e028b53a4ae0eba":[3,0,2,0,5,16],
-"_string_iterator_8h.html#a8580ddc2d2ab745145c194dfcd9bf890":[3,0,2,0,5,5]
+"_string_iterator_8h.html#a82090f649922f56c9e028b53a4ae0eba":[3,0,2,0,5,16]
 };

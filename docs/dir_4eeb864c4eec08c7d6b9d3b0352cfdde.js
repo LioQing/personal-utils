@@ -5,5 +5,8 @@ var dir_4eeb864c4eec08c7d6b9d3b0352cfdde =
     [ "ImGui-SFML.NET", "dir_aac144ee26ac3935ce379df4460fc1b5.html", "dir_aac144ee26ac3935ce379df4460fc1b5" ],
     [ "LConsoleScreen", "dir_6f44b3639bfa94ba73831c3ae783470c.html", "dir_6f44b3639bfa94ba73831c3ae783470c" ],
     [ "mem_usage", "dir_baf7a9cace2e1ac57bbd9f1906a81e8c.html", "dir_baf7a9cace2e1ac57bbd9f1906a81e8c" ],
+    [ "CustomFloat.cs", "_custom_float_8cs.html", [
+      [ "lio.CustomFloat", "classlio_1_1_custom_float.html", "classlio_1_1_custom_float" ]
+    ] ],
     [ "PortableSystemFunctions.h", "_portable_system_functions_8h.html", "_portable_system_functions_8h" ]
 ];

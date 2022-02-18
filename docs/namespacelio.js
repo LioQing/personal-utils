@@ -108,6 +108,7 @@ var namespacelio =
     ] ],
     [ "AStarPathfinder", "classlio_1_1_a_star_pathfinder.html", "classlio_1_1_a_star_pathfinder" ],
     [ "CSVReader", "classlio_1_1_c_s_v_reader.html", "classlio_1_1_c_s_v_reader" ],
+    [ "CustomFloat", "classlio_1_1_custom_float.html", "classlio_1_1_custom_float" ],
     [ "LConsoleScreen", "classlio_1_1_l_console_screen.html", "classlio_1_1_l_console_screen" ],
     [ "LineSeg", "classlio_1_1_line_seg.html", "classlio_1_1_line_seg" ],
     [ "Mat", "structlio_1_1_mat.html", "structlio_1_1_mat" ],

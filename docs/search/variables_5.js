@@ -8,5 +8,6 @@ var searchData=
   ['entity_5fmanager_5',['entity_manager',['../classlecs_1_1_e_c_s_managers.html#af069b29fcc919e87a00e9bdf848389e0',1,'lecs::ECSManagers']]],
   ['erase_6',['erase',['../struct___string.html#a77934b30739ed25859e62054e956e489',1,'_String']]],
   ['event_5fmanager_7',['event_manager',['../classlecs_1_1_e_c_s_managers.html#a445149adcddf062ede70d243a6fe7213',1,'lecs::ECSManagers']]],
-  ['events_8',['events',['../classlecs_1_1_event_manager.html#afd211948c05eef6271aef15d36a395c6',1,'lecs::EventManager']]]
+  ['events_8',['events',['../classlecs_1_1_event_manager.html#afd211948c05eef6271aef15d36a395c6',1,'lecs::EventManager']]],
+  ['exponentsize_9',['ExponentSize',['../classlio_1_1_custom_float.html#a1b6c71ed62fe4404c5080226e7dde37c',1,'lio::CustomFloat']]]
 ];

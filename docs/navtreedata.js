@@ -48,6 +48,7 @@ var NAVTREE =
         [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ],
         [ "Enumerator", "functions_eval.html", null ],
+        [ "Properties", "functions_prop.html", null ],
         [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -69,13 +70,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_a_n_s_i_escaper_8c.html",
-"_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a50e47498118c75cce2da096af38236a6",
-"_string_iterator_8h.html#a86ccfd529156b9cfc4dadf9b824e690f",
+"_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a4ee813c2b78593978b2bc62082f857b1",
+"_string_iterator_8h.html#a8580ddc2d2ab745145c194dfcd9bf890",
 "classlecs_1_1_logger.html#abb8ddb4f365d156d941598100d5f667c",
-"classlio_1_1_line_seg.html#a2dbb8d4e482c75a287b93b16aa760203",
-"namespacelio.html#a3a9ec8eeaa7e070401af3b9f76d5dfb9",
-"struct___string_iterator.html#a03caf59f9d274875b8fb5d9ec697596a",
-"structlio_1_1_vec3.html#a7873652dbed5d4d3514092a5a4c5b8f4"
+"classlio_1_1_l_console_screen.html#ace28d776616e44b718ddf0aa6e9abbc3",
+"namespacelio.html#a0e949b8d704a7face263a7cfc794fe71",
+"struct___string.html#a0a400f5b8f3824a566b0357cd5959d34",
+"structlio_1_1_vec3.html#a1615de336444beaf1cc216a234ccc593"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

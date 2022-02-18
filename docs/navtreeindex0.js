@@ -194,6 +194,7 @@ var NAVTREEINDEX0 =
 "_c_s_v_reader_8cpp.html":[3,0,4,1,0],
 "_c_s_v_reader_8hpp.html":[3,0,4,1,1],
 "_c_s_v_reader_8hpp_source.html":[3,0,4,1,1],
+"_custom_float_8cs.html":[3,0,4,5],
 "_exmaple_8cs.html":[3,0,4,2,0],
 "_im_gui_s_f_m_l_8cs.html":[3,0,4,2,1],
 "_iterator_8h.html":[3,0,2,0,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a1344e9325b38af0e3b276c7ee73806ab":[3,0,4,3,3,2,7],
 "_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a1c77fc161737cf6b0a33b3d494ee2aa2":[3,0,4,3,3,2,21],
 "_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a2762ad7609cf4ba60ee0ff5b032326e0":[3,0,4,3,3,2,3],
-"_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a4039a4db4bee171926bc20762d0b426a":[3,0,4,3,3,2,29],
-"_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a4ee813c2b78593978b2bc62082f857b1":[3,0,4,3,3,2,16]
+"_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a4039a4db4bee171926bc20762d0b426a":[3,0,4,3,3,2,29]
 };

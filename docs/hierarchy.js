@@ -6,6 +6,7 @@ var hierarchy =
     [ "lio::AStarPathfinder< T, U >", "classlio_1_1_a_star_pathfinder.html", null ],
     [ "lecs::Component", "classlecs_1_1_component.html", null ],
     [ "lio::CSVReader", "classlio_1_1_c_s_v_reader.html", null ],
+    [ "lio.CustomFloat", "classlio_1_1_custom_float.html", null ],
     [ "lecs::ECSManagers", "classlecs_1_1_e_c_s_managers.html", null ],
     [ "lecs::Entity", "classlecs_1_1_entity.html", null ],
     [ "lic::Entity", "structlic_1_1_entity.html", null ],
