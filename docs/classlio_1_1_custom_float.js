@@ -2,7 +2,8 @@ var classlio_1_1_custom_float =
 [
     [ "CustomFloat", "classlio_1_1_custom_float.html#a599bc8677a71907719ba7408a97dba4f", null ],
     [ "CustomFloat", "classlio_1_1_custom_float.html#aecb19945962c57d55b27b7920c724038", null ],
-    [ "SetValue", "classlio_1_1_custom_float.html#a11ad6750571ec616911075c33f25dab0", null ],
+    [ "SetValue", "classlio_1_1_custom_float.html#a413839890b83172a2ecec074885f536d", null ],
+    [ "SetValue< T >", "classlio_1_1_custom_float.html#a5d6d942090d6fddf1ec184225ea5a3b0", null ],
     [ "ToBitString", "classlio_1_1_custom_float.html#a26856ddfff1c6a8b4395ee29097d86b0", null ],
     [ "Bias", "classlio_1_1_custom_float.html#a67a0b1620d5ce06fae9c3dcabb04cb09", null ],
     [ "ExponentSize", "classlio_1_1_custom_float.html#a1b6c71ed62fe4404c5080226e7dde37c", null ],

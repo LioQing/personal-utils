@@ -1,8 +1,8 @@
 var searchData=
 [
   ['dark_5fgray_0',['DARK_GRAY',['../namespacelio_1_1_a_n_s_i_escaper.html#ae9663df0f526d9467121b28dad44e7f0af4a6cd454ab028e356e98b95d1df80e7',1,'lio::ANSIEscaper::DARK_GRAY()'],['../_a_n_s_i_escaper_8h.html#a3d63713f6de49b53e3fd3a3a141621e3a656c37aed4a972689007d4c9ce88f425',1,'DARK_GRAY():&#160;ANSIEscaper.h']]],
-  ['data_1',['data',['../struct___string.html#a2bbba1339ae686abd811b6e40852b129',1,'_String']]],
-  ['data_2',['Data',['../classlio_1_1_custom_float.html#ae2ddbc19af42c3aef0bc36fd3b84fb27',1,'lio::CustomFloat']]],
+  ['data_1',['Data',['../classlio_1_1_custom_float.html#ae2ddbc19af42c3aef0bc36fd3b84fb27',1,'lio::CustomFloat']]],
+  ['data_2',['data',['../struct___string.html#a2bbba1339ae686abd811b6e40852b129',1,'_String']]],
   ['del_3',['DEL',['../namespacelio_1_1_a_n_s_i_escaper.html#abbd1c27ab7739ae2d78520c3c46b7f87a922bfc6e2b2cd7a13726c2b6bd5b7c88',1,'lio::ANSIEscaper::DEL()'],['../_a_n_s_i_escaper_8h.html#af31477bc48f67856bedb0fa8e5b5281da11563127ec3be864b514a1784c5d37a6',1,'DEL():&#160;ANSIEscaper.h']]],
   ['delete_4',['delete',['../_vector_8h.html#a86ccfd529156b9cfc4dadf9b824e690f',1,'delete():&#160;Vector.h'],['../_string_iterator_8h.html#a86ccfd529156b9cfc4dadf9b824e690f',1,'delete():&#160;StringIterator.h'],['../_string_8h.html#a86ccfd529156b9cfc4dadf9b824e690f',1,'delete():&#160;String.h'],['../_vector_iterator_8h.html#a86ccfd529156b9cfc4dadf9b824e690f',1,'delete():&#160;VectorIterator.h'],['../struct___string.html#a99e601fe13d3152970ea4147e293b6da',1,'_String::delete()'],['../struct___string_iterator.html#a4003c178e97cd853b630cd33ffece6b1',1,'_StringIterator::delete()']]],
   ['deltatime_5',['DeltaTime',['../lecs_8hpp.html#a22d044706f54f42d019c3409ad1596f2',1,'lecs.hpp']]],

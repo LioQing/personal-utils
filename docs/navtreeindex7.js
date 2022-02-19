@@ -1,5 +1,7 @@
 var NAVTREEINDEX7 =
 {
+"structlio_1_1_vec3.html":[2,0,3,10],
+"structlio_1_1_vec3.html#a1615de336444beaf1cc216a234ccc593":[2,0,3,10,5],
 "structlio_1_1_vec3.html#a1615de336444beaf1cc216a234ccc593":[1,0,4,12,5],
 "structlio_1_1_vec3.html#a25858a4da375ce4a97a36d94b5b29eff":[1,0,4,12,2],
 "structlio_1_1_vec3.html#a25858a4da375ce4a97a36d94b5b29eff":[2,0,3,10,2],

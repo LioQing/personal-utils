@@ -1,5 +1,7 @@
 var NAVTREEINDEX6 =
 {
+"struct___string.html":[2,0,5],
+"struct___string.html#a033bcd62a8ada65f72bc9ec2a2d1f2e0":[2,0,5,16],
 "struct___string.html#a0a400f5b8f3824a566b0357cd5959d34":[2,0,5,5],
 "struct___string.html#a0aa714a8a723fa5a83bd961a42afaf01":[2,0,5,14],
 "struct___string.html#a126b6d2697915f1f9ea5beb47876b3fb":[2,0,5,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX6 =
 "structlio_1_1_vec2.html#aed01708519eca63e602a6fce9174fa91":[2,0,3,9,2],
 "structlio_1_1_vec2.html#af4163eb1d38c2e46475ff69a0fc3e4cc":[1,0,4,11,4],
 "structlio_1_1_vec2.html#af4163eb1d38c2e46475ff69a0fc3e4cc":[2,0,3,9,4],
-"structlio_1_1_vec3.html":[1,0,4,12],
-"structlio_1_1_vec3.html":[2,0,3,10],
-"structlio_1_1_vec3.html#a1615de336444beaf1cc216a234ccc593":[2,0,3,10,5]
+"structlio_1_1_vec3.html":[1,0,4,12]
 };
