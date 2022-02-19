@@ -9,25 +9,25 @@ namespace lio
 {
     class CustomFloat
     {
-        public readonly int ExponentSize;
-        public readonly int SignificandSize;
-        public readonly long Bias;
+        public int ExponentSize{ get; private set; }
+        public int SignificandSize{ get; private set; }
+        public long Bias{ get; private set; }
 
-        public int Size { get { return ExponentSize + SignificandSize + 1; } }
-        public static int ExponentPos { get { return 1; } }
-        public int SignificandPos { get { return ExponentPos + ExponentSize; } }
+        public int Size => ExponentSize + SignificandSize + 1;
+        public static int ExponentPos => 1;
+        public int SignificandPos => ExponentPos + ExponentSize;
 
-        public BitArray Data { get; set; }
+        public BitArray Data{ get; set; }
 
         public CustomFloat(int exponentSize, int significandSize, long bias)
         {
             ExponentSize = exponentSize;
             SignificandSize = significandSize;
             Bias = bias;
-            Data = new(Size);
+            Data = new BitArray(Size);
         }
 
-        public CustomFloat(int exponentSize, int significandSize) 
+        public CustomFloat(int exponentSize, int significandSize)
             : this(exponentSize, significandSize, (1 << (exponentSize - 1)) - 1)
         {
         }
@@ -104,28 +104,28 @@ namespace lio
             // save to Data
 
             var sig = integralBin.Concat(fractionalBin).ToArray();
-            for (int i = 0; i < SignificandSize; ++i)
+            for (var i = 0; i < SignificandSize; ++i)
             {
                 Data[SignificandPos + i] = sig[i + 1];
             }
 
             var exp = Convert.ToString(exponent, 2).PadLeft(ExponentSize, '0');
-            for (int i = 0; i < ExponentSize; ++i)
+            for (var i = 0; i < ExponentSize; ++i)
             {
                 Data[ExponentPos + i] = exp[i] == '1';
             }
         }
 
-        public string ToBitString(int group_by = 4)
+        public string ToBitString(int groupBy = 4)
         {
             var sb = new StringBuilder();
 
-            for (int i = 0; i < Data.Count; i++)
+            for (var i = 0; i < Data.Count; i++)
             {
-                if ((Data.Count - i) % group_by == 0 && i != 0)
+                if ((Data.Count - i) % groupBy == 0 && i != 0)
                     sb.Append(' ');
 
-                char c = Data[i] ? '1' : '0';
+                var c = Data[i] ? '1' : '0';
                 sb.Append(c);
             }
 
