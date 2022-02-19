@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Numerics;
 
 namespace lio
 {
@@ -16,7 +17,7 @@ namespace lio
         public static int ExponentPos { get { return 1; } }
         public int SignificandPos { get { return ExponentPos + ExponentSize; } }
 
-        public BitArray Data { get; private set; }
+        public BitArray Data { get; set; }
 
         public CustomFloat(int exponentSize, int significandSize, long bias)
         {
@@ -31,9 +32,9 @@ namespace lio
         {
         }
 
-        public void SetValue(decimal value)
+        public void SetValue<T>(T value)
         {
-            if (value == 0)
+            if ((dynamic)value == 0)
             {
                 Data.SetAll(false);
                 return;
@@ -41,17 +42,42 @@ namespace lio
 
             // parse
 
-            Data[0] = value < 0;
+            Data[0] = (dynamic)value < 0;
 
-            var integral = Convert.ToUInt64(Math.Abs(Math.Truncate(value)));
-            var fractional = Math.Abs(value) - integral;
+            var integral = (BigInteger)Math.Abs(Math.Truncate((dynamic)value));
+            var fractional = (double)Math.Abs((dynamic)value) - (double)integral;
 
+            ExtractValue(integral, fractional);
+        }
+
+        public void SetValue(string value)
+        {
+            Data[0] = value[0] == '-';
+
+            var dotPos = value.IndexOf('.');
+            if (dotPos == -1)
+                dotPos = value.Length;
+
+            var integral = BigInteger.Parse(value[Convert.ToInt32(Data[0])..dotPos]);
+            var fractional = double.Parse(value[dotPos..]);
+
+            if (integral == 0 && fractional == 0)
+            {
+                Data.SetAll(false);
+                return;
+            }
+
+            ExtractValue(integral, fractional);
+        }
+
+        private void ExtractValue(BigInteger integral, double fractional)
+        {
             // integral binary
             var integralBin = new List<bool>();
 
             while (integral > 0)
             {
-                integralBin.Add(Convert.ToBoolean(integral % 2));
+                integralBin.Add(integral % 2 == 1);
                 integral /= 2;
             }
 
@@ -83,7 +109,7 @@ namespace lio
                 Data[SignificandPos + i] = sig[i + 1];
             }
 
-            var exp = Convert.ToString(exponent, 2);
+            var exp = Convert.ToString(exponent, 2).PadLeft(ExponentSize, '0');
             for (int i = 0; i < ExponentSize; ++i)
             {
                 Data[ExponentPos + i] = exp[i] == '1';
