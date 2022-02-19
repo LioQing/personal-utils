@@ -21,7 +21,7 @@ var searchData=
   ['setvalue_18',['SetValue',['../classlio_1_1_custom_float.html#a413839890b83172a2ecec074885f536d',1,'lio::CustomFloat']]],
   ['setvalue_3c_20t_20_3e_19',['SetValue&lt; T &gt;',['../classlio_1_1_custom_float.html#a5d6d942090d6fddf1ec184225ea5a3b0',1,'lio::CustomFloat']]],
   ['significandpos_20',['SignificandPos',['../classlio_1_1_custom_float.html#ad53b62a821ad48100fa5e2c331a7c1fb',1,'lio::CustomFloat']]],
-  ['significandsize_21',['SignificandSize',['../classlio_1_1_custom_float.html#a686de2ad15f0160efae53b0cfc47220f',1,'lio::CustomFloat']]],
+  ['significandsize_21',['SignificandSize',['../classlio_1_1_custom_float.html#a99c26624682e6702246f10d766ff8640',1,'lio::CustomFloat']]],
   ['size_22',['size',['../struct___string.html#a4cfa1e14137769c08e7696aaa5631886',1,'_String']]],
   ['size_23',['Size',['../classlio_1_1_custom_float.html#ac110f5ae4d0a22ba164e6df94b8e4bc2',1,'lio::CustomFloat']]],
   ['sleep_24',['sleep',['../_portable_system_functions_8h.html#a5f516c6db008e2e8899c9ff2b1ac64d3',1,'PortableSystemFunctions.h']]],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['data_0',['Data',['../classlio_1_1_custom_float.html#ae2ddbc19af42c3aef0bc36fd3b84fb27',1,'lio::CustomFloat']]]
+  ['bias_0',['Bias',['../classlio_1_1_custom_float.html#a3e9b435d16219311f99155e07dd47591',1,'lio::CustomFloat']]]
 ];

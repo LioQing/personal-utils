@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['significandpos_0',['SignificandPos',['../classlio_1_1_custom_float.html#ad53b62a821ad48100fa5e2c331a7c1fb',1,'lio::CustomFloat']]],
-  ['size_1',['Size',['../classlio_1_1_custom_float.html#ac110f5ae4d0a22ba164e6df94b8e4bc2',1,'lio::CustomFloat']]]
+  ['exponentpos_0',['ExponentPos',['../classlio_1_1_custom_float.html#a5a01eed5c500f89280b4f77190217ab4',1,'lio::CustomFloat']]],
+  ['exponentsize_1',['ExponentSize',['../classlio_1_1_custom_float.html#ab244dee9d8e303822c89ee2efe3c0cff',1,'lio::CustomFloat']]]
 ];
