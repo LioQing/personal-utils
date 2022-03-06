@@ -3,7 +3,7 @@
 All my personal utilities, majority of the code is written myself, feel free to use.
 The column 'Language Standard/Version' just means the standard/version the code was developed and tested in.
 
-Documentation: [Not quite useful documentation](https://lioqing.github.io/PersonalUtils/)
+Documentation: [Not quite useful documentation](https://lioqing.github.io/personal-utils/)
 
 [Algorithms](algorithms)  
 [Code Architectures](code%20architectures)  
