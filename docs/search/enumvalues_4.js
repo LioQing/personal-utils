@@ -24,5 +24,6 @@ var searchData=
   ['fg_5fmagenta_21',['FG_MAGENTA',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119a777359bea18b87d6c06e8a767fcefda4',1,'lio::LConsoleScreen']]],
   ['fg_5fred_22',['FG_RED',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119ab1d7fb0d5d2ac2432afccaf5472d4708',1,'lio::LConsoleScreen']]],
   ['fg_5fwhite_23',['FG_WHITE',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119a75b947054ce1143197003414cf14b1de',1,'lio::LConsoleScreen']]],
-  ['fg_5fyellow_24',['FG_YELLOW',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119ad63035703c8079a51b0191e121a2797d',1,'lio::LConsoleScreen']]]
+  ['fg_5fyellow_24',['FG_YELLOW',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119ad63035703c8079a51b0191e121a2797d',1,'lio::LConsoleScreen']]],
+  ['foreground_25',['Foreground',['../namespacetman.html#a9e0ca7936b368a67b72b5ade6b98b53ba45bd1d5b32931106efbf1a82fe6a732f',1,'tman']]]
 ];
