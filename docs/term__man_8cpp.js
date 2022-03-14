@@ -1,7 +1,6 @@
 var term__man_8cpp =
 [
     [ "End", "term__man_8cpp.html#a5132303e3fd898759246ebc8440b45e6", null ],
-    [ "GetInputBuf", "term__man_8cpp.html#a4c0374bb440fd449ed52c70859d757c7", null ],
     [ "GetSize", "term__man_8cpp.html#a864c54bbfdabfcb8d49bbf4ef175529e", null ],
     [ "GetSizeX", "term__man_8cpp.html#aba799311cc3582e68b513d8747dc644b", null ],
     [ "GetSizeY", "term__man_8cpp.html#ad450b1140c4e4afa4963b71faeafa0c5", null ],

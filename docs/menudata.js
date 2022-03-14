@@ -155,7 +155,6 @@ var menudata={children:[
 {text:"l",url:"functions_eval.html#index_l"},
 {text:"p",url:"functions_eval.html#index_p"},
 {text:"r",url:"functions_eval.html#index_r"},
-{text:"s",url:"functions_eval.html#index_s"},
 {text:"t",url:"functions_eval.html#index_t"},
 {text:"u",url:"functions_eval.html#index_u"}]},
 {text:"Properties",url:"functions_prop.html"},
