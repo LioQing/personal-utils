@@ -32,6 +32,11 @@ var annotated_dup =
       [ "Vec2", "structlio_1_1_vec2.html", "structlio_1_1_vec2" ],
       [ "Vec3", "structlio_1_1_vec3.html", "structlio_1_1_vec3" ]
     ] ],
+    [ "tman", "namespacetman.html", [
+      [ "Event", "structtman_1_1_event.html", "structtman_1_1_event" ],
+      [ "InputEvent", "structtman_1_1_input_event.html", "structtman_1_1_input_event" ],
+      [ "SystemEvent", "structtman_1_1_system_event.html", "structtman_1_1_system_event" ]
+    ] ],
     [ "_CONSOLE_FONT_INFOEX", "struct___c_o_n_s_o_l_e___f_o_n_t___i_n_f_o_e_x.html", "struct___c_o_n_s_o_l_e___f_o_n_t___i_n_f_o_e_x" ],
     [ "_String", "struct___string.html", "struct___string" ],
     [ "_StringIterator", "struct___string_iterator.html", "struct___string_iterator" ],

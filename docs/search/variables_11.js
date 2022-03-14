@@ -7,6 +7,7 @@ var searchData=
   ['subscribed_4',['subscribed',['../classlecs_1_1_event_subscriber.html#a28f505eee7e8ec0b3717fe152e81baaf',1,'lecs::EventSubscriber']]],
   ['subscribers_5',['subscribers',['../classlecs_1_1_event.html#a9b96dd88b88ec02f30dc5074e5c06e1c',1,'lecs::Event']]],
   ['swap_6',['swap',['../struct___string.html#a759980a04bc93806706feb8e322a671e',1,'_String']]],
-  ['system_5fmanager_7',['system_manager',['../classlecs_1_1_e_c_s_managers.html#ada3e6fd6a21b8a2d5be778f5d9208fa6',1,'lecs::ECSManagers']]],
-  ['systems_8',['systems',['../classlecs_1_1_system_manager.html#a791a3ba916013b294a165770cd95b821',1,'lecs::SystemManager']]]
+  ['system_7',['system',['../structtman_1_1_event.html#a38fb0b9ab963d765b4085f28b383ead8',1,'tman::Event']]],
+  ['system_5fmanager_8',['system_manager',['../classlecs_1_1_e_c_s_managers.html#ada3e6fd6a21b8a2d5be778f5d9208fa6',1,'lecs::ECSManagers']]],
+  ['systems_9',['systems',['../classlecs_1_1_system_manager.html#a791a3ba916013b294a165770cd95b821',1,'lecs::SystemManager']]]
 ];

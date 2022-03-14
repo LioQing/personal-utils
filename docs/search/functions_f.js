@@ -11,13 +11,14 @@ var searchData=
   ['removelistener_8',['RemoveListener',['../classlev_1_1_event.html#a4b05fc28c99b6dfcedef552339317883',1,'lev::Event']]],
   ['replace_9',['Replace',['../structlio_1_1_mat.html#ad22340aa7e909b29fd3e751cc225b6c1',1,'lio::Mat']]],
   ['replaced_10',['Replaced',['../structlio_1_1_mat.html#af0a276b80ad6a148898ce4784dae8794',1,'lio::Mat::Replaced(const Mat&lt; U &gt; &amp;m, size_t row=0, size_t col=0) const'],['../structlio_1_1_mat.html#a123c0b95ea04efbc343070939f1b838e',1,'lio::Mat::Replaced(const Mat &amp;m_dest, const Mat&lt; S &gt; &amp;m_src, size_t row=0, size_t col=0)']]],
-  ['rightinverse_11',['RightInverse',['../structlio_1_1_mat.html#ad2d1d77c75f9fb42ba66875d906696c4',1,'lio::Mat::RightInverse(const Mat &amp;m)'],['../structlio_1_1_mat.html#a9e0f08707e3876e8d1ae559e4089e835',1,'lio::Mat::RightInverse() const']]],
-  ['rightinvert_12',['RightInvert',['../structlio_1_1_mat.html#a4daa67b7e86789f3114a876518fbfec5',1,'lio::Mat']]],
-  ['rotate_13',['Rotate',['../classlio_1_1_line_seg.html#adccfeb2475b1f7b5ba7a729cf2672e10',1,'lio::LineSeg::Rotate()'],['../structlio_1_1_vec2.html#aab6f89eb0f0e0cf249adf6677e82619f',1,'lio::Vec2::Rotate(U theta) &amp;']]],
-  ['rotated_14',['Rotated',['../structlio_1_1_vec2.html#ac240a252fbb7b7609fa19f81be1a9be2',1,'lio::Vec2::Rotated(U theta) const'],['../structlio_1_1_vec2.html#a8d5091459ec611cf60ba8a7463db937b',1,'lio::Vec2::Rotated(Vec2 v, U theta)'],['../classlio_1_1_line_seg.html#a7abda4a49089dded455018e7164479ea',1,'lio::LineSeg::Rotated()']]],
-  ['row_15',['Row',['../classlio_1_1_c_s_v_reader.html#aa8959563abf75691776ddfe2c63e9649',1,'lio::CSVReader']]],
-  ['rowadded_16',['RowAdded',['../structlio_1_1_mat.html#a972a48c68670d743822bbaf2d060b3a0',1,'lio::Mat::RowAdded(const Mat &amp;m, size_t r_dest, size_t r_src, U s)'],['../structlio_1_1_mat.html#adb5558f44914f6278dc4c79fb90f5d8f',1,'lio::Mat::RowAdded(size_t r_dest, size_t r_src, U s) const']]],
-  ['rowcount_17',['RowCount',['../structlio_1_1_mat.html#ab78bf545068306e39531eada98d182c1',1,'lio::Mat']]],
-  ['rowmultiplied_18',['RowMultiplied',['../structlio_1_1_mat.html#a5c6245747cf8585f6f8398f03a520f1c',1,'lio::Mat::RowMultiplied(const Mat &amp;m, size_t row, U s)'],['../structlio_1_1_mat.html#a1788d739a047034b57876ca0d5618b9a',1,'lio::Mat::RowMultiplied(size_t row, U s) const']]],
-  ['rowsswapped_19',['RowsSwapped',['../structlio_1_1_mat.html#a0dd3db09c958e5e5b2a63b2acafaa5d7',1,'lio::Mat::RowsSwapped(const Mat &amp;m, size_t r1, size_t r2)'],['../structlio_1_1_mat.html#a22127d4dfad136ba4c4a4c330bbe057d',1,'lio::Mat::RowsSwapped(size_t r1, size_t r2) const']]]
+  ['resetcolor_11',['ResetColor',['../namespacetman.html#ae2a39945ec140c7b36a58811b85ba314',1,'tman']]],
+  ['rightinverse_12',['RightInverse',['../structlio_1_1_mat.html#a9e0f08707e3876e8d1ae559e4089e835',1,'lio::Mat::RightInverse() const'],['../structlio_1_1_mat.html#ad2d1d77c75f9fb42ba66875d906696c4',1,'lio::Mat::RightInverse(const Mat &amp;m)']]],
+  ['rightinvert_13',['RightInvert',['../structlio_1_1_mat.html#a4daa67b7e86789f3114a876518fbfec5',1,'lio::Mat']]],
+  ['rotate_14',['Rotate',['../classlio_1_1_line_seg.html#adccfeb2475b1f7b5ba7a729cf2672e10',1,'lio::LineSeg::Rotate()'],['../structlio_1_1_vec2.html#aab6f89eb0f0e0cf249adf6677e82619f',1,'lio::Vec2::Rotate()']]],
+  ['rotated_15',['Rotated',['../classlio_1_1_line_seg.html#a7abda4a49089dded455018e7164479ea',1,'lio::LineSeg::Rotated()'],['../structlio_1_1_vec2.html#a8d5091459ec611cf60ba8a7463db937b',1,'lio::Vec2::Rotated(Vec2 v, U theta)'],['../structlio_1_1_vec2.html#ac240a252fbb7b7609fa19f81be1a9be2',1,'lio::Vec2::Rotated(U theta) const']]],
+  ['row_16',['Row',['../classlio_1_1_c_s_v_reader.html#aa8959563abf75691776ddfe2c63e9649',1,'lio::CSVReader']]],
+  ['rowadded_17',['RowAdded',['../structlio_1_1_mat.html#a972a48c68670d743822bbaf2d060b3a0',1,'lio::Mat::RowAdded(const Mat &amp;m, size_t r_dest, size_t r_src, U s)'],['../structlio_1_1_mat.html#adb5558f44914f6278dc4c79fb90f5d8f',1,'lio::Mat::RowAdded(size_t r_dest, size_t r_src, U s) const']]],
+  ['rowcount_18',['RowCount',['../structlio_1_1_mat.html#ab78bf545068306e39531eada98d182c1',1,'lio::Mat']]],
+  ['rowmultiplied_19',['RowMultiplied',['../structlio_1_1_mat.html#a5c6245747cf8585f6f8398f03a520f1c',1,'lio::Mat::RowMultiplied(const Mat &amp;m, size_t row, U s)'],['../structlio_1_1_mat.html#a1788d739a047034b57876ca0d5618b9a',1,'lio::Mat::RowMultiplied(size_t row, U s) const']]],
+  ['rowsswapped_20',['RowsSwapped',['../structlio_1_1_mat.html#a0dd3db09c958e5e5b2a63b2acafaa5d7',1,'lio::Mat::RowsSwapped(const Mat &amp;m, size_t r1, size_t r2)'],['../structlio_1_1_mat.html#a22127d4dfad136ba4c4a4c330bbe057d',1,'lio::Mat::RowsSwapped(size_t r1, size_t r2) const']]]
 ];

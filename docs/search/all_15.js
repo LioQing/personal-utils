@@ -9,7 +9,7 @@ var searchData=
   ['vec2i_6',['Vec2i',['../namespacelio.html#a2c3fa59e96ade55856dcc850cdac6d8d',1,'lio']]],
   ['vec2tomat_7',['Vec2ToMat',['../namespacelio.html#a74f27059b45229f442073a7073f7a076',1,'lio']]],
   ['vec2u_8',['Vec2u',['../namespacelio.html#a3add2f36d17c379ed589394eaf12804e',1,'lio']]],
-  ['vec3_9',['Vec3',['../structlio_1_1_vec3.html',1,'lio::Vec3&lt; T &gt;'],['../structlio_1_1_vec3.html#aea9be181c3764ce464ccc8b0d9892cfc',1,'lio::Vec3::Vec3()=default'],['../structlio_1_1_vec3.html#adde633ea39178373ac8a36111e2cea17',1,'lio::Vec3::Vec3(const Vec3 &amp;)=default'],['../structlio_1_1_vec3.html#a25858a4da375ce4a97a36d94b5b29eff',1,'lio::Vec3::Vec3(T x, T y, T z)']]],
+  ['vec3_9',['Vec3',['../structlio_1_1_vec3.html',1,'lio::Vec3&lt; T &gt;'],['../structlio_1_1_vec3.html#adde633ea39178373ac8a36111e2cea17',1,'lio::Vec3::Vec3(const Vec3 &amp;)=default'],['../structlio_1_1_vec3.html#aea9be181c3764ce464ccc8b0d9892cfc',1,'lio::Vec3::Vec3()=default'],['../structlio_1_1_vec3.html#a25858a4da375ce4a97a36d94b5b29eff',1,'lio::Vec3::Vec3(T x, T y, T z)']]],
   ['vec3_2ehpp_10',['Vec3.hpp',['../_vec3_8hpp.html',1,'']]],
   ['vec3d_11',['Vec3d',['../namespacelio.html#a54189d3d2ee22cdf2dafa23cf7ac4321',1,'lio']]],
   ['vec3f_12',['Vec3f',['../namespacelio.html#aaf2b790f3f5c43ed78d0d23f73ac6bc2',1,'lio']]],
@@ -29,6 +29,5 @@ var searchData=
   ['vectoriterator_5fdeclare_26',['VectorIterator_declare',['../_vector_iterator_8h.html#ae1b3ff2807c7799ebe9914240c188602',1,'VectorIterator.h']]],
   ['vectoriterator_5fdefine_27',['VectorIterator_define',['../_vector_iterator_8h.html#ae34652d66b41bbf9821746630cec93f0',1,'VectorIterator.h']]],
   ['vectoriterator_5fend_28',['VectorIterator_end',['../_vector_iterator_8h.html#ab861cad7c6fcf908836c295039981c83',1,'VectorIterator.h']]],
-  ['vectoriterator_5fnew_29',['VectorIterator_new',['../_vector_iterator_8h.html#a6532482668f4388b86c5dbc3e9a4a2fd',1,'VectorIterator.h']]],
-  ['vt_30',['VT',['../_a_n_s_i_escaper_8h.html#af31477bc48f67856bedb0fa8e5b5281dacc6eb75e245bf77075bf1abfaacbd16b',1,'VT():&#160;ANSIEscaper.h'],['../namespacelio_1_1_a_n_s_i_escaper.html#abbd1c27ab7739ae2d78520c3c46b7f87a36ee56c0e36d8a9a3ce417d836135f65',1,'lio::ANSIEscaper::VT()']]]
+  ['vectoriterator_5fnew_29',['VectorIterator_new',['../_vector_iterator_8h.html#a6532482668f4388b86c5dbc3e9a4a2fd',1,'VectorIterator.h']]]
 ];

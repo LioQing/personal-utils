@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['z_0',['z',['../structlio_1_1_vec3.html#a482d0854a1748f274978ce5983d31f07',1,'lio::Vec3']]],
-  ['zero_1',['Zero',['../structlio_1_1_vec2.html#aea6fab1c3e3efbaab560213e7b7849fc',1,'lio::Vec2::Zero()'],['../structlio_1_1_vec3.html#adfe4581a18d9180cc52bb029099f9c63',1,'lio::Vec3::Zero()']]]
+  ['y_0',['y',['../structlio_1_1_vec2.html#a1872d77d04f4f8a9538769e3a4130c9d',1,'lio::Vec2::y()'],['../structlio_1_1_vec3.html#a2fe6ecb7dc11440c0d07da1006e48b03',1,'lio::Vec3::y()']]]
 ];

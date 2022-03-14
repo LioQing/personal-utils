@@ -25,11 +25,11 @@
 var NAVTREE =
 [
   [ "PersonalUtils", "index.html", [
-    [ "PersonalUtils", "md__r_e_a_d_m_e.html", null ],
+    [ "personal-utils", "md__r_e_a_d_m_e.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", "namespacemembers_dup" ],
+        [ "All", "namespacemembers.html", null ],
         [ "Functions", "namespacemembers_func.html", null ],
         [ "Variables", "namespacemembers_vars.html", null ],
         [ "Typedefs", "namespacemembers_type.html", null ],
@@ -69,14 +69,13 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_a_n_s_i_escaper_8c.html",
-"_l_console_screen_8h.html#a46252f37c23b162c3d2fd1de4c0d0958a4ee813c2b78593978b2bc62082f857b1",
-"_string_iterator_8h.html#a8580ddc2d2ab745145c194dfcd9bf890",
-"classlecs_1_1_logger.html#abb8ddb4f365d156d941598100d5f667c",
-"classlio_1_1_l_console_screen.html#ac68b6309c5e31eecaa83347b795e89f4",
-"namespacelio.html#a070e207cb69ba29b037dc3e7c1d38b89",
-"struct___string.html",
-"structlio_1_1_vec3.html"
+"_a_star_pathfinder_8hpp.html",
+"_string_8h.html#af2549996889e9cd5c3f083aa55167a95",
+"classlecs_1_1_entity_manager.html#aba23c1b1c86fa2d3cc35235cd8dc38c6",
+"classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119af70622b0c1d987cc021e54609903f76a",
+"lecs_8hpp.html#ad30b6be69c74ddc27f10c5425dcbbcab",
+"struct_l_console_screen.html#a300aeffddca66d4fcf65c010a198e4ba",
+"structlio_1_1_vec3.html#ab5364b638428c8d5d44325c027105efb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

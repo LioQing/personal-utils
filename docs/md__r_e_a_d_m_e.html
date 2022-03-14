@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>PersonalUtils: PersonalUtils</title>
+<title>PersonalUtils: personal-utils</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -84,15 +84,12 @@ $(document).ready(function(){initNavTree('md__r_e_a_d_m_e.html',''); initResizab
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">PersonalUtils </div></div>
+  <div class="headertitle"><div class="title">personal-utils </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p >All my personal utilities, majority of the code is written myself, feel free to use. The column 'Language Standard/Version' just means the standard/version the code was developed and tested in.</p>
 <p >Documentation: <a href="https://lioqing.github.io/personal-utils/">Not quite useful documentation</a></p>
-<p >[Algorithms](algorithms) <br  />
- [Code Architectures](code%20architectures) <br  />
- [Data Structures](data%20structures) <br  />
- [Tools](tools) <br  />
+<p >[Algorithms](algorithms) [Code Architectures](code%20architectures) [Data Structures](data%20structures) [Tools](tools) <br  />
 </p>
 <h2><a class="anchor" id="autotoc_md2"></a>
 Algorithms</h2>
@@ -142,7 +139,24 @@ Data Structures</h2>
 </table>
 <h2><a class="anchor" id="autotoc_md5"></a>
 Tools</h2>
-<p >File | Description | Language Standard/Version | Dependencies | Namespace/Class &mdash; | &mdash; | &mdash; | &mdash; | &mdash; <a href="tools/ANSIEscaper">ANSIEscaper</a> | A group of cross-platform ANSI escape code wrapper functions | C++14 / C99 | <a href="https://en.wikipedia.org/wiki/Windows.h">windows.h</a> (for windows)| <a href="tools/CSVReader">CSVReader</a> | CSV (Comma Separated Values) file reader and parser | C++11 | N/A | lio <a href="tools/LConsoleScreen">LConsoleScreen</a> | Display Ascii characters as 2D screen in cmd (Windows only) | C++11 / C99 | <a href="https://en.wikipedia.org/wiki/Windows.h">windows.h</a> | lio <a href="tools/PortableSystemFunctions.h">PortableSystemFunctions.h</a> | Cross-platform system functions | C++17 / C17 | <a href="https://en.wikipedia.org/wiki/Windows.h">windows.h</a> / <a href="https://en.wikipedia.org/wiki/Unistd.h">unistd.h</a> | N/A <a href="tools/mem_usage">mem_usage</a> | To track and print out heap memory informations in console | C++14 | N/A | lio <a href="tools/ImGui-SFML.NET">ImGui-SFML.NET</a> | Use Dear ImGui.NET with SFML.NET | C# 9.0, .NET 5.0 | <a href="https://www.sfml-dev.org/download/sfml.net/">SFML.NET 2.5.0</a>, <a href="https://github.com/mellinoe/ImGui.NET">ImGui.NET 1.78.0</a> | ImGuiNET.ImGuiSFML <a href="tools/CustomFloat.cs">CustomFloat</a> | Floating point number class that allows custom specification. | C# 9.0 | N/A | lio </p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">File   </th><th class="markdownTableHeadNone">Description   </th><th class="markdownTableHeadNone">Language Standard/Version   </th><th class="markdownTableHeadNone">Dependencies   </th><th class="markdownTableHeadNone">Namespace/Class    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="tools/term_man">term_man</a>   </td><td class="markdownTableBodyNone">Control the IO of terminal using ANSI escape codes (Linux only)   </td><td class="markdownTableBodyNone">C++14   </td><td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/Ioctl">sys/ioctl.h</a>, <a href="https://en.wikipedia.org/wiki/Unistd.h">unistd.h</a>, <a href="https://man7.org/linux/man-pages/man0/termios.h.0p.html">termios.h</a>   </td><td class="markdownTableBodyNone">tman    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="tools/CSVReader">CSVReader</a>   </td><td class="markdownTableBodyNone">CSV (Comma Separated Values) file reader and parser   </td><td class="markdownTableBodyNone">C++11   </td><td class="markdownTableBodyNone">N/A   </td><td class="markdownTableBodyNone">lio    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="tools/LConsoleScreen">LConsoleScreen</a>   </td><td class="markdownTableBodyNone">Display Ascii characters as 2D screen in cmd (Windows only)   </td><td class="markdownTableBodyNone">C++11 / C99   </td><td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/Windows.h">windows.h</a>   </td><td class="markdownTableBodyNone">lio    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="tools/PortableSystemFunctions.h">PortableSystemFunctions.h</a>   </td><td class="markdownTableBodyNone">Cross-platform system functions   </td><td class="markdownTableBodyNone">C++17 / C17   </td><td class="markdownTableBodyNone"><a href="https://en.wikipedia.org/wiki/Windows.h">windows.h</a> / <a href="https://en.wikipedia.org/wiki/Unistd.h">unistd.h</a>   </td><td class="markdownTableBodyNone">N/A    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="tools/mem_usage">mem_usage</a>   </td><td class="markdownTableBodyNone">To track and print out heap memory informations in console   </td><td class="markdownTableBodyNone">C++14   </td><td class="markdownTableBodyNone">N/A   </td><td class="markdownTableBodyNone">lio    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="tools/ImGui-SFML.NET">ImGui-SFML.NET</a>   </td><td class="markdownTableBodyNone">Use Dear ImGui.NET with SFML.NET   </td><td class="markdownTableBodyNone">C# 9.0, .NET 5.0   </td><td class="markdownTableBodyNone"><a href="https://www.sfml-dev.org/download/sfml.net/">SFML.NET 2.5.0</a>, <a href="https://github.com/mellinoe/ImGui.NET">ImGui.NET 1.78.0</a>   </td><td class="markdownTableBodyNone">ImGuiNET.ImGuiSFML    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="tools/CustomFloat.cs">CustomFloat</a>   </td><td class="markdownTableBodyNone">Floating point number class that allows custom specification.   </td><td class="markdownTableBodyNone">C# 9.0   </td><td class="markdownTableBodyNone">N/A   </td><td class="markdownTableBodyNone">lio   </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

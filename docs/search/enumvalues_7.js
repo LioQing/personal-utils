@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['inversed_0',['INVERSED',['../_a_n_s_i_escaper_8h.html#abc53ce56313f1cac020b5dc09e240985a9fcac2fc927e60fd9f367927c3da8047',1,'INVERSED():&#160;ANSIEscaper.h'],['../namespacelio_1_1_a_n_s_i_escaper.html#a41a70be39244039f922b1419b136d853a02fef45d2161b1518d629ea42394cf8b',1,'lio::ANSIEscaper::INVERSED()']]],
-  ['invisible_1',['INVISIBLE',['../_a_n_s_i_escaper_8h.html#abc53ce56313f1cac020b5dc09e240985a59810d2438e63be8bce699880cb6dfad',1,'INVISIBLE():&#160;ANSIEscaper.h'],['../namespacelio_1_1_a_n_s_i_escaper.html#a41a70be39244039f922b1419b136d853a9b0881888f225dfc71d05e5bee7940cb',1,'lio::ANSIEscaper::INVISIBLE()']]],
-  ['italic_2',['ITALIC',['../_a_n_s_i_escaper_8h.html#abc53ce56313f1cac020b5dc09e240985ac1005585401f6364dc82967ecf313617',1,'ITALIC():&#160;ANSIEscaper.h'],['../namespacelio_1_1_a_n_s_i_escaper.html#a41a70be39244039f922b1419b136d853ab818fbf53494f9aa517202dd5416228d',1,'lio::ANSIEscaper::ITALIC()']]]
+  ['input_0',['Input',['../structtman_1_1_event.html#addd406af2cab64f5bd69e56733e3bc4caa7dfc09e055e286285a346638d8d2645',1,'tman::Event']]],
+  ['insert_1',['Insert',['../structtman_1_1_input_event.html#aca0127a6ef187e37412bec3a58228679a07bf8a6e816ff699b765baa607344e41',1,'tman::InputEvent']]]
 ];
