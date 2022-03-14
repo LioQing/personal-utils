@@ -96,31 +96,36 @@ namespace tman
         std::printf("%c[%d;%dm", ESC, fg_col, bg_col);
     }
 
-    void SetColor8bit(uint8_t fg_col, uint8_t bg_col)
+    void SetColor8bit(uint8_t col, Target target)
     {
-        std::printf("%c[38;5;%d;48;5;%dm", ESC, fg_col, bg_col);
+        std::printf("%c[%d;5;%dm", ESC, (int)target, col);
     }
 
-    void SetColor24bit(uint8_t fg_r, uint8_t fg_g, uint8_t fg_b, uint8_t bg_r, uint8_t bg_g, uint8_t bg_b)
+    void SetColor24bit(uint8_t r, uint8_t g, uint8_t b, Target target)
     {
-        std::printf("%c[38;2;%d;%d;%d;48;2;%d;%d;%dm", ESC, fg_r, fg_g, fg_b, bg_r, bg_g, bg_b);
+        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target, r, g, b);
     }
 
-    void SetColor24bit(uint32_t fg_rgb, uint32_t bg_rgb)
+    void SetColor24bit(uint32_t rgb, Target target)
     {
-        std::printf("%c[38;2;%d;%d;%d;48;2;%d;%d;%dm", ESC,
-            fg_rgb / (uint32_t)0x00'01'00'00 % 0x1'00,
-            fg_rgb / (uint32_t)0x00'00'01'00 % 0x1'00,
-            fg_rgb / (uint32_t)0x00'00'00'01 % 0x1'00,
-            bg_rgb / (uint32_t)0x00'01'00'00 % 0x1'00,
-            bg_rgb / (uint32_t)0x00'00'01'00 % 0x1'00,
-            bg_rgb / (uint32_t)0x00'00'00'01 % 0x1'00
+        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target,
+            rgb / (uint32_t)0x00'01'00'00 % 0x1'00,
+            rgb / (uint32_t)0x00'00'01'00 % 0x1'00,
+            rgb / (uint32_t)0x00'00'00'01 % 0x1'00
         );
     }
 
     void ResetColor()
     {
         std::printf("%c[0m", ESC);
+    }
+
+    void ClearScreen()
+    {
+        tman::SetCursorPos(0, 0);
+        tman::ResetColor();
+        printf("%c[J", 0x1b);
+        fflush(stdout);
     }
 
     bool UpdateSize()
@@ -209,45 +214,33 @@ namespace tman
 
                 if (seq_len == 1)
                 {
-                    event_queue.emplace_back(Event
-                    {
-                        .type = Event::Input,
-                        .input = InputEvent
-                        {
-                            .code = InputEvent::Escape,
-                            .is_esc = false,
-                            .is_alt = false,
-                        },
-                    });
+                    Event event;
+                    event.type = Event::Input;
+                    event.input.code = InputEvent::Escape;
+                    event.input.is_esc = false;
+                    event.input.is_alt = false;
+                    event_queue.emplace_back(event);
 
                     continue;
                 }
 
                 i += seq_len - 1;
 
-                event_queue.emplace_back(Event
-                {
-                    .type = Event::Input,
-                    .input = InputEvent
-                    {
-                        .code = code,
-                        .is_esc = !is_alt,
-                        .is_alt = is_alt,
-                    },
-                });
+                Event event;
+                event.type = Event::Input;
+                event.input.code = InputEvent::Escape;
+                event.input.is_esc = !is_alt;
+                event.input.is_alt = is_alt;
+                event_queue.emplace_back(event);
             }
             else
             {
-                event_queue.emplace_back(Event
-                {
-                    .type = Event::Input,
-                    .input = InputEvent
-                    {
-                        .code = (uint8_t)buf.at(i),
-                        .is_esc = false,
-                        .is_alt = false,
-                    },
-                });
+                Event event;
+                event.type = Event::Input;
+                event.input.code = (uint8_t)buf.at(i);
+                event.input.is_esc = false;
+                event.input.is_alt = false;
+                event_queue.emplace_back(event);
             }
         }
 

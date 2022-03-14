@@ -51,6 +51,11 @@ namespace tman
         };
     };
 
+    enum class Target
+    {
+        Foreground = 38, Background = 48,
+    };
+
     /**
      * @brief Initialize term_man.
      * 
@@ -82,38 +87,42 @@ namespace tman
     void SetColor4bit(uint8_t fg_col, uint8_t bg_col);
 
     /**
-     * @brief Set the color in 8 bit format (256 colors).
+     * @brief Set the color in 8 bit format (256 colors)
      * 
-     * @param fg_col Foreground color
-     * @param bg_col Background color
+     * @param col The color to be set
+     * @param target The target (foreground or background)
      */
-    void SetColor8bit(uint8_t fg_col, uint8_t bg_col);
+    void SetColor8bit(uint8_t col, Target target);
 
     /**
      * @brief Set the color in 24 bit format (rgb color).
      * 
-     * @param fg_r Foreground red
-     * @param fg_g Foreground green
-     * @param fg_b Foreground blue
-     * @param bg_r background red
-     * @param bg_g background green
-     * @param bg_b background blue
+     * @param r Red
+     * @param g Breen
+     * @param b Blue
+     * @param target The target (foreground or background)
      */
-    void SetColor24bit(uint8_t fg_r, uint8_t fg_g, uint8_t fg_b, uint8_t bg_r, uint8_t bg_g, uint8_t bg_b);
+    void SetColor24bit(uint8_t r, uint8_t g, uint8_t b, Target target);
 
     /**
      * @brief Set the color in 24 bit format (rgb color).
      * 
-     * @param fg_rgb Foreground color
-     * @param bg_rgb Background color
+     * @param rgb The color to be set
+     * @param target The target (foreground or background)
      */
-    void SetColor24bit(uint32_t fg_rgb, uint32_t bg_rgb);
+    void SetColor24bit(uint32_t rgb, Target target);
 
     /**
-     * @brief Set the color to default
+     * @brief Set the color to default.
      * 
      */
     void ResetColor();
+
+    /**
+     * @brief Clear the screen, cursor position will be (0, 0) after this.
+     * 
+     */
+    void ClearScreen();
     
     /**
      * @brief Update the terminal size.
@@ -139,8 +148,8 @@ namespace tman
     /**
      * @brief Get the size of terminal.
      * 
-     * @param x The width value to be assigned
-     * @param y The height value to be assigned
+     * @param x The width value to be returned
+     * @param y The height value to be returned
      */
     void GetSize(int16_t& x, int16_t& y);
 
@@ -159,7 +168,7 @@ namespace tman
     /**
      * @brief Poll events.
      * 
-     * @param event The Event struct to be assigned
+     * @param event The Event struct to be returned
      * @return A boolean indicating whether an event is polled
      */
     bool PollEvent(Event& event);
