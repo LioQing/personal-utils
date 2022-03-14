@@ -23,6 +23,8 @@ namespace tman
         volatile sig_atomic_t signal_status = Signal::None;
         void SAHandler(int32_t signal);
 
+        bool GetInputBuf(std::string& buf);
+
         int32_t MapEscSeqToInputCode(const char* esc_seq, int32_t size, uint8_t& code, bool& is_alt);
 
         uint16_t size_x;
@@ -51,6 +53,9 @@ namespace tman
         if (sigaction(SIGWINCH, &sa, NULL) != 0)
             return false;
 
+        if (sigaction(SIGTERM, &sa, NULL) != 0)
+            return false;
+
         if (sigaction(SIGINT, &sa, NULL) != 0)
             return false;
 
@@ -67,6 +72,9 @@ namespace tman
         sa.sa_flags = 0;
 
         if (sigaction(SIGWINCH, &sa, NULL) != 0)
+            return false;
+
+        if (sigaction(SIGTERM, &sa, NULL) != 0)
             return false;
 
         if (sigaction(SIGINT, &sa, NULL) != 0)
@@ -153,38 +161,6 @@ namespace tman
         std::printf("%c[?25h", ESC);
     }
 
-    bool GetInputBuf(std::string& buf)
-    {
-        termios term;
-        tcflag_t prev_lflag;
-
-        tcgetattr(STDIN_FILENO, &term);
-        prev_lflag = term.c_lflag;
-
-        term.c_lflag &= ~(ICANON | ECHO);
-        term.c_cc[VTIME] = 0;
-        term.c_cc[VMIN] = 0;
-        tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
-        // number of bytes to be read
-        int bytes_read;
-        if (ioctl(STDIN_FILENO, FIONREAD, &bytes_read) != 0)
-            return false;
-
-        // read the inputs
-        char* c_buf = (char*)malloc((bytes_read) * sizeof(char));
-        if (read(STDIN_FILENO, c_buf, bytes_read) < 0)
-            return false;
-        
-        buf = std::string(c_buf, bytes_read);
-
-        // restore terminal attributes
-        term.c_lflag = prev_lflag;
-        tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
-        return true;
-    }
-
     bool PollEvent(Event& event)
     {
         if (!event_queue.empty())
@@ -200,8 +176,7 @@ namespace tman
         {
             event_queue.emplace_back(Event
             {
-                .type = Event::System,
-                .system = SystemEvent{ .type = SystemEvent::Exit },
+                .type = Event::Exit
             });
         }
 
@@ -210,8 +185,7 @@ namespace tman
             UpdateSize();
             event_queue.emplace_back(Event
             {
-                .type = Event::System,
-                .system = SystemEvent{ .type = SystemEvent::Resize },
+                .type = Event::Resize
             });
         }
 
@@ -295,11 +269,49 @@ namespace tman
         {
             switch (signal)
             {
-                case SIGWINCH:  signal_status |= Signal::Resize; return;
-                case SIGINT:    signal_status |= Signal::Exit; return;
+                case SIGWINCH:
+                    signal_status |= Signal::Resize;
+                    return;
+
+                case SIGTERM:
+                case SIGINT:
+                    signal_status |= Signal::Exit;
+                    return;
 
                 default: return;
             }
+        }
+        
+        bool GetInputBuf(std::string& buf)
+        {
+            termios term;
+            tcflag_t prev_lflag;
+
+            tcgetattr(STDIN_FILENO, &term);
+            prev_lflag = term.c_lflag;
+
+            term.c_lflag &= ~(ICANON | ECHO);
+            term.c_cc[VTIME] = 0;
+            term.c_cc[VMIN] = 0;
+            tcsetattr(STDIN_FILENO, TCSANOW, &term);
+
+            // number of bytes to be read
+            int bytes_read;
+            if (ioctl(STDIN_FILENO, FIONREAD, &bytes_read) != 0)
+                return false;
+
+            // read the inputs
+            char* c_buf = (char*)malloc((bytes_read) * sizeof(char));
+            if (read(STDIN_FILENO, c_buf, bytes_read) < 0)
+                return false;
+            
+            buf = std::string(c_buf, bytes_read);
+
+            // restore terminal attributes
+            term.c_lflag = prev_lflag;
+            tcsetattr(STDIN_FILENO, TCSANOW, &term);
+
+            return true;
         }
 
         int32_t MapEscSeqToInputCode(const char* esc_seq, int32_t size, uint8_t& code, bool& is_alt)
