@@ -1,13 +1,13 @@
-# PersonalUtils
+# personal-utils
 
 All my personal utilities, majority of the code is written myself, feel free to use.
 The column 'Language Standard/Version' just means the standard/version the code was developed and tested in.
 
 Documentation: [Not quite useful documentation](https://lioqing.github.io/PersonalUtils/)
 
-[Algorithms](algorithms)  
-[Code Architectures](code%20architectures)  
-[Data Structures](data%20structures)  
+[Algorithms](algorithms) 
+[Code Architectures](code%20architectures) 
+[Data Structures](data%20structures) 
 [Tools](tools)  
 
 ### Algorithms
@@ -43,7 +43,7 @@ File | Description | Language Standard/Version | Dependencies | Namespace/Class
 
 File | Description | Language Standard/Version | Dependencies | Namespace/Class
 --- | --- | --- | --- | ---
-[ANSIEscaper](tools/ANSIEscaper) | A group of cross-platform ANSI escape code wrapper functions | C++14 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) (for windows)|
+[term_man](tools/term_man) | Control the IO of terminal using ANSI escape codes (Linux only) | C++14 | [sys/ioctl.h](https://en.wikipedia.org/wiki/Ioctl), [unistd.h](https://en.wikipedia.org/wiki/Unistd.h), [termios.h](https://man7.org/linux/man-pages/man0/termios.h.0p.html) |tman
 [CSVReader](tools/CSVReader) | CSV (Comma Separated Values) file reader and parser | C++11 | N/A | lio
 [LConsoleScreen](tools/LConsoleScreen) | Display Ascii characters as 2D screen in cmd (Windows only) | C++11 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) | lio
 [PortableSystemFunctions.h](tools/PortableSystemFunctions.h) | Cross-platform system functions | C++17 / C17 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) / [unistd.h](https://en.wikipedia.org/wiki/Unistd.h) | N/A
