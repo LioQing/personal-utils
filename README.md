@@ -5,10 +5,13 @@ The column 'Language Standard/Version' just means the standard/version the code 
 
 Documentation: [Not quite useful documentation](https://lioqing.github.io/personal-utils/)
 
-[Algorithms](algorithms) 
-[Code Architectures](code%20architectures) 
-[Data Structures](data%20structures) 
-[Tools](tools)  
+[Algorithms](algorithms)
+
+[Code Architectures](code%20architectures)
+
+[Data Structures](data%20structures)
+
+[Tools](tools)
 
 ### Algorithms
 
