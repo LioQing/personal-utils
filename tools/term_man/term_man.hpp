@@ -18,6 +18,7 @@ namespace tman
             F0,
             F1, F2, F3, F4,
             F5, F6, F7, F8,
+            F9, F10, F11, F12,
             Up, Down, Right, Left,
             Home, Insert, Delete, End, PgUp, PgDown,
 
@@ -30,6 +31,16 @@ namespace tman
         uint8_t code;
         bool is_esc;
         bool is_alt;
+    };
+
+    /**
+     * @brief A structure containing resize event information
+     * 
+     */
+    struct ResizeEvent
+    {
+        int16_t width;
+        int16_t height;
     };
 
     /**
@@ -48,6 +59,7 @@ namespace tman
         union
         {
             InputEvent input;
+            ResizeEvent resize;
         };
     };
 
@@ -136,14 +148,14 @@ namespace tman
      * 
      * @return int16_t The width
      */
-    int16_t GetSizeX();
+    int16_t GetWidth();
 
     /**
      * @brief Get the height of terminal.
      * 
      * @return int16_t The height
      */
-    int16_t GetSizeY();
+    int16_t GetHeight();
 
     /**
      * @brief Get the size of terminal.

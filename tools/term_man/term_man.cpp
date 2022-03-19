@@ -27,8 +27,8 @@ namespace tman
 
         int32_t MapEscSeqToInputCode(const char* esc_seq, int32_t size, uint8_t& code, bool& is_alt);
 
-        uint16_t size_x;
-        uint16_t size_y;
+        uint16_t width;
+        uint16_t height;
 
         termios init_term;
 
@@ -109,9 +109,9 @@ namespace tman
     void SetColor24bit(uint32_t rgb, Target target)
     {
         std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target,
-            rgb / (uint32_t)0x00'01'00'00 % 0x1'00,
-            rgb / (uint32_t)0x00'00'01'00 % 0x1'00,
-            rgb / (uint32_t)0x00'00'00'01 % 0x1'00
+            rgb / (uint32_t)0x00010000 % 0x100,
+            rgb / (uint32_t)0x00000100 % 0x100,
+            rgb / (uint32_t)0x00000001 % 0x100
         );
     }
 
@@ -134,26 +134,26 @@ namespace tman
         if (ioctl(STDIN_FILENO, TIOCGWINSZ, &size) != 0)
             return false;
             
-        size_x = size.ws_col;
-        size_y = size.ws_row;
+        width = size.ws_col;
+        height = size.ws_row;
 
         return true;
     }
 
-    int16_t GetSizeX()
+    int16_t GetWidth()
     {
-        return size_x;
+        return width;
     }
 
-    int16_t GetSizeY()
+    int16_t GetHeight()
     {
-        return size_y;
+        return height;
     }
 
     void GetSize(int16_t& x, int16_t& y)
     {
-        x = size_x;
-        y = size_y;
+        x = width;
+        y = height;
     }
 
     void HideCursor()
@@ -176,27 +176,26 @@ namespace tman
             return true;
         }
 
-        // system
+        // exit event
         if ((signal_status & Signal::Exit) != 0)
         {
-            event_queue.emplace_back(Event
-            {
-                .type = Event::Exit
-            });
+            event_queue.emplace_back(Event{ Event::Exit });
         }
 
+        // resize event
         if ((signal_status & Signal::Resize) != 0)
         {
             UpdateSize();
-            event_queue.emplace_back(Event
-            {
-                .type = Event::Resize
-            });
+            Event event;
+            event.type = Event::Resize;
+            event.resize = ResizeEvent{ GetWidth(), GetHeight() };
+
+            event_queue.emplace_back(event);
         }
 
         signal_status = Signal::None;
 
-        // input
+        // input event
         std::string buf;
         if (!GetInputBuf(buf) || buf.empty())
             return false;
@@ -353,6 +352,10 @@ namespace tman
                             else if (esc_seq[2] == '1' && esc_seq[3] == '7')    { code = InputEvent::F6;        return 5; }
                             else if (esc_seq[2] == '1' && esc_seq[3] == '8')    { code = InputEvent::F7;        return 5; }
                             else if (esc_seq[2] == '1' && esc_seq[3] == '9')    { code = InputEvent::F8;        return 5; }
+                            else if (esc_seq[2] == '2' && esc_seq[3] == '0')    { code = InputEvent::F9;        return 5; }
+                            else if (esc_seq[2] == '2' && esc_seq[3] == '1')    { code = InputEvent::F10;       return 5; }
+                            else if (esc_seq[2] == '2' && esc_seq[3] == '3')    { code = InputEvent::F11;       return 5; }
+                            else if (esc_seq[2] == '2' && esc_seq[3] == '4')    { code = InputEvent::F12;       return 5; }
                         }
                     }
 

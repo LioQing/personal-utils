@@ -52,7 +52,7 @@ int main()
         tman::ClearScreen();
 
         // hello world
-        tman::SetCursorPos(tman::GetSizeX() / 2 - 6, tman::GetSizeY() / 2);
+        tman::SetCursorPos(tman::GetWidth() / 2 - 6, tman::GetHeight() / 2);
         for (int i = 0; i < 12; ++i)
         {
             if (i < len)
@@ -67,7 +67,7 @@ int main()
         }
 
         // circle
-        tman::SetCursorPos(tman::GetSizeX() / 2 - 2 + (int)(2 * radius * cos(theta)), tman::GetSizeY() / 2 + (int)(radius * sin(theta)));
+        tman::SetCursorPos(tman::GetWidth() / 2 - 2 + (int)(2 * radius * cos(theta)), tman::GetHeight() / 2 + (int)(radius * sin(theta)));
         tman::ResetColor();
         printf("%s", circle);
 
