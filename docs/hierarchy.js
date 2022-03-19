@@ -14,10 +14,10 @@ var hierarchy =
     [ "lecs::EntityManager", "classlecs_1_1_entity_manager.html", null ],
     [ "lecs::Event", "classlecs_1_1_event.html", null ],
     [ "lev::Event< TArgs >", "classlev_1_1_event.html", null ],
-    [ "tman::Event", "structtman_1_1_event.html", null ],
+    [ "tcon::Event", "structtcon_1_1_event.html", null ],
     [ "lecs::EventManager", "classlecs_1_1_event_manager.html", null ],
     [ "lecs::EventSubscriber", "classlecs_1_1_event_subscriber.html", null ],
-    [ "tman::InputEvent", "structtman_1_1_input_event.html", null ],
+    [ "tcon::InputEvent", "structtcon_1_1_input_event.html", null ],
     [ "LConsoleScreen", "struct_l_console_screen.html", null ],
     [ "lio::LConsoleScreen", "classlio_1_1_l_console_screen.html", [
       [ "lio::TConsoleScreen", "classlio_1_1_t_console_screen.html", null ]
@@ -30,7 +30,7 @@ var hierarchy =
     [ "lio::Pipe< Tuple, Ret, Args >", "structlio_1_1_pipe.html", null ],
     [ "ImGuiSFML_Example.Program", "class_im_gui_s_f_m_l___example_1_1_program.html", null ],
     [ "lic::Range< TComps >", "structlic_1_1_range.html", null ],
-    [ "tman::ResizeEvent", "structtman_1_1_resize_event.html", null ],
+    [ "tcon::ResizeEvent", "structtcon_1_1_resize_event.html", null ],
     [ "lecs::System", "classlecs_1_1_system.html", null ],
     [ "lecs::SystemManager", "classlecs_1_1_system_manager.html", null ],
     [ "TComp", null, [

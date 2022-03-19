@@ -1,18 +1,18 @@
 var searchData=
 [
-  ['f0_0',['F0',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76cac869d52d3b971e7865f23ea7bb76258d',1,'tman::InputEvent']]],
-  ['f1_1',['F1',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76ca654d11135d4e90c75111ce16bd9d78d4',1,'tman::InputEvent']]],
-  ['f10_2',['F10',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76ca03da1287decd592ba7c7cad2d457bb81',1,'tman::InputEvent']]],
-  ['f11_3',['F11',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76ca9805907880929026d142ba498fb189e4',1,'tman::InputEvent']]],
-  ['f12_4',['F12',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76ca8911164d83e493d512e43b77a1951866',1,'tman::InputEvent']]],
-  ['f2_5',['F2',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76caf2de99c74c727f1c3d8fd83a098bb28e',1,'tman::InputEvent']]],
-  ['f3_6',['F3',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76cadabe854e16668fa566cf0dfe4919bd14',1,'tman::InputEvent']]],
-  ['f4_7',['F4',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76ca346807de331412b9873d4a0d92394f0b',1,'tman::InputEvent']]],
-  ['f5_8',['F5',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76ca4ef759e9bed152145498304e955b76c3',1,'tman::InputEvent']]],
-  ['f6_9',['F6',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76ca5365143abb2fe47aa78b110eae1f06e2',1,'tman::InputEvent']]],
-  ['f7_10',['F7',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76cae764c5a470b647cd06fe1b36a13dea4c',1,'tman::InputEvent']]],
-  ['f8_11',['F8',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76cae9a5d04edf1d782f0bcd0efcaf7b875b',1,'tman::InputEvent']]],
-  ['f9_12',['F9',['../structtman_1_1_input_event.html#ae70159aaa3ca60fcd246a2bf2c7fc76caf6f60e638f41220038324dcc9c862287',1,'tman::InputEvent']]],
+  ['f0_0',['F0',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca98ec9b35c056c1e6d83f7a1ca8cf25b1',1,'tcon::InputEvent']]],
+  ['f1_1',['F1',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca4c1089e056027083b5c4f66b209160e8',1,'tcon::InputEvent']]],
+  ['f10_2',['F10',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca672facafe70bdb3b97f5554e8b4f1e2e',1,'tcon::InputEvent']]],
+  ['f11_3',['F11',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fccaa5a93548379a58addea4f045abfbac30',1,'tcon::InputEvent']]],
+  ['f12_4',['F12',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca8323e934b946675647139464f106cf55',1,'tcon::InputEvent']]],
+  ['f2_5',['F2',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca24f41a283a3bfef5f35e47d0b9e75430',1,'tcon::InputEvent']]],
+  ['f3_6',['F3',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca75a31eaad25f4e0bd37fe3818d16801e',1,'tcon::InputEvent']]],
+  ['f4_7',['F4',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca8a4df3de0ab3cb8762cef143ead9969b',1,'tcon::InputEvent']]],
+  ['f5_8',['F5',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fccac79842588138e29479c58826e0123671',1,'tcon::InputEvent']]],
+  ['f6_9',['F6',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fccaced28fbc377158589cbf39b88b168fa7',1,'tcon::InputEvent']]],
+  ['f7_10',['F7',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca41b7038b2279412c603a1cad0ba32ca4',1,'tcon::InputEvent']]],
+  ['f8_11',['F8',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca3466d70dfb98345f9a5290e7dc8cc3cd',1,'tcon::InputEvent']]],
+  ['f9_12',['F9',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca8434796590b69597caf9b29ec269c927',1,'tcon::InputEvent']]],
   ['fg_5fblack_13',['FG_BLACK',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119af572420464cde84c32db9d5b180d9000',1,'lio::LConsoleScreen']]],
   ['fg_5fblue_14',['FG_BLUE',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119aadc4d389c419e99f431008723abb2521',1,'lio::LConsoleScreen']]],
   ['fg_5fcyan_15',['FG_CYAN',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119ad42a1defa6cd4d9b8855954790adc15f',1,'lio::LConsoleScreen']]],
@@ -29,5 +29,5 @@ var searchData=
   ['fg_5fred_26',['FG_RED',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119ab1d7fb0d5d2ac2432afccaf5472d4708',1,'lio::LConsoleScreen']]],
   ['fg_5fwhite_27',['FG_WHITE',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119a75b947054ce1143197003414cf14b1de',1,'lio::LConsoleScreen']]],
   ['fg_5fyellow_28',['FG_YELLOW',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119ad63035703c8079a51b0191e121a2797d',1,'lio::LConsoleScreen']]],
-  ['foreground_29',['Foreground',['../namespacetman.html#a9e0ca7936b368a67b72b5ade6b98b53ba45bd1d5b32931106efbf1a82fe6a732f',1,'tman']]]
+  ['foreground_29',['Foreground',['../namespacetcon.html#ae3136437173b558822f60cf3cb7d633ca45bd1d5b32931106efbf1a82fe6a732f',1,'tcon']]]
 ];

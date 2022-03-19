@@ -5,5 +5,5 @@ var namespaces_dup =
     [ "lecs", "namespacelecs.html", "namespacelecs" ],
     [ "lev", "namespacelev.html", "namespacelev" ],
     [ "lio", "namespacelio.html", "namespacelio" ],
-    [ "tman", "namespacetman.html", "namespacetman" ]
+    [ "tcon", "namespacetcon.html", "namespacetcon" ]
 ];

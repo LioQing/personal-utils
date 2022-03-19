@@ -11,7 +11,7 @@ var searchData=
   ['removelistener_8',['RemoveListener',['../classlev_1_1_event.html#a4b05fc28c99b6dfcedef552339317883',1,'lev::Event']]],
   ['replace_9',['Replace',['../structlio_1_1_mat.html#ad22340aa7e909b29fd3e751cc225b6c1',1,'lio::Mat']]],
   ['replaced_10',['Replaced',['../structlio_1_1_mat.html#af0a276b80ad6a148898ce4784dae8794',1,'lio::Mat::Replaced(const Mat&lt; U &gt; &amp;m, size_t row=0, size_t col=0) const'],['../structlio_1_1_mat.html#a123c0b95ea04efbc343070939f1b838e',1,'lio::Mat::Replaced(const Mat &amp;m_dest, const Mat&lt; S &gt; &amp;m_src, size_t row=0, size_t col=0)']]],
-  ['resetcolor_11',['ResetColor',['../namespacetman.html#ae2a39945ec140c7b36a58811b85ba314',1,'tman']]],
+  ['resetcolor_11',['ResetColor',['../namespacetcon.html#a859da47fc9203ffef5962c2bfc6d8e3f',1,'tcon']]],
   ['rightinverse_12',['RightInverse',['../structlio_1_1_mat.html#a9e0f08707e3876e8d1ae559e4089e835',1,'lio::Mat::RightInverse() const'],['../structlio_1_1_mat.html#ad2d1d77c75f9fb42ba66875d906696c4',1,'lio::Mat::RightInverse(const Mat &amp;m)']]],
   ['rightinvert_13',['RightInvert',['../structlio_1_1_mat.html#a4daa67b7e86789f3114a876518fbfec5',1,'lio::Mat']]],
   ['rotate_14',['Rotate',['../classlio_1_1_line_seg.html#adccfeb2475b1f7b5ba7a729cf2672e10',1,'lio::LineSeg::Rotate()'],['../structlio_1_1_vec2.html#aab6f89eb0f0e0cf249adf6677e82619f',1,'lio::Vec2::Rotate()']]],
