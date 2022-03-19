@@ -3,14 +3,14 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 
-#include "term_man.hpp"
+#include "tcon.hpp"
 
 int main()
 {
     // init
-    tman::Init();
-    tman::HideCursor();
-    tman::ClearScreen();
+    tcon::Init();
+    tcon::HideCursor();
+    tcon::ClearScreen();
 
     // variables
     bool is_running = true;
@@ -28,14 +28,14 @@ int main()
     while (is_running)
     {
         // event polling
-        tman::Event event;
-        while (tman::PollEvent(event))
+        tcon::Event event;
+        while (tcon::PollEvent(event))
         {
-            if (event.type == tman::Event::Exit)        // exit event
+            if (event.type == tcon::Event::Exit)        // exit event
             {
                 is_running = false;
             }
-            else if (event.type == tman::Event::Input)  // input event
+            else if (event.type == tcon::Event::Input)  // input event
             {
                 if (!event.input.is_esc && !event.input.is_alt && event.input.code == ' ') // space pressed
                 {
@@ -49,15 +49,15 @@ int main()
         theta = fmod(theta + rot_dir * .05f, 2 * 3.1415926);
 
         // draw
-        tman::ClearScreen();
+        tcon::ClearScreen();
 
         // hello world
-        tman::SetCursorPos(tman::GetWidth() / 2 - 6, tman::GetHeight() / 2);
+        tcon::SetCursorPos(tcon::GetWidth() / 2 - 6, tcon::GetHeight() / 2);
         for (int i = 0; i < 12; ++i)
         {
             if (i < len)
             {
-                tman::SetColor24bit(col[i], tman::Target::Foreground);
+                tcon::SetColor24bit(col[i], tcon::Target::Foreground);
                 printf("%c", hello_world[i]);
             }
             else
@@ -67,8 +67,8 @@ int main()
         }
 
         // circle
-        tman::SetCursorPos(tman::GetWidth() / 2 - 2 + (int)(2 * radius * cos(theta)), tman::GetHeight() / 2 + (int)(radius * sin(theta)));
-        tman::ResetColor();
+        tcon::SetCursorPos(tcon::GetWidth() / 2 - 2 + (int)(2 * radius * cos(theta)), tcon::GetHeight() / 2 + (int)(radius * sin(theta)));
+        tcon::ResetColor();
         printf("%s", circle);
 
         fflush(stdout);
@@ -78,9 +78,9 @@ int main()
     }
 
     // clean up
-    tman::ClearScreen();
-    tman::ShowCursor();
-    tman::End();
+    tcon::ClearScreen();
+    tcon::ShowCursor();
+    tcon::End();
 
     return 0;
 }

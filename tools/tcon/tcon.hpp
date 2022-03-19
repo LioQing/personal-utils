@@ -4,7 +4,7 @@
 #include <string>
 #include <signal.h>
 
-namespace tman
+namespace tcon
 {
     /**
      * @brief A structure containing input event information

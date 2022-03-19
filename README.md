@@ -46,7 +46,7 @@ File | Description | Language Standard/Version | Dependencies | Namespace/Class
 
 File | Description | Language Standard/Version | Dependencies | Namespace/Class
 --- | --- | --- | --- | ---
-[term_man](tools/term_man) | Control the IO of terminal using ANSI escape codes (Linux only) | C++14 | [sys/ioctl.h](https://en.wikipedia.org/wiki/Ioctl), [unistd.h](https://en.wikipedia.org/wiki/Unistd.h), [termios.h](https://man7.org/linux/man-pages/man0/termios.h.0p.html) |tman
+[tcon](tools/tcon) | Control the IO of terminal using ANSI escape codes (Linux only) | C++11 | [sys/ioctl.h](https://en.wikipedia.org/wiki/Ioctl), [unistd.h](https://en.wikipedia.org/wiki/Unistd.h), [termios.h](https://man7.org/linux/man-pages/man0/termios.h.0p.html) |tcon
 [CSVReader](tools/CSVReader) | CSV (Comma Separated Values) file reader and parser | C++11 | N/A | lio
 [LConsoleScreen](tools/LConsoleScreen) | Display Ascii characters as 2D screen in cmd (Windows only) | C++11 / C99 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) | lio
 [PortableSystemFunctions.h](tools/PortableSystemFunctions.h) | Cross-platform system functions | C++17 / C17 | [windows.h](https://en.wikipedia.org/wiki/Windows.h) / [unistd.h](https://en.wikipedia.org/wiki/Unistd.h) | N/A

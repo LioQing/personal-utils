@@ -1,4 +1,4 @@
-#include "term_man.hpp"
+#include "tcon.hpp"
 
 #include <deque>
 #include <cstdio>
@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <termios.h>
 
-namespace tman
+namespace tcon
 {
     namespace
     {
@@ -122,8 +122,8 @@ namespace tman
 
     void ClearScreen()
     {
-        tman::SetCursorPos(0, 0);
-        tman::ResetColor();
+        tcon::SetCursorPos(0, 0);
+        tcon::ResetColor();
         printf("%c[J", 0x1b);
         fflush(stdout);
     }
