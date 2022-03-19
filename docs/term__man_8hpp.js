@@ -1,6 +1,7 @@
 var term__man_8hpp =
 [
     [ "tman::InputEvent", "structtman_1_1_input_event.html", "structtman_1_1_input_event" ],
+    [ "tman::ResizeEvent", "structtman_1_1_resize_event.html", "structtman_1_1_resize_event" ],
     [ "tman::Event", "structtman_1_1_event.html", "structtman_1_1_event" ],
     [ "Target", "term__man_8hpp.html#a9e0ca7936b368a67b72b5ade6b98b53b", [
       [ "Foreground", "term__man_8hpp.html#a9e0ca7936b368a67b72b5ade6b98b53ba45bd1d5b32931106efbf1a82fe6a732f", null ],
@@ -8,9 +9,9 @@ var term__man_8hpp =
     ] ],
     [ "ClearScreen", "term__man_8hpp.html#adde2a212cb46370d49c51155712f4812", null ],
     [ "End", "term__man_8hpp.html#a5132303e3fd898759246ebc8440b45e6", null ],
+    [ "GetHeight", "term__man_8hpp.html#ad148200dd57a8df4167c4db10ca448ef", null ],
     [ "GetSize", "term__man_8hpp.html#a864c54bbfdabfcb8d49bbf4ef175529e", null ],
-    [ "GetSizeX", "term__man_8hpp.html#aba799311cc3582e68b513d8747dc644b", null ],
-    [ "GetSizeY", "term__man_8hpp.html#ad450b1140c4e4afa4963b71faeafa0c5", null ],
+    [ "GetWidth", "term__man_8hpp.html#abba829af7a668785654fd328b62611cf", null ],
     [ "HideCursor", "term__man_8hpp.html#a17955d07d875fd66b985885dca1cef00", null ],
     [ "Init", "term__man_8hpp.html#a7ff06effca0c76f5860b5df1acd463f3", null ],
     [ "PollEvent", "term__man_8hpp.html#a25c95fdd04e5547b9ed36f0898981acb", null ],

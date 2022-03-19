@@ -34,7 +34,8 @@ var annotated_dup =
     ] ],
     [ "tman", "namespacetman.html", [
       [ "Event", "structtman_1_1_event.html", "structtman_1_1_event" ],
-      [ "InputEvent", "structtman_1_1_input_event.html", "structtman_1_1_input_event" ]
+      [ "InputEvent", "structtman_1_1_input_event.html", "structtman_1_1_input_event" ],
+      [ "ResizeEvent", "structtman_1_1_resize_event.html", "structtman_1_1_resize_event" ]
     ] ],
     [ "_CONSOLE_FONT_INFOEX", "struct___c_o_n_s_o_l_e___f_o_n_t___i_n_f_o_e_x.html", "struct___c_o_n_s_o_l_e___f_o_n_t___i_n_f_o_e_x" ],
     [ "_String", "struct___string.html", "struct___string" ],

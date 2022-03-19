@@ -2,9 +2,9 @@ var term__man_8cpp =
 [
     [ "ClearScreen", "term__man_8cpp.html#adde2a212cb46370d49c51155712f4812", null ],
     [ "End", "term__man_8cpp.html#a5132303e3fd898759246ebc8440b45e6", null ],
+    [ "GetHeight", "term__man_8cpp.html#ad148200dd57a8df4167c4db10ca448ef", null ],
     [ "GetSize", "term__man_8cpp.html#a864c54bbfdabfcb8d49bbf4ef175529e", null ],
-    [ "GetSizeX", "term__man_8cpp.html#aba799311cc3582e68b513d8747dc644b", null ],
-    [ "GetSizeY", "term__man_8cpp.html#ad450b1140c4e4afa4963b71faeafa0c5", null ],
+    [ "GetWidth", "term__man_8cpp.html#abba829af7a668785654fd328b62611cf", null ],
     [ "HideCursor", "term__man_8cpp.html#a17955d07d875fd66b985885dca1cef00", null ],
     [ "Init", "term__man_8cpp.html#a7ff06effca0c76f5860b5df1acd463f3", null ],
     [ "PollEvent", "term__man_8cpp.html#a25c95fdd04e5547b9ed36f0898981acb", null ],

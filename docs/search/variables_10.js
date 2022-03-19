@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['reserve_0',['reserve',['../struct___string.html#a2739f4d8fe5356398b72bfc7a76fb29c',1,'_String']]],
-  ['resize_1',['resize',['../struct___string.html#ac614cec6c44ae06cc77392b072003b06',1,'_String']]],
-  ['right_2',['Right',['../structlio_1_1_vec2.html#ad5ddcad5bf79e5f918cf2b5b02d7f350',1,'lio::Vec2::Right()'],['../structlio_1_1_vec3.html#a20e6b01aa68bb19a45ea9a2f34118424',1,'lio::Vec3::Right()']]],
-  ['row_5fcount_3',['row_count',['../structlio_1_1_mat.html#a9b4f26ad48a4faf2d4f6ce454146a19f',1,'lio::Mat']]]
+  ['p1_0',['p1',['../classlio_1_1_line_seg.html#a2dbb8d4e482c75a287b93b16aa760203',1,'lio::LineSeg']]],
+  ['p2_1',['p2',['../classlio_1_1_line_seg.html#a0b59b54bcf9de9ac0585b49516af9d1a',1,'lio::LineSeg']]],
+  ['pop_5fback_2',['pop_back',['../struct___string.html#aef7c2a0dfef215f4991e9e22ba912da5',1,'_String']]],
+  ['pos_3',['pos',['../struct___string_iterator.html#ac489edf36db952aefcd0fc28b3e99ea3',1,'_StringIterator']]],
+  ['push_5fback_4',['push_back',['../struct___string.html#a56386b113d45ef00aa22ee86278a6c31',1,'_String']]]
 ];

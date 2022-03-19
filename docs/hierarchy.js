@@ -30,6 +30,7 @@ var hierarchy =
     [ "lio::Pipe< Tuple, Ret, Args >", "structlio_1_1_pipe.html", null ],
     [ "ImGuiSFML_Example.Program", "class_im_gui_s_f_m_l___example_1_1_program.html", null ],
     [ "lic::Range< TComps >", "structlic_1_1_range.html", null ],
+    [ "tman::ResizeEvent", "structtman_1_1_resize_event.html", null ],
     [ "lecs::System", "classlecs_1_1_system.html", null ],
     [ "lecs::SystemManager", "classlecs_1_1_system_manager.html", null ],
     [ "TComp", null, [

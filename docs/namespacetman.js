@@ -2,15 +2,16 @@ var namespacetman =
 [
     [ "Event", "structtman_1_1_event.html", "structtman_1_1_event" ],
     [ "InputEvent", "structtman_1_1_input_event.html", "structtman_1_1_input_event" ],
+    [ "ResizeEvent", "structtman_1_1_resize_event.html", "structtman_1_1_resize_event" ],
     [ "Target", "namespacetman.html#a9e0ca7936b368a67b72b5ade6b98b53b", [
       [ "Foreground", "namespacetman.html#a9e0ca7936b368a67b72b5ade6b98b53ba45bd1d5b32931106efbf1a82fe6a732f", null ],
       [ "Background", "namespacetman.html#a9e0ca7936b368a67b72b5ade6b98b53baa9ded1e5ce5d75814730bb4caaf49419", null ]
     ] ],
     [ "ClearScreen", "namespacetman.html#adde2a212cb46370d49c51155712f4812", null ],
     [ "End", "namespacetman.html#a5132303e3fd898759246ebc8440b45e6", null ],
+    [ "GetHeight", "namespacetman.html#ad148200dd57a8df4167c4db10ca448ef", null ],
     [ "GetSize", "namespacetman.html#a864c54bbfdabfcb8d49bbf4ef175529e", null ],
-    [ "GetSizeX", "namespacetman.html#aba799311cc3582e68b513d8747dc644b", null ],
-    [ "GetSizeY", "namespacetman.html#ad450b1140c4e4afa4963b71faeafa0c5", null ],
+    [ "GetWidth", "namespacetman.html#abba829af7a668785654fd328b62611cf", null ],
     [ "HideCursor", "namespacetman.html#a17955d07d875fd66b985885dca1cef00", null ],
     [ "Init", "namespacetman.html#a7ff06effca0c76f5860b5df1acd463f3", null ],
     [ "PollEvent", "namespacetman.html#a25c95fdd04e5547b9ed36f0898981acb", null ],
