@@ -7,7 +7,7 @@
 namespace tcon
 {
     /**
-     * @brief A structure containing input event information
+     * @brief A structure containing input event information.
      * 
      */
     struct InputEvent
@@ -34,7 +34,7 @@ namespace tcon
     };
 
     /**
-     * @brief A structure containing resize event information
+     * @brief A structure containing resize event information.
      * 
      */
     struct ResizeEvent
@@ -44,7 +44,7 @@ namespace tcon
     };
 
     /**
-     * @brief A union of all the event structures
+     * @brief A union of all the event structures.
      * 
      */
     struct Event
@@ -63,9 +63,62 @@ namespace tcon
         };
     };
 
+    /**
+     * @brief Enum for specifying what target to set color (foreground or background).
+     * 
+     */
     enum class Target
     {
-        Foreground = 38, Background = 48,
+        Foreground, Background = 10,
+    };
+
+    /**
+     * @brief Enum for specifying the colors.
+     * 
+     */
+    struct Color
+    {
+        enum : uint8_t
+        {
+            Black = 0,
+            Red,
+            Green,
+            Yellow,
+            Blue,
+            Magenta,
+            Cyan,
+            White,
+            BrightBlack,
+            BrightRed,
+            BrightGreen,
+            BrightYellow,
+            BrightBlue,
+            BrightMagenta,
+            BrightCyan,
+            BrightWhite,
+        };
+    };
+
+    /**
+     * @brief Enum for specifying style of the text.
+     * 
+     */
+    struct Style
+    {
+        enum : uint8_t
+        {
+            Bold            = 0x1,
+            Dim             = 0x2,
+            Italic          = 0x4,
+            Underline       = 0x8,
+            Blink           = 0x10,
+            Inversed        = 0x20,
+            Invisible       = 0x40,
+            CrossedOut      = 0x80,
+
+            All = Bold | Dim | Italic | Underline | Blink | 
+                Inversed | Invisible | CrossedOut,
+        };
     };
 
     /**
@@ -93,13 +146,13 @@ namespace tcon
     /**
      * @brief Set the color in 4 bit format (16 colors).
      * 
-     * @param fg_col Foreground color
-     * @param bg_col Background color
+     * @param col The color to be set
+     * @param target The target (foreground or background)
      */
-    void SetColor4bit(uint8_t fg_col, uint8_t bg_col);
+    void SetColor4bit(uint8_t col, Target target);
 
     /**
-     * @brief Set the color in 8 bit format (256 colors)
+     * @brief Set the color in 8 bit format (256 colors).
      * 
      * @param col The color to be set
      * @param target The target (foreground or background)
@@ -125,10 +178,19 @@ namespace tcon
     void SetColor24bit(uint32_t rgb, Target target);
 
     /**
-     * @brief Set the color to default.
+     * @brief Reset the color to default.
      * 
+     * @param target The target (foreground or background)
      */
-    void ResetColor();
+    void ResetColor(Target target);
+
+    /**
+     * @brief Set the style of text.
+     * 
+     * @param style The style to be set
+     * @param enable Whether enable to disable the style
+     */
+    void SetStyle(uint8_t style, bool enable);
 
     /**
      * @brief Clear the screen, cursor position will be (0, 0) after this.

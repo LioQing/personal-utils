@@ -91,39 +91,55 @@ namespace tcon
         std::printf("%c[%d;%df", ESC, y, x);
     }
 
-    void SetColor4bit(uint8_t fg_col, uint8_t bg_col)
+    void SetColor4bit(uint8_t col, Target target)
     {
-        std::printf("%c[%d;%dm", ESC, fg_col, bg_col);
+        if (col < 8)
+            col += 30;
+        else if (col < 16)
+            col += 82;
+        
+        std::printf("%c[%dm", ESC, col + (int)target);
     }
 
     void SetColor8bit(uint8_t col, Target target)
     {
-        std::printf("%c[%d;5;%dm", ESC, (int)target, col);
+        std::printf("%c[%d;5;%dm", ESC, (int)target + 38, col);
     }
 
     void SetColor24bit(uint8_t r, uint8_t g, uint8_t b, Target target)
     {
-        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target, r, g, b);
+        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38, r, g, b);
     }
 
     void SetColor24bit(uint32_t rgb, Target target)
     {
-        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target,
+        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38,
             rgb / (uint32_t)0x00010000 % 0x100,
             rgb / (uint32_t)0x00000100 % 0x100,
             rgb / (uint32_t)0x00000001 % 0x100
         );
     }
 
-    void ResetColor()
+    void ResetColor(Target target)
     {
-        std::printf("%c[0m", ESC);
+        printf("%c[%dm", ESC, (int)target + 39);
+    }
+
+    void SetStyle(uint8_t style, bool enable)
+    {
+        if (style & Style::Bold        ) printf("%c[%dm", ESC, 1 + !enable * 21);
+        if (style & Style::Dim         ) printf("%c[%dm", ESC, 2 + !enable * 20);
+        if (style & Style::Italic      ) printf("%c[%dm", ESC, 3 + !enable * 20);
+        if (style & Style::Underline   ) printf("%c[%dm", ESC, 4 + !enable * 20);
+        if (style & Style::Blink       ) printf("%c[%dm", ESC, 5 + !enable * 20);
+        if (style & Style::Inversed    ) printf("%c[%dm", ESC, 6 + !enable * 20);
+        if (style & Style::Invisible   ) printf("%c[%dm", ESC, 7 + !enable * 20);
+        if (style & Style::CrossedOut  ) printf("%c[%dm", ESC, 8 + !enable * 20);
     }
 
     void ClearScreen()
     {
         tcon::SetCursorPos(0, 0);
-        tcon::ResetColor();
         printf("%c[J", 0x1b);
         fflush(stdout);
     }

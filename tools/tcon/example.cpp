@@ -49,10 +49,14 @@ int main()
         theta = fmod(theta + rot_dir * .05f, 2 * 3.1415926);
 
         // draw
+        tcon::SetStyle(tcon::Style::All, false);
+        tcon::ResetColor(tcon::Target::Foreground);
+        tcon::ResetColor(tcon::Target::Background);
         tcon::ClearScreen();
 
         // hello world
         tcon::SetCursorPos(tcon::GetWidth() / 2 - 6, tcon::GetHeight() / 2);
+        tcon::SetStyle(tcon::Style::Italic | tcon::Style::Underline, true);
         for (int i = 0; i < 12; ++i)
         {
             if (i < len)
@@ -68,7 +72,9 @@ int main()
 
         // circle
         tcon::SetCursorPos(tcon::GetWidth() / 2 - 2 + (int)(2 * radius * cos(theta)), tcon::GetHeight() / 2 + (int)(radius * sin(theta)));
-        tcon::ResetColor();
+        tcon::SetStyle(tcon::Style::All, false);
+        tcon::SetColor4bit(tcon::Color::BrightBlue, tcon::Target::Foreground);
+        tcon::ResetColor(tcon::Target::Background);
         printf("%s", circle);
 
         fflush(stdout);
