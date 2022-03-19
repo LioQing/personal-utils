@@ -109,6 +109,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtcon_1_1_event.html">tcon::Event</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A union of all the event structures.  <a href="structtcon_1_1_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtcon_1_1_color.html">tcon::Color</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for specifying the colors.  <a href="structtcon_1_1_color.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtcon_1_1_style.html">tcon::Style</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for specifying style of the text.  <a href="structtcon_1_1_style.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -117,9 +123,10 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ae3136437173b558822f60cf3cb7d633c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ae3136437173b558822f60cf3cb7d633c">tcon::Target</a> { <a class="el" href="namespacetcon.html#ae3136437173b558822f60cf3cb7d633ca45bd1d5b32931106efbf1a82fe6a732f">tcon::Foreground</a> = 38
-, <a class="el" href="namespacetcon.html#ae3136437173b558822f60cf3cb7d633caa9ded1e5ce5d75814730bb4caaf49419">tcon::Background</a> = 48
+<tr class="memitem:ae3136437173b558822f60cf3cb7d633c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ae3136437173b558822f60cf3cb7d633c">tcon::Target</a> { <a class="el" href="namespacetcon.html#ae3136437173b558822f60cf3cb7d633ca45bd1d5b32931106efbf1a82fe6a732f">tcon::Foreground</a>
+, <a class="el" href="namespacetcon.html#ae3136437173b558822f60cf3cb7d633caa9ded1e5ce5d75814730bb4caaf49419">tcon::Background</a> = 10
  }</td></tr>
+<tr class="memdesc:ae3136437173b558822f60cf3cb7d633c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for specifying what target to set color (foreground or background).  <a href="namespacetcon.html#ae3136437173b558822f60cf3cb7d633c">More...</a><br /></td></tr>
 <tr class="separator:ae3136437173b558822f60cf3cb7d633c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -133,11 +140,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a8961a54552f31ee9d90ca85e4673e480"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a8961a54552f31ee9d90ca85e4673e480">tcon::SetCursorPos</a> (uint16_t x, uint16_t y)</td></tr>
 <tr class="memdesc:a8961a54552f31ee9d90ca85e4673e480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor position.  <a href="namespacetcon.html#a8961a54552f31ee9d90ca85e4673e480">More...</a><br /></td></tr>
 <tr class="separator:a8961a54552f31ee9d90ca85e4673e480"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cc990cc84d8aab6758df2ab1213ea85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a4cc990cc84d8aab6758df2ab1213ea85">tcon::SetColor4bit</a> (uint8_t fg_col, uint8_t bg_col)</td></tr>
-<tr class="memdesc:a4cc990cc84d8aab6758df2ab1213ea85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 4 bit format (16 colors).  <a href="namespacetcon.html#a4cc990cc84d8aab6758df2ab1213ea85">More...</a><br /></td></tr>
-<tr class="separator:a4cc990cc84d8aab6758df2ab1213ea85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10b84a1460e9ed441c120dcbd2d86133"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a10b84a1460e9ed441c120dcbd2d86133">tcon::SetColor4bit</a> (uint8_t col, Target target)</td></tr>
+<tr class="memdesc:a10b84a1460e9ed441c120dcbd2d86133"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 4 bit format (16 colors).  <a href="namespacetcon.html#a10b84a1460e9ed441c120dcbd2d86133">More...</a><br /></td></tr>
+<tr class="separator:a10b84a1460e9ed441c120dcbd2d86133"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa29e6c401fbdd8e6e50ac7932814d824"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#aa29e6c401fbdd8e6e50ac7932814d824">tcon::SetColor8bit</a> (uint8_t col, Target target)</td></tr>
-<tr class="memdesc:aa29e6c401fbdd8e6e50ac7932814d824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 8 bit format (256 colors)  <a href="namespacetcon.html#aa29e6c401fbdd8e6e50ac7932814d824">More...</a><br /></td></tr>
+<tr class="memdesc:aa29e6c401fbdd8e6e50ac7932814d824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 8 bit format (256 colors).  <a href="namespacetcon.html#aa29e6c401fbdd8e6e50ac7932814d824">More...</a><br /></td></tr>
 <tr class="separator:aa29e6c401fbdd8e6e50ac7932814d824"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada64dd5d38320d2ce5f2d11a3fb459cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ada64dd5d38320d2ce5f2d11a3fb459cf">tcon::SetColor24bit</a> (uint8_t r, uint8_t g, uint8_t b, Target target)</td></tr>
 <tr class="memdesc:ada64dd5d38320d2ce5f2d11a3fb459cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 24 bit format (rgb color).  <a href="namespacetcon.html#ada64dd5d38320d2ce5f2d11a3fb459cf">More...</a><br /></td></tr>
@@ -145,9 +152,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a9ebe678b9135d27a7424c14fba9152f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a9ebe678b9135d27a7424c14fba9152f7">tcon::SetColor24bit</a> (uint32_t rgb, Target target)</td></tr>
 <tr class="memdesc:a9ebe678b9135d27a7424c14fba9152f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 24 bit format (rgb color).  <a href="namespacetcon.html#a9ebe678b9135d27a7424c14fba9152f7">More...</a><br /></td></tr>
 <tr class="separator:a9ebe678b9135d27a7424c14fba9152f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a859da47fc9203ffef5962c2bfc6d8e3f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a859da47fc9203ffef5962c2bfc6d8e3f">tcon::ResetColor</a> ()</td></tr>
-<tr class="memdesc:a859da47fc9203ffef5962c2bfc6d8e3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color to default.  <a href="namespacetcon.html#a859da47fc9203ffef5962c2bfc6d8e3f">More...</a><br /></td></tr>
-<tr class="separator:a859da47fc9203ffef5962c2bfc6d8e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a481acc9d839f93a2b1e1604e8fe959b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a481acc9d839f93a2b1e1604e8fe959b0">tcon::ResetColor</a> (Target target)</td></tr>
+<tr class="memdesc:a481acc9d839f93a2b1e1604e8fe959b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the color to default.  <a href="namespacetcon.html#a481acc9d839f93a2b1e1604e8fe959b0">More...</a><br /></td></tr>
+<tr class="separator:a481acc9d839f93a2b1e1604e8fe959b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69e0cb15c56f9a7db930b473f6f4c51b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a69e0cb15c56f9a7db930b473f6f4c51b">tcon::SetStyle</a> (uint8_t style, bool enable)</td></tr>
+<tr class="memdesc:a69e0cb15c56f9a7db930b473f6f4c51b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the style of text.  <a href="namespacetcon.html#a69e0cb15c56f9a7db930b473f6f4c51b">More...</a><br /></td></tr>
+<tr class="separator:a69e0cb15c56f9a7db930b473f6f4c51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a88c010ebd1c704635e1489129d6181f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a88c010ebd1c704635e1489129d6181f2">tcon::ClearScreen</a> ()</td></tr>
 <tr class="memdesc:a88c010ebd1c704635e1489129d6181f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the screen, cursor position will be (0, 0) after this.  <a href="namespacetcon.html#a88c010ebd1c704635e1489129d6181f2">More...</a><br /></td></tr>
 <tr class="separator:a88c010ebd1c704635e1489129d6181f2"><td class="memSeparator" colspan="2">&#160;</td></tr>

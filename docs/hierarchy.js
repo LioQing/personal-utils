@@ -4,6 +4,7 @@ var hierarchy =
     [ "_String", "struct___string.html", null ],
     [ "_StringIterator", "struct___string_iterator.html", null ],
     [ "lio::AStarPathfinder< T, U >", "classlio_1_1_a_star_pathfinder.html", null ],
+    [ "tcon::Color", "structtcon_1_1_color.html", null ],
     [ "lecs::Component", "classlecs_1_1_component.html", null ],
     [ "lio::CSVReader", "classlio_1_1_c_s_v_reader.html", null ],
     [ "lio.CustomFloat", "classlio_1_1_custom_float.html", null ],
@@ -31,6 +32,7 @@ var hierarchy =
     [ "ImGuiSFML_Example.Program", "class_im_gui_s_f_m_l___example_1_1_program.html", null ],
     [ "lic::Range< TComps >", "structlic_1_1_range.html", null ],
     [ "tcon::ResizeEvent", "structtcon_1_1_resize_event.html", null ],
+    [ "tcon::Style", "structtcon_1_1_style.html", null ],
     [ "lecs::System", "classlecs_1_1_system.html", null ],
     [ "lecs::SystemManager", "classlecs_1_1_system_manager.html", null ],
     [ "TComp", null, [

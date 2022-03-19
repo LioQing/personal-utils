@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['vt_0',['VT',['../_a_n_s_i_escaper_8h.html#af31477bc48f67856bedb0fa8e5b5281dacc6eb75e245bf77075bf1abfaacbd16b',1,'VT():&#160;ANSIEscaper.h'],['../namespacelio_1_1_a_n_s_i_escaper.html#abbd1c27ab7739ae2d78520c3c46b7f87a36ee56c0e36d8a9a3ce417d836135f65',1,'lio::ANSIEscaper::VT()']]]
+  ['underline_0',['Underline',['../structtcon_1_1_style.html#a2fba43cedfc00ca662e320f5b61dc4a0aa0f938cfc994eed4ceb49d2f9a64ce5b',1,'tcon::Style']]],
+  ['up_1',['Up',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca796163f9235ce3a2f145f9a9ca50bc6b',1,'tcon::InputEvent']]],
+  ['usage_2',['USAGE',['../namespacelio.html#af0279d8167a511d9895557c868b79819aae7c3cef8788d4009148039735c59506',1,'lio']]]
 ];

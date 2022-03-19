@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['yellow_0',['YELLOW',['../_a_n_s_i_escaper_8h.html#a3d63713f6de49b53e3fd3a3a141621e3ae735a848bf82163a19236ead1c3ef2d2',1,'YELLOW():&#160;ANSIEscaper.h'],['../namespacelio_1_1_a_n_s_i_escaper.html#ae9663df0f526d9467121b28dad44e7f0ad39a322aa77c7941469299dbcbbc560c',1,'lio::ANSIEscaper::YELLOW()']]]
+  ['yellow_0',['Yellow',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844a26aa7b1c4e7abbea020df623de66b8e8',1,'tcon::Color']]]
 ];

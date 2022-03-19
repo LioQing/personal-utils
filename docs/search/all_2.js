@@ -21,5 +21,17 @@ var searchData=
   ['bg_5fred_18',['BG_RED',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119af25c69c342d7dc469aaf5053922fa003',1,'lio::LConsoleScreen']]],
   ['bg_5fwhite_19',['BG_WHITE',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119af678ad061dd593bcec1965490828968d',1,'lio::LConsoleScreen']]],
   ['bg_5fyellow_20',['BG_YELLOW',['../classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119ab9fa6846e7209526e92610a05dffa60b',1,'lio::LConsoleScreen']]],
-  ['bias_21',['Bias',['../classlio_1_1_custom_float.html#a3e9b435d16219311f99155e07dd47591',1,'lio::CustomFloat']]]
+  ['bias_21',['Bias',['../classlio_1_1_custom_float.html#a3e9b435d16219311f99155e07dd47591',1,'lio::CustomFloat']]],
+  ['black_22',['Black',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844afcd444a4972018e7bd30af760d6fa886',1,'tcon::Color']]],
+  ['blink_23',['Blink',['../structtcon_1_1_style.html#a2fba43cedfc00ca662e320f5b61dc4a0aced4154523411ccbae66be17a9cfb0d5',1,'tcon::Style']]],
+  ['blue_24',['Blue',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844a5bdc1821e921bdc3e6755f9c172e8227',1,'tcon::Color']]],
+  ['bold_25',['Bold',['../structtcon_1_1_style.html#a2fba43cedfc00ca662e320f5b61dc4a0a9ccdafd897bfec24722e5c083484ea0a',1,'tcon::Style']]],
+  ['brightblack_26',['BrightBlack',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844ad4316d9e4ef628d200952ea13fbf7bf4',1,'tcon::Color']]],
+  ['brightblue_27',['BrightBlue',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844a6c27e940c07df1139ded9b588b00ae99',1,'tcon::Color']]],
+  ['brightcyan_28',['BrightCyan',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844ad72e00b3208013165ff78d925221e868',1,'tcon::Color']]],
+  ['brightgreen_29',['BrightGreen',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844a81d2ad06824e28638503bee9dd16f8cd',1,'tcon::Color']]],
+  ['brightmagenta_30',['BrightMagenta',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844a880d110553518747c7384cc79b4db811',1,'tcon::Color']]],
+  ['brightred_31',['BrightRed',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844a533e88b35d339b4a972a7e999bee83c2',1,'tcon::Color']]],
+  ['brightwhite_32',['BrightWhite',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844a8e4840ae715c4648836757651781e6ba',1,'tcon::Color']]],
+  ['brightyellow_33',['BrightYellow',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844ab4bb8947917e25bd30fbd2b9b7cf4aa1',1,'tcon::Color']]]
 ];

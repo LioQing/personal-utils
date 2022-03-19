@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['up_0',['Up',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca796163f9235ce3a2f145f9a9ca50bc6b',1,'tcon::InputEvent']]],
-  ['usage_1',['USAGE',['../namespacelio.html#af0279d8167a511d9895557c868b79819aae7c3cef8788d4009148039735c59506',1,'lio']]]
+  ['red_0',['Red',['../structtcon_1_1_color.html#a028f229599cff0ddc129ed9f227c5844a1211cfdc3d3600ac373a2aa0daaaac07',1,'tcon::Color']]],
+  ['resize_1',['Resize',['../structtcon_1_1_event.html#a9d388a7025ca30c604c9fe8ab9a3f78ba0038dc023f4716ad830cfbe6af8aed78',1,'tcon::Event']]],
+  ['right_2',['Right',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca99a822f753e4f653956678aabe25ed4a',1,'tcon::InputEvent']]]
 ];

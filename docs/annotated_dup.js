@@ -33,9 +33,11 @@ var annotated_dup =
       [ "Vec3", "structlio_1_1_vec3.html", "structlio_1_1_vec3" ]
     ] ],
     [ "tcon", "namespacetcon.html", [
+      [ "Color", "structtcon_1_1_color.html", null ],
       [ "Event", "structtcon_1_1_event.html", "structtcon_1_1_event" ],
       [ "InputEvent", "structtcon_1_1_input_event.html", "structtcon_1_1_input_event" ],
-      [ "ResizeEvent", "structtcon_1_1_resize_event.html", "structtcon_1_1_resize_event" ]
+      [ "ResizeEvent", "structtcon_1_1_resize_event.html", "structtcon_1_1_resize_event" ],
+      [ "Style", "structtcon_1_1_style.html", null ]
     ] ],
     [ "_CONSOLE_FONT_INFOEX", "struct___c_o_n_s_o_l_e___f_o_n_t___i_n_f_o_e_x.html", "struct___c_o_n_s_o_l_e___f_o_n_t___i_n_f_o_e_x" ],
     [ "_String", "struct___string.html", "struct___string" ],
