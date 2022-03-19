@@ -122,7 +122,7 @@ namespace tcon
     };
 
     /**
-     * @brief Initialize term_man.
+     * @brief Initialize tcon.
      * 
      * @return A boolean indicating success or not
      */
