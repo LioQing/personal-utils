@@ -125,9 +125,6 @@ namespace tcon
 
     struct Handle
     {
-        uint16_t width;
-        uint16_t height;
-
         Handle() = default;
         ~Handle();
 
@@ -153,6 +150,20 @@ namespace tcon
         bool UpdateSize();
 
         /**
+         * @brief Get the width of terminal.
+         * 
+         * @return uint16_t The width
+         */
+        uint16_t GetWidth() const;
+
+        /**
+         * @brief Get the height of terminal.
+         * 
+         * @return uint16_t The height
+         */
+        uint16_t GetHeight() const;
+
+        /**
          * @brief Get the size of terminal.
          * 
          * @param x The width value to be returned
@@ -174,6 +185,9 @@ namespace tcon
     
         static bool initialized;
         termios init_term;
+
+        uint16_t width;
+        uint16_t height;
 
         std::deque<Event> event_queue;
     };

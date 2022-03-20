@@ -62,7 +62,7 @@ int main()
         tcon::ClearScreen();
 
         // hello world
-        tcon::SetCursorPos(handle.width / 2 - 6, handle.height / 2);
+        tcon::SetCursorPos(handle.GetWidth() / 2 - 6, handle.GetHeight() / 2);
         tcon::SetStyle(tcon::Style::Italic | tcon::Style::Underline, true);
         for (int i = 0; i < 12; ++i)
         {
@@ -78,7 +78,7 @@ int main()
         }
 
         // circle
-        tcon::SetCursorPos(handle.width / 2 - 2 + (int)(2 * radius * cos(theta)), handle.height / 2 + (int)(radius * sin(theta)));
+        tcon::SetCursorPos(handle.GetWidth() / 2 - 2 + (int)(2 * radius * cos(theta)), handle.GetHeight() / 2 + (int)(radius * sin(theta)));
         tcon::SetStyle(tcon::Style::All, false);
         tcon::SetColor4bit(tcon::Color::BrightBlue, tcon::Target::Foreground);
         tcon::ResetColor(tcon::Target::Background);

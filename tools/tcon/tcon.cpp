@@ -103,6 +103,16 @@ namespace tcon
 
         return true;
     }
+
+    uint16_t Handle::GetWidth() const
+    {
+        return width;
+    }
+
+    uint16_t Handle::GetHeight() const
+    {
+        return height;
+    }
     
     void Handle::GetSize(uint16_t& x, uint16_t& y) const
     {
@@ -201,7 +211,7 @@ namespace tcon
 
     void SetCursorPos(uint16_t x, uint16_t y)
     {
-        std::printf("%c[%d;%df", ESC, y, x);
+        printf("%c[%d;%df", ESC, y, x);
     }
 
     void SetColor4bit(uint8_t col, Target target)
@@ -211,22 +221,22 @@ namespace tcon
         else if (col < 16)
             col += 82;
         
-        std::printf("%c[%dm", ESC, col + (int)target);
+        printf("%c[%dm", ESC, col + (int)target);
     }
 
     void SetColor8bit(uint8_t col, Target target)
     {
-        std::printf("%c[%d;5;%dm", ESC, (int)target + 38, col);
+        printf("%c[%d;5;%dm", ESC, (int)target + 38, col);
     }
 
     void SetColor24bit(uint8_t r, uint8_t g, uint8_t b, Target target)
     {
-        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38, r, g, b);
+        printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38, r, g, b);
     }
 
     void SetColor24bit(uint32_t rgb, Target target)
     {
-        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38,
+        printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38,
             rgb / (uint32_t)0x00010000 % 0x100,
             rgb / (uint32_t)0x00000100 % 0x100,
             rgb / (uint32_t)0x00000001 % 0x100
@@ -252,19 +262,19 @@ namespace tcon
 
     void ClearScreen()
     {
-        tcon::SetCursorPos(0, 0);
+        SetCursorPos(0, 0);
         printf("%c[J", 0x1b);
         fflush(stdout);
     }
 
     void HideCursor()
     {
-        std::printf("%c[?25l", ESC);
+        printf("%c[?25l", ESC);
     }
 
     void ShowCursor()
     {
-        std::printf("%c[?25h", ESC);
+        printf("%c[?25h", ESC);
     }
 
     namespace
@@ -380,7 +390,7 @@ namespace tcon
                 }
             }
             
-            if (std::isprint(esc_seq[1]))
+            if (isprint(esc_seq[1]))
             {
                 is_alt = true;
                 code = esc_seq[1];
