@@ -18,6 +18,7 @@ var hierarchy =
     [ "tcon::Event", "structtcon_1_1_event.html", null ],
     [ "lecs::EventManager", "classlecs_1_1_event_manager.html", null ],
     [ "lecs::EventSubscriber", "classlecs_1_1_event_subscriber.html", null ],
+    [ "tcon::Handle", "structtcon_1_1_handle.html", null ],
     [ "tcon::InputEvent", "structtcon_1_1_input_event.html", null ],
     [ "LConsoleScreen", "struct_l_console_screen.html", null ],
     [ "lio::LConsoleScreen", "classlio_1_1_l_console_screen.html", [

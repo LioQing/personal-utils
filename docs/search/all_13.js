@@ -12,6 +12,6 @@ var searchData=
   ['tobitstring_9',['ToBitString',['../classlio_1_1_custom_float.html#ac972eb655d30cfd9afb5e1dcdd3a55b7',1,'lio::CustomFloat']]],
   ['transpose_10',['Transpose',['../structlio_1_1_mat.html#afe9a1a689c106ef7b6ca8a1f47bfbf7b',1,'lio::Mat']]],
   ['transposed_11',['Transposed',['../structlio_1_1_mat.html#aa89af57f9ba4e57d774559fc82da82f3',1,'lio::Mat::Transposed(const Mat &amp;m)'],['../structlio_1_1_mat.html#a112a9ce6a4712f00569f1aabc834ae95',1,'lio::Mat::Transposed() const']]],
-  ['type_12',['Type',['../structtcon_1_1_event.html#a9d388a7025ca30c604c9fe8ab9a3f78b',1,'tcon::Event']]],
-  ['type_13',['type',['../structtcon_1_1_event.html#afe27612cff7f93e249a27f649f9c444c',1,'tcon::Event']]]
+  ['type_12',['type',['../structtcon_1_1_event.html#afe27612cff7f93e249a27f649f9c444c',1,'tcon::Event']]],
+  ['type_13',['Type',['../structtcon_1_1_event.html#a9d388a7025ca30c604c9fe8ab9a3f78b',1,'tcon::Event']]]
 ];

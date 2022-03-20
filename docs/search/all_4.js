@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['data_0',['Data',['../classlio_1_1_custom_float.html#ae2ddbc19af42c3aef0bc36fd3b84fb27',1,'lio::CustomFloat']]],
-  ['data_1',['data',['../struct___string.html#a2bbba1339ae686abd811b6e40852b129',1,'_String']]],
+  ['data_0',['data',['../struct___string.html#a2bbba1339ae686abd811b6e40852b129',1,'_String']]],
+  ['data_1',['Data',['../classlio_1_1_custom_float.html#ae2ddbc19af42c3aef0bc36fd3b84fb27',1,'lio::CustomFloat']]],
   ['delete_2',['delete',['../_string_8h.html#a86ccfd529156b9cfc4dadf9b824e690f',1,'delete():&#160;String.h'],['../_string_iterator_8h.html#a86ccfd529156b9cfc4dadf9b824e690f',1,'delete():&#160;StringIterator.h'],['../_vector_8h.html#a86ccfd529156b9cfc4dadf9b824e690f',1,'delete():&#160;Vector.h'],['../_vector_iterator_8h.html#a86ccfd529156b9cfc4dadf9b824e690f',1,'delete():&#160;VectorIterator.h']]],
   ['delete_3',['Delete',['../structtcon_1_1_input_event.html#a5874764ae7ff3847e93cc9df41d40fcca23e92e81b7a9f0ddd4ef6e228cc6e8e6',1,'tcon::InputEvent']]],
   ['delete_4',['delete',['../struct___string.html#a99e601fe13d3152970ea4147e293b6da',1,'_String::delete()'],['../struct___string_iterator.html#a4003c178e97cd853b630cd33ffece6b1',1,'_StringIterator::delete()']]],

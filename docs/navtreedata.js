@@ -74,8 +74,8 @@ var NAVTREEINDEX =
 "classlecs_1_1_entity_manager.html#aba23c1b1c86fa2d3cc35235cd8dc38c6",
 "classlio_1_1_l_console_screen.html#a02ff17f79410c7d96dc1ba6ff112a119af70622b0c1d987cc021e54609903f76a",
 "lecs_8hpp.html#a23bb74607677a4790e92c879d1c3ebcbaadb980c8b44fd31bffa020aa8ed4099c",
-"struct___string_iterator.html#aad1543ec3358f482a646632eb220db28",
-"structlio_1_1_vec3.html#a7978ec13dff6ef616009d671d6e1c8c6"
+"struct_l_console_screen.html#a35011ae3b8dc2eb938ec078b91d61dec",
+"structlio_1_1_vec3.html#ad2203dd885e2905dc1bec7ff68a7a434"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -100,6 +100,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtcon_1_1_event.html">Event</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A union of all the event structures.  <a href="structtcon_1_1_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtcon_1_1_handle.html">Handle</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtcon_1_1_input_event.html">InputEvent</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A structure containing input event information.  <a href="structtcon_1_1_input_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,12 +122,6 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:abde535f0f6acc6442b2e3da271397f24"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#abde535f0f6acc6442b2e3da271397f24">Init</a> ()</td></tr>
-<tr class="memdesc:abde535f0f6acc6442b2e3da271397f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize tcon.  <a href="namespacetcon.html#abde535f0f6acc6442b2e3da271397f24">More...</a><br /></td></tr>
-<tr class="separator:abde535f0f6acc6442b2e3da271397f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe2dd1f2eac7202ab98ee129954b800e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#afe2dd1f2eac7202ab98ee129954b800e">End</a> ()</td></tr>
-<tr class="memdesc:afe2dd1f2eac7202ab98ee129954b800e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restore default terminal and dettach signal handler.  <a href="namespacetcon.html#afe2dd1f2eac7202ab98ee129954b800e">More...</a><br /></td></tr>
-<tr class="separator:afe2dd1f2eac7202ab98ee129954b800e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8961a54552f31ee9d90ca85e4673e480"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a8961a54552f31ee9d90ca85e4673e480">SetCursorPos</a> (uint16_t x, uint16_t y)</td></tr>
 <tr class="memdesc:a8961a54552f31ee9d90ca85e4673e480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor position.  <a href="namespacetcon.html#a8961a54552f31ee9d90ca85e4673e480">More...</a><br /></td></tr>
 <tr class="separator:a8961a54552f31ee9d90ca85e4673e480"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -150,27 +146,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a88c010ebd1c704635e1489129d6181f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a88c010ebd1c704635e1489129d6181f2">ClearScreen</a> ()</td></tr>
 <tr class="memdesc:a88c010ebd1c704635e1489129d6181f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the screen, cursor position will be (0, 0) after this.  <a href="namespacetcon.html#a88c010ebd1c704635e1489129d6181f2">More...</a><br /></td></tr>
 <tr class="separator:a88c010ebd1c704635e1489129d6181f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65795c2700b45897d51cfcddc5f9320b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a65795c2700b45897d51cfcddc5f9320b">UpdateSize</a> ()</td></tr>
-<tr class="memdesc:a65795c2700b45897d51cfcddc5f9320b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the terminal size.  <a href="namespacetcon.html#a65795c2700b45897d51cfcddc5f9320b">More...</a><br /></td></tr>
-<tr class="separator:a65795c2700b45897d51cfcddc5f9320b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03fcad2e82b1718833c55d375be626d3"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a03fcad2e82b1718833c55d375be626d3">GetWidth</a> ()</td></tr>
-<tr class="memdesc:a03fcad2e82b1718833c55d375be626d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the width of terminal.  <a href="namespacetcon.html#a03fcad2e82b1718833c55d375be626d3">More...</a><br /></td></tr>
-<tr class="separator:a03fcad2e82b1718833c55d375be626d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b4b823864e59feb56c8c5045906457b"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a8b4b823864e59feb56c8c5045906457b">GetHeight</a> ()</td></tr>
-<tr class="memdesc:a8b4b823864e59feb56c8c5045906457b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the height of terminal.  <a href="namespacetcon.html#a8b4b823864e59feb56c8c5045906457b">More...</a><br /></td></tr>
-<tr class="separator:a8b4b823864e59feb56c8c5045906457b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d3625dddbfe05dc7239e79aea641a28"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a4d3625dddbfe05dc7239e79aea641a28">GetSize</a> (int16_t &amp;x, int16_t &amp;y)</td></tr>
-<tr class="memdesc:a4d3625dddbfe05dc7239e79aea641a28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the size of terminal.  <a href="namespacetcon.html#a4d3625dddbfe05dc7239e79aea641a28">More...</a><br /></td></tr>
-<tr class="separator:a4d3625dddbfe05dc7239e79aea641a28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b6ead83decdb1e06cfbafe2f3a4d612"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a8b6ead83decdb1e06cfbafe2f3a4d612">HideCursor</a> ()</td></tr>
 <tr class="memdesc:a8b6ead83decdb1e06cfbafe2f3a4d612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hide the cursor.  <a href="namespacetcon.html#a8b6ead83decdb1e06cfbafe2f3a4d612">More...</a><br /></td></tr>
 <tr class="separator:a8b6ead83decdb1e06cfbafe2f3a4d612"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c0be6336cd6137f04ef94cd6297c925"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a7c0be6336cd6137f04ef94cd6297c925">ShowCursor</a> ()</td></tr>
 <tr class="memdesc:a7c0be6336cd6137f04ef94cd6297c925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show the cursor.  <a href="namespacetcon.html#a7c0be6336cd6137f04ef94cd6297c925">More...</a><br /></td></tr>
 <tr class="separator:a7c0be6336cd6137f04ef94cd6297c925"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a220d3a286b8b563d205d14bbf29956fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a220d3a286b8b563d205d14bbf29956fc">PollEvent</a> (<a class="el" href="structtcon_1_1_event.html">Event</a> &amp;event)</td></tr>
-<tr class="memdesc:a220d3a286b8b563d205d14bbf29956fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Poll events.  <a href="namespacetcon.html#a220d3a286b8b563d205d14bbf29956fc">More...</a><br /></td></tr>
-<tr class="separator:a220d3a286b8b563d205d14bbf29956fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ae3136437173b558822f60cf3cb7d633c" name="ae3136437173b558822f60cf3cb7d633c"></a>
@@ -221,103 +202,6 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afe2dd1f2eac7202ab98ee129954b800e" name="afe2dd1f2eac7202ab98ee129954b800e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe2dd1f2eac7202ab98ee129954b800e">&#9670;&nbsp;</a></span>End()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool tcon::End </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Restore default terminal and dettach signal handler. </p>
-<dl class="section return"><dt>Returns</dt><dd>A boolean indicating success or not </dd></dl>
-
-</div>
-</div>
-<a id="a8b4b823864e59feb56c8c5045906457b" name="a8b4b823864e59feb56c8c5045906457b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b4b823864e59feb56c8c5045906457b">&#9670;&nbsp;</a></span>GetHeight()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int16_t tcon::GetHeight </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the height of terminal. </p>
-<dl class="section return"><dt>Returns</dt><dd>int16_t The height </dd></dl>
-
-</div>
-</div>
-<a id="a4d3625dddbfe05dc7239e79aea641a28" name="a4d3625dddbfe05dc7239e79aea641a28"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d3625dddbfe05dc7239e79aea641a28">&#9670;&nbsp;</a></span>GetSize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tcon::GetSize </td>
-          <td>(</td>
-          <td class="paramtype">int16_t &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int16_t &amp;&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the size of terminal. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>The width value to be returned </td></tr>
-    <tr><td class="paramname">y</td><td>The height value to be returned </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a03fcad2e82b1718833c55d375be626d3" name="a03fcad2e82b1718833c55d375be626d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03fcad2e82b1718833c55d375be626d3">&#9670;&nbsp;</a></span>GetWidth()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int16_t tcon::GetWidth </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the width of terminal. </p>
-<dl class="section return"><dt>Returns</dt><dd>int16_t The width </dd></dl>
-
-</div>
-</div>
 <a id="a8b6ead83decdb1e06cfbafe2f3a4d612" name="a8b6ead83decdb1e06cfbafe2f3a4d612"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8b6ead83decdb1e06cfbafe2f3a4d612">&#9670;&nbsp;</a></span>HideCursor()</h2>
 
@@ -334,53 +218,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Hide the cursor. </p>
-
-</div>
-</div>
-<a id="abde535f0f6acc6442b2e3da271397f24" name="abde535f0f6acc6442b2e3da271397f24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abde535f0f6acc6442b2e3da271397f24">&#9670;&nbsp;</a></span>Init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool tcon::Init </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initialize tcon. </p>
-<dl class="section return"><dt>Returns</dt><dd>A boolean indicating success or not </dd></dl>
-
-</div>
-</div>
-<a id="a220d3a286b8b563d205d14bbf29956fc" name="a220d3a286b8b563d205d14bbf29956fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a220d3a286b8b563d205d14bbf29956fc">&#9670;&nbsp;</a></span>PollEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool tcon::PollEvent </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structtcon_1_1_event.html">Event</a> &amp;&#160;</td>
-          <td class="paramname"><em>event</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Poll events. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">event</td><td>The <a class="el" href="structtcon_1_1_event.html" title="A union of all the event structures.">Event</a> struct to be returned </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A boolean indicating whether an event is polled </dd></dl>
 
 </div>
 </div>
@@ -662,26 +499,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Show the cursor. </p>
-
-</div>
-</div>
-<a id="a65795c2700b45897d51cfcddc5f9320b" name="a65795c2700b45897d51cfcddc5f9320b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65795c2700b45897d51cfcddc5f9320b">&#9670;&nbsp;</a></span>UpdateSize()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool tcon::UpdateSize </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Update the terminal size. </p>
-<dl class="section return"><dt>Returns</dt><dd>A boolean indicating success or not </dd></dl>
 
 </div>
 </div>

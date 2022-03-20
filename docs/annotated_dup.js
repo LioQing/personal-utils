@@ -35,6 +35,7 @@ var annotated_dup =
     [ "tcon", "namespacetcon.html", [
       [ "Color", "structtcon_1_1_color.html", null ],
       [ "Event", "structtcon_1_1_event.html", "structtcon_1_1_event" ],
+      [ "Handle", "structtcon_1_1_handle.html", "structtcon_1_1_handle" ],
       [ "InputEvent", "structtcon_1_1_input_event.html", "structtcon_1_1_input_event" ],
       [ "ResizeEvent", "structtcon_1_1_resize_event.html", "structtcon_1_1_resize_event" ],
       [ "Style", "structtcon_1_1_style.html", null ]
