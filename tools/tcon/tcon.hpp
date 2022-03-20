@@ -3,6 +3,8 @@
 #include <cstdint>
 #include <string>
 #include <signal.h>
+#include <deque>
+#include <termios.h>
 
 namespace tcon
 {
@@ -39,8 +41,8 @@ namespace tcon
      */
     struct ResizeEvent
     {
-        int16_t width;
-        int16_t height;
+        uint16_t width;
+        uint16_t height;
     };
 
     /**
@@ -121,19 +123,60 @@ namespace tcon
         };
     };
 
-    /**
-     * @brief Initialize tcon.
-     * 
-     * @return A boolean indicating success or not
-     */
-    bool Init();
+    struct Handle
+    {
+        uint16_t width;
+        uint16_t height;
 
-    /**
-     * @brief Restore default terminal and dettach signal handler.
-     * 
-     * @return A boolean indicating success or not
-     */
-    bool End();
+        Handle() = default;
+        ~Handle();
+
+        /**
+         * @brief Initialize tcon in this Handle.
+         * 
+         * @return bool Boolean indicating success or not
+         */
+        bool Init();
+
+        /**
+         * @brief Restore default terminal and dettach signal handler.
+         * 
+         * @return bool Boolean indicating success or not
+         */
+        bool End();
+
+        /**
+         * @brief Update the terminal size.
+         * 
+         * @return bool Boolean indicating success or not
+         */
+        bool UpdateSize();
+
+        /**
+         * @brief Get the size of terminal.
+         * 
+         * @param x The width value to be returned
+         * @param y The height value to be returned
+         */
+        void GetSize(uint16_t& x, uint16_t& y) const;
+
+        /**
+         * @brief Poll events.
+         * 
+         * @param event The Event struct to be returned
+         * @return bool Boolean indicating whether an event is polled
+         */
+        bool PollEvent(Event& event);
+
+    private:
+
+        Handle(const Handle&) = default;
+    
+        static bool initialized;
+        termios init_term;
+
+        std::deque<Event> event_queue;
+    };
 
     /**
      * @brief Set the cursor position.
@@ -197,35 +240,6 @@ namespace tcon
      * 
      */
     void ClearScreen();
-    
-    /**
-     * @brief Update the terminal size.
-     * 
-     * @return A boolean indicating success or not
-     */
-    bool UpdateSize();
-
-    /**
-     * @brief Get the width of terminal.
-     * 
-     * @return int16_t The width
-     */
-    int16_t GetWidth();
-
-    /**
-     * @brief Get the height of terminal.
-     * 
-     * @return int16_t The height
-     */
-    int16_t GetHeight();
-
-    /**
-     * @brief Get the size of terminal.
-     * 
-     * @param x The width value to be returned
-     * @param y The height value to be returned
-     */
-    void GetSize(int16_t& x, int16_t& y);
 
     /**
      * @brief Hide the cursor.
@@ -238,12 +252,4 @@ namespace tcon
      * 
      */
     void ShowCursor();
-
-    /**
-     * @brief Poll events.
-     * 
-     * @param event The Event struct to be returned
-     * @return A boolean indicating whether an event is polled
-     */
-    bool PollEvent(Event& event);
 }

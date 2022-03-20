@@ -1,11 +1,9 @@
 #include "tcon.hpp"
 
-#include <deque>
 #include <cstdio>
 #include <cstdlib>
 #include <sys/ioctl.h>
 #include <unistd.h>
-#include <termios.h>
 
 namespace tcon
 {
@@ -26,20 +24,18 @@ namespace tcon
         bool GetInputBuf(std::string& buf);
 
         int32_t MapEscSeqToInputCode(const char* esc_seq, int32_t size, uint8_t& code, bool& is_alt);
-
-        uint16_t width;
-        uint16_t height;
-
-        termios init_term;
-
-        std::deque<Event> event_queue;
     }
 
-    bool Init()
-    {
-        tcgetattr(STDIN_FILENO, &init_term);
+    bool Handle::initialized = false;
 
-        event_queue = std::deque<Event>();
+    bool Handle::Init()
+    {
+        if (initialized)
+            return false;
+
+        initialized = true;
+
+        tcgetattr(STDIN_FILENO, &init_term);
 
         termios term = init_term;
         term.c_lflag &= ~(ICANON | ECHO);
@@ -64,8 +60,16 @@ namespace tcon
         return true;
     }
 
-    bool End()
+    Handle::~Handle()
     {
+        End();
+    }
+
+    bool Handle::End()
+    {
+        if (!initialized)
+            return true;
+
         struct sigaction sa;
         sa.sa_handler = SIG_DFL;
         sigemptyset(&sa.sa_mask);
@@ -83,68 +87,12 @@ namespace tcon
         if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &init_term) != 0)
             return false;
 
+        initialized = false;
+
         return true;
     }
 
-    void SetCursorPos(uint16_t x, uint16_t y)
-    {
-        std::printf("%c[%d;%df", ESC, y, x);
-    }
-
-    void SetColor4bit(uint8_t col, Target target)
-    {
-        if (col < 8)
-            col += 30;
-        else if (col < 16)
-            col += 82;
-        
-        std::printf("%c[%dm", ESC, col + (int)target);
-    }
-
-    void SetColor8bit(uint8_t col, Target target)
-    {
-        std::printf("%c[%d;5;%dm", ESC, (int)target + 38, col);
-    }
-
-    void SetColor24bit(uint8_t r, uint8_t g, uint8_t b, Target target)
-    {
-        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38, r, g, b);
-    }
-
-    void SetColor24bit(uint32_t rgb, Target target)
-    {
-        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38,
-            rgb / (uint32_t)0x00010000 % 0x100,
-            rgb / (uint32_t)0x00000100 % 0x100,
-            rgb / (uint32_t)0x00000001 % 0x100
-        );
-    }
-
-    void ResetColor(Target target)
-    {
-        printf("%c[%dm", ESC, (int)target + 39);
-    }
-
-    void SetStyle(uint8_t style, bool enable)
-    {
-        if (style & Style::Bold        ) printf("%c[%dm", ESC, 1 + !enable * 21);
-        if (style & Style::Dim         ) printf("%c[%dm", ESC, 2 + !enable * 20);
-        if (style & Style::Italic      ) printf("%c[%dm", ESC, 3 + !enable * 20);
-        if (style & Style::Underline   ) printf("%c[%dm", ESC, 4 + !enable * 20);
-        if (style & Style::Blink       ) printf("%c[%dm", ESC, 5 + !enable * 20);
-        if (style & Style::Inversed    ) printf("%c[%dm", ESC, 6 + !enable * 20);
-        if (style & Style::Invisible   ) printf("%c[%dm", ESC, 7 + !enable * 20);
-        if (style & Style::CrossedOut  ) printf("%c[%dm", ESC, 8 + !enable * 20);
-    }
-
-    void ClearScreen()
-    {
-        tcon::SetCursorPos(0, 0);
-        printf("%c[J", 0x1b);
-        fflush(stdout);
-    }
-
-    bool UpdateSize()
+    bool Handle::UpdateSize()
     {
         struct winsize size;
         if (ioctl(STDIN_FILENO, TIOCGWINSZ, &size) != 0)
@@ -155,34 +103,14 @@ namespace tcon
 
         return true;
     }
-
-    int16_t GetWidth()
-    {
-        return width;
-    }
-
-    int16_t GetHeight()
-    {
-        return height;
-    }
-
-    void GetSize(int16_t& x, int16_t& y)
+    
+    void Handle::GetSize(uint16_t& x, uint16_t& y) const
     {
         x = width;
         y = height;
     }
-
-    void HideCursor()
-    {
-        std::printf("%c[?25l", ESC);
-    }
-
-    void ShowCursor()
-    {
-        std::printf("%c[?25h", ESC);
-    }
-
-    bool PollEvent(Event& event)
+    
+    bool Handle::PollEvent(Event& event)
     {
         if (!event_queue.empty())
         {
@@ -204,7 +132,7 @@ namespace tcon
             UpdateSize();
             Event event;
             event.type = Event::Resize;
-            event.resize = ResizeEvent{ GetWidth(), GetHeight() };
+            event.resize = ResizeEvent{ width, height };
 
             event_queue.emplace_back(event);
         }
@@ -269,6 +197,74 @@ namespace tcon
         }
 
         return false;
+    }
+
+    void SetCursorPos(uint16_t x, uint16_t y)
+    {
+        std::printf("%c[%d;%df", ESC, y, x);
+    }
+
+    void SetColor4bit(uint8_t col, Target target)
+    {
+        if (col < 8)
+            col += 30;
+        else if (col < 16)
+            col += 82;
+        
+        std::printf("%c[%dm", ESC, col + (int)target);
+    }
+
+    void SetColor8bit(uint8_t col, Target target)
+    {
+        std::printf("%c[%d;5;%dm", ESC, (int)target + 38, col);
+    }
+
+    void SetColor24bit(uint8_t r, uint8_t g, uint8_t b, Target target)
+    {
+        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38, r, g, b);
+    }
+
+    void SetColor24bit(uint32_t rgb, Target target)
+    {
+        std::printf("%c[%d;2;%d;%d;%dm", ESC, (int)target + 38,
+            rgb / (uint32_t)0x00010000 % 0x100,
+            rgb / (uint32_t)0x00000100 % 0x100,
+            rgb / (uint32_t)0x00000001 % 0x100
+        );
+    }
+
+    void ResetColor(Target target)
+    {
+        printf("%c[%dm", ESC, (int)target + 39);
+    }
+
+    void SetStyle(uint8_t style, bool enable)
+    {
+        if (style & Style::Bold        ) printf("%c[%dm", ESC, 1 + !enable * 21);
+        if (style & Style::Dim         ) printf("%c[%dm", ESC, 2 + !enable * 20);
+        if (style & Style::Italic      ) printf("%c[%dm", ESC, 3 + !enable * 20);
+        if (style & Style::Underline   ) printf("%c[%dm", ESC, 4 + !enable * 20);
+        if (style & Style::Blink       ) printf("%c[%dm", ESC, 5 + !enable * 20);
+        if (style & Style::Inversed    ) printf("%c[%dm", ESC, 6 + !enable * 20);
+        if (style & Style::Invisible   ) printf("%c[%dm", ESC, 7 + !enable * 20);
+        if (style & Style::CrossedOut  ) printf("%c[%dm", ESC, 8 + !enable * 20);
+    }
+
+    void ClearScreen()
+    {
+        tcon::SetCursorPos(0, 0);
+        printf("%c[J", 0x1b);
+        fflush(stdout);
+    }
+
+    void HideCursor()
+    {
+        std::printf("%c[?25l", ESC);
+    }
+
+    void ShowCursor()
+    {
+        std::printf("%c[?25h", ESC);
     }
 
     namespace

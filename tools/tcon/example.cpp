@@ -1,3 +1,4 @@
+#include <iostream>
 #include <thread>
 #include <cmath>
 #include <sys/ioctl.h>
@@ -8,7 +9,13 @@
 int main()
 {
     // init
-    tcon::Init();
+    tcon::Handle handle;
+    if (!handle.Init())
+    {
+        handle.End();
+        std::cerr << "Failed to initialize tcon::Handle" << std::endl;
+        return 1;
+    }
     tcon::HideCursor();
     tcon::ClearScreen();
 
@@ -29,7 +36,7 @@ int main()
     {
         // event polling
         tcon::Event event;
-        while (tcon::PollEvent(event))
+        while (handle.PollEvent(event))
         {
             if (event.type == tcon::Event::Exit)        // exit event
             {
@@ -55,7 +62,7 @@ int main()
         tcon::ClearScreen();
 
         // hello world
-        tcon::SetCursorPos(tcon::GetWidth() / 2 - 6, tcon::GetHeight() / 2);
+        tcon::SetCursorPos(handle.width / 2 - 6, handle.height / 2);
         tcon::SetStyle(tcon::Style::Italic | tcon::Style::Underline, true);
         for (int i = 0; i < 12; ++i)
         {
@@ -71,7 +78,7 @@ int main()
         }
 
         // circle
-        tcon::SetCursorPos(tcon::GetWidth() / 2 - 2 + (int)(2 * radius * cos(theta)), tcon::GetHeight() / 2 + (int)(radius * sin(theta)));
+        tcon::SetCursorPos(handle.width / 2 - 2 + (int)(2 * radius * cos(theta)), handle.height / 2 + (int)(radius * sin(theta)));
         tcon::SetStyle(tcon::Style::All, false);
         tcon::SetColor4bit(tcon::Color::BrightBlue, tcon::Target::Foreground);
         tcon::ResetColor(tcon::Target::Background);
@@ -86,7 +93,6 @@ int main()
     // clean up
     tcon::ClearScreen();
     tcon::ShowCursor();
-    tcon::End();
 
     return 0;
 }
