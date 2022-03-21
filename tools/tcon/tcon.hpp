@@ -179,6 +179,13 @@ namespace tcon
          */
         bool PollEvent(Event& event);
 
+        /**
+         * @brief Check is there any Handle initialized.
+         * 
+         * @return bool Boolean indicating whether initialized or not
+         */
+        static bool IsInitialized();
+
     private:
 
         Handle(const Handle&) = default;

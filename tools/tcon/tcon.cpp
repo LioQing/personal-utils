@@ -1,4 +1,4 @@
-#include "tcon.hpp"
+#include <ttui/tcon.hpp>
 
 #include <cstdio>
 #include <cstdlib>
@@ -207,6 +207,11 @@ namespace tcon
         }
 
         return false;
+    }
+
+    bool Handle::IsInitialized()
+    {
+        return Handle::initialized;
     }
 
     void SetCursorPos(uint16_t x, uint16_t y)
