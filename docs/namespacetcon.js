@@ -10,14 +10,15 @@ var namespacetcon =
       [ "Foreground", "namespacetcon.html#ae3136437173b558822f60cf3cb7d633ca45bd1d5b32931106efbf1a82fe6a732f", null ],
       [ "Background", "namespacetcon.html#ae3136437173b558822f60cf3cb7d633caa9ded1e5ce5d75814730bb4caaf49419", null ]
     ] ],
-    [ "ClearScreen", "namespacetcon.html#a88c010ebd1c704635e1489129d6181f2", null ],
-    [ "HideCursor", "namespacetcon.html#a8b6ead83decdb1e06cfbafe2f3a4d612", null ],
-    [ "ResetColor", "namespacetcon.html#a481acc9d839f93a2b1e1604e8fe959b0", null ],
-    [ "SetColor24bit", "namespacetcon.html#a9ebe678b9135d27a7424c14fba9152f7", null ],
-    [ "SetColor24bit", "namespacetcon.html#ada64dd5d38320d2ce5f2d11a3fb459cf", null ],
-    [ "SetColor4bit", "namespacetcon.html#a10b84a1460e9ed441c120dcbd2d86133", null ],
-    [ "SetColor8bit", "namespacetcon.html#aa29e6c401fbdd8e6e50ac7932814d824", null ],
-    [ "SetCursorPos", "namespacetcon.html#a8961a54552f31ee9d90ca85e4673e480", null ],
-    [ "SetStyle", "namespacetcon.html#a69e0cb15c56f9a7db930b473f6f4c51b", null ],
-    [ "ShowCursor", "namespacetcon.html#a7c0be6336cd6137f04ef94cd6297c925", null ]
+    [ "Color24bit", "namespacetcon.html#af966bea78c259983635c97e4aead53ed", null ],
+    [ "Color24bit", "namespacetcon.html#a4c3e02a23c712edcde2083c90a9815c3", null ],
+    [ "Color4bit", "namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81", null ],
+    [ "Color8bit", "namespacetcon.html#aabfdf6412ca21328fd6f5e6d1a81488d", null ],
+    [ "ColorReset", "namespacetcon.html#acd524e332bdfa2016c0d577d3fffd883", null ],
+    [ "SetAppearance", "namespacetcon.html#a7f968dd595b72d28c4711fe9be817393", null ],
+    [ "SetClearScreen", "namespacetcon.html#a5bffaa673665e9ae76eb822e5e0636ac", null ],
+    [ "SetCursorPos", "namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab", null ],
+    [ "SetHideCursor", "namespacetcon.html#a624dd7a5fffd5eb760b6a930de311ba0", null ],
+    [ "SetShowCursor", "namespacetcon.html#ad2468042ca20358ffe74422559b3ca93", null ],
+    [ "Style", "namespacetcon.html#a56aab10062cbf80e8b2bf6fefc5569ef", null ]
 ];

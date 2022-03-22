@@ -1,13 +1,13 @@
 var tcon_8cpp =
 [
-    [ "ClearScreen", "tcon_8cpp.html#a88c010ebd1c704635e1489129d6181f2", null ],
-    [ "HideCursor", "tcon_8cpp.html#a8b6ead83decdb1e06cfbafe2f3a4d612", null ],
-    [ "ResetColor", "tcon_8cpp.html#a481acc9d839f93a2b1e1604e8fe959b0", null ],
-    [ "SetColor24bit", "tcon_8cpp.html#a9ebe678b9135d27a7424c14fba9152f7", null ],
-    [ "SetColor24bit", "tcon_8cpp.html#ada64dd5d38320d2ce5f2d11a3fb459cf", null ],
-    [ "SetColor4bit", "tcon_8cpp.html#a10b84a1460e9ed441c120dcbd2d86133", null ],
-    [ "SetColor8bit", "tcon_8cpp.html#aa29e6c401fbdd8e6e50ac7932814d824", null ],
-    [ "SetCursorPos", "tcon_8cpp.html#a8961a54552f31ee9d90ca85e4673e480", null ],
-    [ "SetStyle", "tcon_8cpp.html#a69e0cb15c56f9a7db930b473f6f4c51b", null ],
-    [ "ShowCursor", "tcon_8cpp.html#a7c0be6336cd6137f04ef94cd6297c925", null ]
+    [ "Color24bit", "tcon_8cpp.html#af966bea78c259983635c97e4aead53ed", null ],
+    [ "Color24bit", "tcon_8cpp.html#a4c3e02a23c712edcde2083c90a9815c3", null ],
+    [ "Color4bit", "tcon_8cpp.html#a9fc7fc1d23ba4c0b9d992c86df715f81", null ],
+    [ "Color8bit", "tcon_8cpp.html#aabfdf6412ca21328fd6f5e6d1a81488d", null ],
+    [ "ColorReset", "tcon_8cpp.html#acd524e332bdfa2016c0d577d3fffd883", null ],
+    [ "SetClearScreen", "tcon_8cpp.html#a5bffaa673665e9ae76eb822e5e0636ac", null ],
+    [ "SetCursorPos", "tcon_8cpp.html#ac9b0c1409075c3f03cd3389e781837ab", null ],
+    [ "SetHideCursor", "tcon_8cpp.html#a624dd7a5fffd5eb760b6a930de311ba0", null ],
+    [ "SetShowCursor", "tcon_8cpp.html#ad2468042ca20358ffe74422559b3ca93", null ],
+    [ "Style", "tcon_8cpp.html#a56aab10062cbf80e8b2bf6fefc5569ef", null ]
 ];

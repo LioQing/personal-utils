@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('tcon_8cpp.html',''); initResizable(); 
   <div class="headertitle"><div class="title">tcon.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;ttui/tcon.hpp&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="tcon_8hpp_source.html">tcon.hpp</a>&quot;</code><br />
 <code>#include &lt;cstdio&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
 <code>#include &lt;sys/ioctl.h&gt;</code><br />
@@ -103,36 +103,36 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8961a54552f31ee9d90ca85e4673e480"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a8961a54552f31ee9d90ca85e4673e480">tcon::SetCursorPos</a> (uint16_t x, uint16_t y)</td></tr>
-<tr class="memdesc:a8961a54552f31ee9d90ca85e4673e480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor position.  <a href="namespacetcon.html#a8961a54552f31ee9d90ca85e4673e480">More...</a><br /></td></tr>
-<tr class="separator:a8961a54552f31ee9d90ca85e4673e480"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10b84a1460e9ed441c120dcbd2d86133"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a10b84a1460e9ed441c120dcbd2d86133">tcon::SetColor4bit</a> (uint8_t col, Target target)</td></tr>
-<tr class="memdesc:a10b84a1460e9ed441c120dcbd2d86133"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 4 bit format (16 colors).  <a href="namespacetcon.html#a10b84a1460e9ed441c120dcbd2d86133">More...</a><br /></td></tr>
-<tr class="separator:a10b84a1460e9ed441c120dcbd2d86133"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa29e6c401fbdd8e6e50ac7932814d824"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#aa29e6c401fbdd8e6e50ac7932814d824">tcon::SetColor8bit</a> (uint8_t col, Target target)</td></tr>
-<tr class="memdesc:aa29e6c401fbdd8e6e50ac7932814d824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 8 bit format (256 colors).  <a href="namespacetcon.html#aa29e6c401fbdd8e6e50ac7932814d824">More...</a><br /></td></tr>
-<tr class="separator:aa29e6c401fbdd8e6e50ac7932814d824"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada64dd5d38320d2ce5f2d11a3fb459cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ada64dd5d38320d2ce5f2d11a3fb459cf">tcon::SetColor24bit</a> (uint8_t r, uint8_t g, uint8_t b, Target target)</td></tr>
-<tr class="memdesc:ada64dd5d38320d2ce5f2d11a3fb459cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 24 bit format (rgb color).  <a href="namespacetcon.html#ada64dd5d38320d2ce5f2d11a3fb459cf">More...</a><br /></td></tr>
-<tr class="separator:ada64dd5d38320d2ce5f2d11a3fb459cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ebe678b9135d27a7424c14fba9152f7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a9ebe678b9135d27a7424c14fba9152f7">tcon::SetColor24bit</a> (uint32_t rgb, Target target)</td></tr>
-<tr class="memdesc:a9ebe678b9135d27a7424c14fba9152f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the color in 24 bit format (rgb color).  <a href="namespacetcon.html#a9ebe678b9135d27a7424c14fba9152f7">More...</a><br /></td></tr>
-<tr class="separator:a9ebe678b9135d27a7424c14fba9152f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a481acc9d839f93a2b1e1604e8fe959b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a481acc9d839f93a2b1e1604e8fe959b0">tcon::ResetColor</a> (Target target)</td></tr>
-<tr class="memdesc:a481acc9d839f93a2b1e1604e8fe959b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the color to default.  <a href="namespacetcon.html#a481acc9d839f93a2b1e1604e8fe959b0">More...</a><br /></td></tr>
-<tr class="separator:a481acc9d839f93a2b1e1604e8fe959b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69e0cb15c56f9a7db930b473f6f4c51b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a69e0cb15c56f9a7db930b473f6f4c51b">tcon::SetStyle</a> (uint8_t style, bool enable)</td></tr>
-<tr class="memdesc:a69e0cb15c56f9a7db930b473f6f4c51b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the style of text.  <a href="namespacetcon.html#a69e0cb15c56f9a7db930b473f6f4c51b">More...</a><br /></td></tr>
-<tr class="separator:a69e0cb15c56f9a7db930b473f6f4c51b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88c010ebd1c704635e1489129d6181f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a88c010ebd1c704635e1489129d6181f2">tcon::ClearScreen</a> ()</td></tr>
-<tr class="memdesc:a88c010ebd1c704635e1489129d6181f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the screen, cursor position will be (0, 0) after this.  <a href="namespacetcon.html#a88c010ebd1c704635e1489129d6181f2">More...</a><br /></td></tr>
-<tr class="separator:a88c010ebd1c704635e1489129d6181f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b6ead83decdb1e06cfbafe2f3a4d612"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a8b6ead83decdb1e06cfbafe2f3a4d612">tcon::HideCursor</a> ()</td></tr>
-<tr class="memdesc:a8b6ead83decdb1e06cfbafe2f3a4d612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hide the cursor.  <a href="namespacetcon.html#a8b6ead83decdb1e06cfbafe2f3a4d612">More...</a><br /></td></tr>
-<tr class="separator:a8b6ead83decdb1e06cfbafe2f3a4d612"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c0be6336cd6137f04ef94cd6297c925"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a7c0be6336cd6137f04ef94cd6297c925">tcon::ShowCursor</a> ()</td></tr>
-<tr class="memdesc:a7c0be6336cd6137f04ef94cd6297c925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show the cursor.  <a href="namespacetcon.html#a7c0be6336cd6137f04ef94cd6297c925">More...</a><br /></td></tr>
-<tr class="separator:a7c0be6336cd6137f04ef94cd6297c925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9b0c1409075c3f03cd3389e781837ab"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab">tcon::SetCursorPos</a> (uint16_t x, uint16_t y)</td></tr>
+<tr class="memdesc:ac9b0c1409075c3f03cd3389e781837ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor position.  <a href="namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab">More...</a><br /></td></tr>
+<tr class="separator:ac9b0c1409075c3f03cd3389e781837ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81">tcon::Color4bit</a> (uint8_t col, Target target)</td></tr>
+<tr class="memdesc:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escape sequence without the prefix &amp; postfix of the color in 4 bit format (16 colors).  <a href="namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81">More...</a><br /></td></tr>
+<tr class="separator:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabfdf6412ca21328fd6f5e6d1a81488d"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#aabfdf6412ca21328fd6f5e6d1a81488d">tcon::Color8bit</a> (uint8_t col, Target target)</td></tr>
+<tr class="memdesc:aabfdf6412ca21328fd6f5e6d1a81488d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escape sequence without the prefix &amp; postfix of the color in 8 bit format (256 colors).  <a href="namespacetcon.html#aabfdf6412ca21328fd6f5e6d1a81488d">More...</a><br /></td></tr>
+<tr class="separator:aabfdf6412ca21328fd6f5e6d1a81488d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c3e02a23c712edcde2083c90a9815c3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a4c3e02a23c712edcde2083c90a9815c3">tcon::Color24bit</a> (uint8_t r, uint8_t g, uint8_t b, Target target)</td></tr>
+<tr class="memdesc:a4c3e02a23c712edcde2083c90a9815c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escape sequence without the prefix &amp; postfix of the color in 24 bit format (rgb color).  <a href="namespacetcon.html#a4c3e02a23c712edcde2083c90a9815c3">More...</a><br /></td></tr>
+<tr class="separator:a4c3e02a23c712edcde2083c90a9815c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af966bea78c259983635c97e4aead53ed"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#af966bea78c259983635c97e4aead53ed">tcon::Color24bit</a> (uint32_t rgb, Target target)</td></tr>
+<tr class="memdesc:af966bea78c259983635c97e4aead53ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escape sequence without the prefix &amp; postfix of the color in 24 bit format (rgb color).  <a href="namespacetcon.html#af966bea78c259983635c97e4aead53ed">More...</a><br /></td></tr>
+<tr class="separator:af966bea78c259983635c97e4aead53ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd524e332bdfa2016c0d577d3fffd883"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#acd524e332bdfa2016c0d577d3fffd883">tcon::ColorReset</a> (Target target)</td></tr>
+<tr class="memdesc:acd524e332bdfa2016c0d577d3fffd883"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escape sequence without the prefix &amp; postfix of the default color.  <a href="namespacetcon.html#acd524e332bdfa2016c0d577d3fffd883">More...</a><br /></td></tr>
+<tr class="separator:acd524e332bdfa2016c0d577d3fffd883"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56aab10062cbf80e8b2bf6fefc5569ef"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a56aab10062cbf80e8b2bf6fefc5569ef">tcon::Style</a> (uint8_t style, bool enable)</td></tr>
+<tr class="memdesc:a56aab10062cbf80e8b2bf6fefc5569ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escape sequence without the prefix &amp; postfix of the style of text.  <a href="namespacetcon.html#a56aab10062cbf80e8b2bf6fefc5569ef">More...</a><br /></td></tr>
+<tr class="separator:a56aab10062cbf80e8b2bf6fefc5569ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bffaa673665e9ae76eb822e5e0636ac"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a5bffaa673665e9ae76eb822e5e0636ac">tcon::SetClearScreen</a> ()</td></tr>
+<tr class="memdesc:a5bffaa673665e9ae76eb822e5e0636ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the screen, cursor position will be (0, 0) after this.  <a href="namespacetcon.html#a5bffaa673665e9ae76eb822e5e0636ac">More...</a><br /></td></tr>
+<tr class="separator:a5bffaa673665e9ae76eb822e5e0636ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a624dd7a5fffd5eb760b6a930de311ba0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a624dd7a5fffd5eb760b6a930de311ba0">tcon::SetHideCursor</a> ()</td></tr>
+<tr class="memdesc:a624dd7a5fffd5eb760b6a930de311ba0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hide the cursor.  <a href="namespacetcon.html#a624dd7a5fffd5eb760b6a930de311ba0">More...</a><br /></td></tr>
+<tr class="separator:a624dd7a5fffd5eb760b6a930de311ba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2468042ca20358ffe74422559b3ca93"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ad2468042ca20358ffe74422559b3ca93">tcon::SetShowCursor</a> ()</td></tr>
+<tr class="memdesc:ad2468042ca20358ffe74422559b3ca93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show the cursor.  <a href="namespacetcon.html#ad2468042ca20358ffe74422559b3ca93">More...</a><br /></td></tr>
+<tr class="separator:ad2468042ca20358ffe74422559b3ca93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
