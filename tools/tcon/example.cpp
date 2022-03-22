@@ -16,8 +16,10 @@ int main()
         std::cerr << "Failed to initialize tcon::Handle" << std::endl;
         return 1;
     }
-    tcon::HideCursor();
-    tcon::ClearScreen();
+    printf("%s", (
+        tcon::SetHideCursor() +
+        tcon::SetClearScreen()
+    ).c_str());
 
     // variables
     bool is_running = true;
@@ -56,20 +58,26 @@ int main()
         theta = fmod(theta + rot_dir * .05f, 2 * 3.1415926);
 
         // draw
-        tcon::SetStyle(tcon::Style::All, false);
-        tcon::ResetColor(tcon::Target::Foreground);
-        tcon::ResetColor(tcon::Target::Background);
-        tcon::ClearScreen();
+        printf("%s", (
+            tcon::SetAppearance(
+                tcon::Style(tcon::Style::All, false),
+                tcon::ColorReset(tcon::Target::Foreground),
+                tcon::ColorReset(tcon::Target::Background)
+            ) + 
+            tcon::SetClearScreen()
+        ).c_str());
 
         // hello world
-        tcon::SetCursorPos(handle.GetWidth() / 2 - 6, handle.GetHeight() / 2);
-        tcon::SetStyle(tcon::Style::Italic | tcon::Style::Underline, true);
+        printf("%s", (
+            tcon::SetCursorPos(handle.GetWidth() / 2 - 6, handle.GetHeight() / 2) + 
+            tcon::SetAppearance(tcon::Style(tcon::Style::Italic | tcon::Style::Underline, true))
+            ).c_str()
+        );
         for (int i = 0; i < 12; ++i)
         {
             if (i < len)
             {
-                tcon::SetColor24bit(col[i], tcon::Target::Foreground);
-                printf("%c", hello_world[i]);
+                printf("%s%c", tcon::SetAppearance(tcon::Color24bit(col[i], tcon::Target::Foreground)).c_str(), hello_world[i]);
             }
             else
             {
@@ -78,10 +86,14 @@ int main()
         }
 
         // circle
-        tcon::SetCursorPos(handle.GetWidth() / 2 - 2 + (int)(2 * radius * cos(theta)), handle.GetHeight() / 2 + (int)(radius * sin(theta)));
-        tcon::SetStyle(tcon::Style::All, false);
-        tcon::SetColor4bit(tcon::Color::BrightBlue, tcon::Target::Foreground);
-        tcon::ResetColor(tcon::Target::Background);
+        printf("%s", 
+            (tcon::SetCursorPos(handle.GetWidth() / 2 - 2 + (int)(2 * radius * cos(theta)), handle.GetHeight() / 2 + (int)(radius * sin(theta))) +
+            tcon::SetAppearance(
+                tcon::Style(tcon::Style::All, false),
+                tcon::Color4bit(tcon::Color::BrightBlue, tcon::Target::Foreground),
+                tcon::ColorReset(tcon::Target::Background)
+            )).c_str()
+        );
         printf("%s", circle);
 
         fflush(stdout);
@@ -91,8 +103,10 @@ int main()
     }
 
     // clean up
-    tcon::ClearScreen();
-    tcon::ShowCursor();
+    printf("%s", (
+        tcon::SetClearScreen() +
+        tcon::SetShowCursor()
+    ).c_str());
 
     return 0;
 }
