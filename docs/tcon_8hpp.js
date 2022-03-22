@@ -15,7 +15,7 @@ var tcon_8hpp =
     [ "Color4bit", "tcon_8hpp.html#a9fc7fc1d23ba4c0b9d992c86df715f81", null ],
     [ "Color8bit", "tcon_8hpp.html#aabfdf6412ca21328fd6f5e6d1a81488d", null ],
     [ "ColorReset", "tcon_8hpp.html#acd524e332bdfa2016c0d577d3fffd883", null ],
-    [ "SetAppearance", "tcon_8hpp.html#a7f968dd595b72d28c4711fe9be817393", null ],
+    [ "SetAppearance", "tcon_8hpp.html#a1802fa5da361f0e6ced0fcdba6b4e209", null ],
     [ "SetClearScreen", "tcon_8hpp.html#a5bffaa673665e9ae76eb822e5e0636ac", null ],
     [ "SetCursorPos", "tcon_8hpp.html#ac9b0c1409075c3f03cd3389e781837ab", null ],
     [ "SetHideCursor", "tcon_8hpp.html#a624dd7a5fffd5eb760b6a930de311ba0", null ],

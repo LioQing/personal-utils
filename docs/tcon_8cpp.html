@@ -90,7 +90,7 @@ $(document).ready(function(){initNavTree('tcon_8cpp.html',''); initResizable(); 
   <div class="headertitle"><div class="title">tcon.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="tcon_8hpp_source.html">tcon.hpp</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;ttui/tcon.hpp&gt;</code><br />
 <code>#include &lt;cstdio&gt;</code><br />
 <code>#include &lt;cstdlib&gt;</code><br />
 <code>#include &lt;sys/ioctl.h&gt;</code><br />
@@ -106,6 +106,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac9b0c1409075c3f03cd3389e781837ab"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab">tcon::SetCursorPos</a> (uint16_t x, uint16_t y)</td></tr>
 <tr class="memdesc:ac9b0c1409075c3f03cd3389e781837ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor position.  <a href="namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab">More...</a><br /></td></tr>
 <tr class="separator:ac9b0c1409075c3f03cd3389e781837ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1802fa5da361f0e6ced0fcdba6b4e209"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a1802fa5da361f0e6ced0fcdba6b4e209">tcon::SetAppearance</a> (const std::vector&lt; std::string &gt; &amp;vec)</td></tr>
+<tr class="memdesc:a1802fa5da361f0e6ced0fcdba6b4e209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the appearance (colors &amp; styles) from a std::vector.  <a href="namespacetcon.html#a1802fa5da361f0e6ced0fcdba6b4e209">More...</a><br /></td></tr>
+<tr class="separator:a1802fa5da361f0e6ced0fcdba6b4e209"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81">tcon::Color4bit</a> (uint8_t col, Target target)</td></tr>
 <tr class="memdesc:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escape sequence without the prefix &amp; postfix of the color in 4 bit format (16 colors).  <a href="namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81">More...</a><br /></td></tr>
 <tr class="separator:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="memSeparator" colspan="2">&#160;</td></tr>

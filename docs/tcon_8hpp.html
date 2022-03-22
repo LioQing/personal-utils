@@ -119,6 +119,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for specifying style of the text.  <a href="structtcon_1_1_style.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtcon_1_1_handle.html">tcon::Handle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A structure to retrieve and store information of the terminal.  <a href="structtcon_1_1_handle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -139,10 +140,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac9b0c1409075c3f03cd3389e781837ab"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab">tcon::SetCursorPos</a> (uint16_t x, uint16_t y)</td></tr>
 <tr class="memdesc:ac9b0c1409075c3f03cd3389e781837ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor position.  <a href="namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab">More...</a><br /></td></tr>
 <tr class="separator:ac9b0c1409075c3f03cd3389e781837ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f968dd595b72d28c4711fe9be817393"><td class="memTemplParams" colspan="2">template&lt;typename... EscSeq&gt; </td></tr>
-<tr class="memitem:a7f968dd595b72d28c4711fe9be817393"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a7f968dd595b72d28c4711fe9be817393">tcon::SetAppearance</a> (EscSeq &amp;&amp;... esc_seq)</td></tr>
-<tr class="memdesc:a7f968dd595b72d28c4711fe9be817393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the appearance (colors &amp; styles).  <a href="namespacetcon.html#a7f968dd595b72d28c4711fe9be817393">More...</a><br /></td></tr>
-<tr class="separator:a7f968dd595b72d28c4711fe9be817393"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1802fa5da361f0e6ced0fcdba6b4e209"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a1802fa5da361f0e6ced0fcdba6b4e209">tcon::SetAppearance</a> (const std::vector&lt; std::string &gt; &amp;vec)</td></tr>
+<tr class="memdesc:a1802fa5da361f0e6ced0fcdba6b4e209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the appearance (colors &amp; styles) from a std::vector.  <a href="namespacetcon.html#a1802fa5da361f0e6ced0fcdba6b4e209">More...</a><br /></td></tr>
+<tr class="separator:a1802fa5da361f0e6ced0fcdba6b4e209"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81">tcon::Color4bit</a> (uint8_t col, Target target)</td></tr>
 <tr class="memdesc:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escape sequence without the prefix &amp; postfix of the color in 4 bit format (16 colors).  <a href="namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81">More...</a><br /></td></tr>
 <tr class="separator:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="memSeparator" colspan="2">&#160;</td></tr>

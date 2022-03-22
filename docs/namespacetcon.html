@@ -101,6 +101,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A union of all the event structures.  <a href="structtcon_1_1_event.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtcon_1_1_handle.html">Handle</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A structure to retrieve and store information of the terminal.  <a href="structtcon_1_1_handle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtcon_1_1_input_event.html">InputEvent</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A structure containing input event information.  <a href="structtcon_1_1_input_event.html#details">More...</a><br /></td></tr>
@@ -125,6 +126,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ac9b0c1409075c3f03cd3389e781837ab"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab">SetCursorPos</a> (uint16_t x, uint16_t y)</td></tr>
 <tr class="memdesc:ac9b0c1409075c3f03cd3389e781837ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cursor position.  <a href="namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab">More...</a><br /></td></tr>
 <tr class="separator:ac9b0c1409075c3f03cd3389e781837ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1802fa5da361f0e6ced0fcdba6b4e209"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a1802fa5da361f0e6ced0fcdba6b4e209">SetAppearance</a> (const std::vector&lt; std::string &gt; &amp;vec)</td></tr>
+<tr class="memdesc:a1802fa5da361f0e6ced0fcdba6b4e209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the appearance (colors &amp; styles) from a std::vector.  <a href="namespacetcon.html#a1802fa5da361f0e6ced0fcdba6b4e209">More...</a><br /></td></tr>
+<tr class="separator:a1802fa5da361f0e6ced0fcdba6b4e209"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81">Color4bit</a> (uint8_t col, <a class="el" href="namespacetcon.html#ae3136437173b558822f60cf3cb7d633c">Target</a> target)</td></tr>
 <tr class="memdesc:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the escape sequence without the prefix &amp; postfix of the color in 4 bit format (16 colors).  <a href="namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81">More...</a><br /></td></tr>
 <tr class="separator:a9fc7fc1d23ba4c0b9d992c86df715f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -152,10 +156,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ad2468042ca20358ffe74422559b3ca93"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetcon.html#ad2468042ca20358ffe74422559b3ca93">SetShowCursor</a> ()</td></tr>
 <tr class="memdesc:ad2468042ca20358ffe74422559b3ca93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Show the cursor.  <a href="namespacetcon.html#ad2468042ca20358ffe74422559b3ca93">More...</a><br /></td></tr>
 <tr class="separator:ad2468042ca20358ffe74422559b3ca93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f968dd595b72d28c4711fe9be817393"><td class="memTemplParams" colspan="2">template&lt;typename... EscSeq&gt; </td></tr>
-<tr class="memitem:a7f968dd595b72d28c4711fe9be817393"><td class="memTemplItemLeft" align="right" valign="top">std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacetcon.html#a7f968dd595b72d28c4711fe9be817393">SetAppearance</a> (EscSeq &amp;&amp;... esc_seq)</td></tr>
-<tr class="memdesc:a7f968dd595b72d28c4711fe9be817393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the appearance (colors &amp; styles).  <a href="namespacetcon.html#a7f968dd595b72d28c4711fe9be817393">More...</a><br /></td></tr>
-<tr class="separator:a7f968dd595b72d28c4711fe9be817393"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ae3136437173b558822f60cf3cb7d633c" name="ae3136437173b558822f60cf3cb7d633c"></a>
@@ -380,28 +380,26 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7f968dd595b72d28c4711fe9be817393" name="a7f968dd595b72d28c4711fe9be817393"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f968dd595b72d28c4711fe9be817393">&#9670;&nbsp;</a></span>SetAppearance()</h2>
+<a id="a1802fa5da361f0e6ced0fcdba6b4e209" name="a1802fa5da361f0e6ced0fcdba6b4e209"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1802fa5da361f0e6ced0fcdba6b4e209">&#9670;&nbsp;</a></span>SetAppearance()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename... EscSeq&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">std::string tcon::SetAppearance </td>
           <td>(</td>
-          <td class="paramtype">EscSeq &amp;&amp;...&#160;</td>
-          <td class="paramname"><em>esc_seq</em></td><td>)</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vec</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Set the appearance (colors &amp; styles). </p>
+<p>Set the appearance (colors &amp; styles) from a std::vector. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">esc_seq</td><td>The escape sequences (without the prefix &amp; postfix) of appearances </td></tr>
+    <tr><td class="paramname">vec</td><td>The vector containing the escape sequences </td></tr>
   </table>
   </dd>
 </dl>

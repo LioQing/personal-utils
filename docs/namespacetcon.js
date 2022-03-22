@@ -15,7 +15,7 @@ var namespacetcon =
     [ "Color4bit", "namespacetcon.html#a9fc7fc1d23ba4c0b9d992c86df715f81", null ],
     [ "Color8bit", "namespacetcon.html#aabfdf6412ca21328fd6f5e6d1a81488d", null ],
     [ "ColorReset", "namespacetcon.html#acd524e332bdfa2016c0d577d3fffd883", null ],
-    [ "SetAppearance", "namespacetcon.html#a7f968dd595b72d28c4711fe9be817393", null ],
+    [ "SetAppearance", "namespacetcon.html#a1802fa5da361f0e6ced0fcdba6b4e209", null ],
     [ "SetClearScreen", "namespacetcon.html#a5bffaa673665e9ae76eb822e5e0636ac", null ],
     [ "SetCursorPos", "namespacetcon.html#ac9b0c1409075c3f03cd3389e781837ab", null ],
     [ "SetHideCursor", "namespacetcon.html#a624dd7a5fffd5eb760b6a930de311ba0", null ],

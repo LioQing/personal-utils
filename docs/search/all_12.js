@@ -8,7 +8,7 @@ var searchData=
   ['set_5',['Set',['../structlio_1_1_vec3.html#adc1f3787f7386481bd594302479ae21d',1,'lio::Vec3::Set()'],['../structlio_1_1_vec2.html#a701d73bbb7c2f9b5ab5a5c0f03de5116',1,'lio::Vec2::Set()'],['../classlio_1_1_line_seg.html#a964f7dc03079b7c0b9b23ac5f01a23c7',1,'lio::LineSeg::Set(T x1, T y1, T x2, T y2) &amp;'],['../classlio_1_1_line_seg.html#ae145fea27c3797e02d2db7cc3e57dc9a',1,'lio::LineSeg::Set(const Vec2&lt; T &gt; &amp;p1, const Vec2&lt; T &gt; &amp;p2=Vec2&lt; T &gt;::Zero()) &amp;']]],
   ['set_5fat_6',['set_at',['../_string_8h.html#a4ca3b8645f1d5202ff471fb622ef993b',1,'set_at():&#160;String.h'],['../struct___string.html#a6a99a7acfadeea5a0ee2068fc8503c21',1,'_String::set_at()'],['../_vector_8h.html#a4ca3b8645f1d5202ff471fb622ef993b',1,'set_at():&#160;Vector.h']]],
   ['set_5fcursor_5fpos_7',['set_cursor_pos',['../_portable_system_functions_8h.html#ad92abec4cc1c191f91259b4a2f214640',1,'PortableSystemFunctions.h']]],
-  ['setappearance_8',['SetAppearance',['../namespacetcon.html#a7f968dd595b72d28c4711fe9be817393',1,'tcon']]],
+  ['setappearance_8',['SetAppearance',['../namespacetcon.html#a1802fa5da361f0e6ced0fcdba6b4e209',1,'tcon']]],
   ['setbackgroundcolor_9',['SetBackgroundColor',['../classlio_1_1_l_console_screen.html#a43c2a52159370c34ec5b72d368a4c7f0',1,'lio::LConsoleScreen']]],
   ['setclearscreen_10',['SetClearScreen',['../namespacetcon.html#a5bffaa673665e9ae76eb822e5e0636ac',1,'tcon']]],
   ['setcurrentconsolefontex_11',['SetCurrentConsoleFontEx',['../gcc__user___r_e_a_d_m_e_8hpp.html#ad062df04f8a7528f3e115e6db2fecc33',1,'gcc_user_README.hpp']]],
