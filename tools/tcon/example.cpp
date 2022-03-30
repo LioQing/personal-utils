@@ -18,6 +18,7 @@ int main()
     }
     printf("%s", (
         tcon::SetHideCursor() +
+        tcon::SetEnableMouseTracking() +
         tcon::SetClearScreen()
     ).c_str());
 
@@ -44,9 +45,16 @@ int main()
             {
                 is_running = false;
             }
-            else if (event.type == tcon::Event::Input)  // input event
+            else if (event.type == tcon::Event::Key)  // input event
             {
-                if (!event.input.is_esc && !event.input.is_alt && event.input.code == ' ') // space pressed
+                if (!event.key.is_esc && !event.key.is_alt && event.key.code == ' ') // space pressed
+                {
+                    rot_dir = -rot_dir;
+                }
+            }
+            else if (event.type == tcon::Event::MouseButton)
+            {
+                if (event.mouse_button.is_down)
                 {
                     rot_dir = -rot_dir;
                 }
@@ -59,25 +67,25 @@ int main()
 
         // draw
         printf("%s", (
-            tcon::SetAppearance(
+            tcon::SetAppearance({
                 tcon::Style(tcon::Style::All, false),
                 tcon::ColorReset(tcon::Target::Foreground),
                 tcon::ColorReset(tcon::Target::Background)
-            ) + 
+            }) + 
             tcon::SetClearScreen()
         ).c_str());
 
         // hello world
         printf("%s", (
             tcon::SetCursorPos(handle.GetWidth() / 2 - 6, handle.GetHeight() / 2) + 
-            tcon::SetAppearance(tcon::Style(tcon::Style::Italic | tcon::Style::Underline, true))
+            tcon::SetAppearance({ tcon::Style(tcon::Style::Italic | tcon::Style::Underline, true) })
             ).c_str()
         );
         for (int i = 0; i < 12; ++i)
         {
             if (i < len)
             {
-                printf("%s%c", tcon::SetAppearance(tcon::Color24bit(col[i], tcon::Target::Foreground)).c_str(), hello_world[i]);
+                printf("%s%c", tcon::SetAppearance({ tcon::Color24bit(col[i], tcon::Target::Foreground) }).c_str(), hello_world[i]);
             }
             else
             {
@@ -88,11 +96,11 @@ int main()
         // circle
         printf("%s", 
             (tcon::SetCursorPos(handle.GetWidth() / 2 - 2 + (int)(2 * radius * cos(theta)), handle.GetHeight() / 2 + (int)(radius * sin(theta))) +
-            tcon::SetAppearance(
+            tcon::SetAppearance({
                 tcon::Style(tcon::Style::All, false),
                 tcon::Color4bit(tcon::Color::BrightBlue, tcon::Target::Foreground),
                 tcon::ColorReset(tcon::Target::Background)
-            )).c_str()
+            })).c_str()
         );
         printf("%s", circle);
 
@@ -105,6 +113,7 @@ int main()
     // clean up
     printf("%s", (
         tcon::SetClearScreen() +
+        tcon::SetDisableMouseTracking() +
         tcon::SetShowCursor()
     ).c_str());
 
